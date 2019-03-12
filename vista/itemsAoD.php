@@ -68,24 +68,6 @@ if(!isset($_SESSION['usuario'])){
 					<div class="col-12 text-center" id="dInactivo">
 							<select multiple name="" id="" class="col-12 form-control" style="height:220px">
 									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
-									<option value="" onclick="selActivo()">Lorem ipsum dolor sit amet.</option>
 								</select>
 					</div>
 				</div>
@@ -152,6 +134,7 @@ function selInactivo(){
 	}
 }
 
+//funcion que carga los items desactivados de la base de datos
 function loadItems() {
 
 	//swal("seleccionaste un item inactivo para activarlo");
@@ -177,7 +160,12 @@ function loadItems() {
 }
 
 function selActivo(){
-	swal("seleccionaste un item activo para desactivarlo");	
+	data = confirm("seleccionaste un item activo para desactivarlo");	
+	if(data){
+		swal("Activado");
+	} else {
+		swal("El dato no sufrio Cambios");
+	}
 }
 
 </script>

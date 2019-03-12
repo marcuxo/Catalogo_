@@ -1372,7 +1372,7 @@ class Catalogo
         }
 	}
 
-	public function traeDatos_1_7($dato)// +++++++++++++++++++++++++++++++++++en uso+++++++++++++++++++++++++++++++++++++++++++
+	public function traeDatos_1_7($dato)// muestra los inputs en el mantenedor de datos central+
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
@@ -1724,12 +1724,16 @@ class Catalogo
                         }
                 	}
                     
-                endforeach;
+				endforeach;
+				$salida .= "
+				<div class='input-group input-group-sm col-9 py-2'><span class='input-group-addon' id='sizing-addon2'>Opcional</span>
+				<input name='dato_8' type='text' class='form-control' placeholder='Ingrese Dato opcional' aria-describedby='sizing-addon2'><br></div>
+				";
                 $salida.= "</div>";
             }else{
                 $salida = "No se encontro lo que buscas";
             }
-
+			
             echo $salida;
             $this->dbh = null;
         }catch (PDOException $e) {
@@ -2254,6 +2258,37 @@ class Catalogo
         }catch (PDOException $e) {
             $e->getMessage();
         }
+	}
+	
+	public function buscaParaEditarUser($data_1,$data_2,$data_3)
+    {
+    	try {
+			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE '.$data_1.' AND familia LIKE '.$data_2.' OR subfamilia LIKE '.$data_3.'');
+			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ? OR subfamilia LIKE ?');
+			$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ?');
+			$query->bindParam(1, $data_1);
+            $query->bindParam(2, $data_2);
+            //$query->bindParam(3, $data_3);
+            $query->execute();
+
+
+            $data = $query->fetchAll();
+            if(!empty($data)){
+                $salida="<div class='input-group input-group-sm col-14'><select multiple class='form-control form-control-sm table-hover' name='buscaUserImg' id='buscaUserImg' style='height:320px'>";
+                foreach ($data as $fila):
+                		$salida.=  "
+                		   <option value='' onclick='showwwwImagen();'>".$fila['grupo']."*".$fila['familia']."*".$fila['subfamilia']."*".$fila['descripcion']."</option>";
+                endforeach;
+                $salida.= "</select></div>";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
     }
 
 	public function agregaFotoTipo($fami, $tipo, $img)
@@ -2262,36 +2297,39 @@ class Catalogo
 
 		if($tipo == "N/A"){
 			try{
-                $query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?)');
-                $query->bindParam(1, $fami);
-                $query->bindParam(2, $img);
+								$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
+								$query->bindParam(1, $fami);
+								$query->bindParam(2, $tipo);
+								$query->bindParam(3, $img);
 
-                $query->execute();
-                $this->dbh = null;
-            } catch (PDOException $e){
-                $e->getMessage();
-            }
+								$query->execute();
+								$this->dbh = null;
+						} catch (PDOException $e){
+								$e->getMessage();
+						}
 		} else {
 			try{
-                $query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?)');
-                $query->bindParam(1, $tipo);
-                $query->bindParam(2, $img);
+								$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
+								$query->bindParam(1, $fami);
+								$query->bindParam(2, $tipo);
+								$query->bindParam(3, $img);
 
-                $query->execute();
-                $this->dbh = null;
-            } catch (PDOException $e){
-                $e->getMessage();
-            }
+								$query->execute();
+								$this->dbh = null;
+						} catch (PDOException $e){
+								$e->getMessage();
+						}
 		}
 
 	}
 
 	public function cargaImagen()//carga las imagenes de la tabla de imagenes por tipo
 	{
+		$data1 = "RODAMIENTO";
+		$data2 = "MATERIALES Y ARTICULOS ELECTRICOS";
 		try {
-            $query = $this->dbh->prepare('SELECT * FROM foto_tipo');
-            //$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
-            //$query->bindParam(1, $dato);
+            $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ?');
+            $query->bindParam(1, $data1);
 			
             $query->execute();
 
@@ -2299,11 +2337,13 @@ class Catalogo
             $cont = count($data);
             $salida;
             if(!empty($data)){
-                $salida ="<div class='col-4'>";
+				$salida ="<div class='col-4 text-right'>
+				<h1 class='text-white lead'>".$data1."</h1>";
                 foreach ($data as $fila):
 						$salida.= "
-							<img src='".$fila['imagen_tipo_foto']."' class='w-25 rounded' id='img' onclick='showImg(this)'>
-                        	";
+						<div class='col'>
+							<label class='fondo text-white'>".$fila['nombre_tipo_foto']." <img src='".$fila['imagen_tipo_foto']."' class='w-25 rounded' id='img' onclick='showImg(this)'></label>
+                        </div>";
                 endforeach;
                 $salida.= "</div>";
             }else{
@@ -2318,8 +2358,6 @@ class Catalogo
 
 	public function cargaInactivos()
 	{
-		$txt_nook = "";
-		$txt_ok = "<i class='fas fa-check-circle'></i>";
 		try {
             $query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = 0');
             //$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
@@ -2348,7 +2386,50 @@ class Catalogo
         }
 	}
 
+	public function cargaActivos()
+	{
+		try {
+            $query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = "1"');
+            //$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
+            //$query->bindParam(1, $dato);
+			
+            $query->execute();
+
+            $data = $query->fetchAll();
+            $cont = count($data);
+            $salida;
+            if(!empty($data)){
+                $salida ="<select multiple name='itemActivo' id='itemActivo' class='col-12 form-control' style='height:220px'>";
+                foreach ($data as $fila):
+						$salida.= "
+							<option value='".$fila['id_dato_f']."' onclick='selActivo()'>".$fila['grupo_dato_f']." ".$fila['familia_dato_f']." ".$fila['dato1_dato_f']." ".$fila['dato2_dato_f']." ".$fila['dato3_dato_f']." ".$fila['dato4_dato_f']." ".$fila['dato5_dato_f']." ".$fila['dato6_dato_f']."</option>
+                        	";
+                endforeach;
+                $salida.= "</select>";
+            }else{
+                $salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+            }
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
+
 	public function downItem($id)
+	{
+		try{
+			$query = $this->dbh->prepare('UPDATE datos_formalizados SET estado_dato_f = 0 WHERE ID_DATO_F = ?');
+			$query->bindParam(1, $id);
+
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+	public function upItem($id)
 	{
 		try{
 			$query = $this->dbh->prepare('UPDATE datos_formalizados SET estado_dato_f = 1 WHERE ID_DATO_F = ?');
@@ -2384,7 +2465,6 @@ class Catalogo
 			$e->getMessage();
 		}
 	}
-
 
 	public function addDato_DC($dato_1, $dato_2, $dato_3, $dato_4)
 	{

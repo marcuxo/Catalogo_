@@ -43,40 +43,11 @@
 <div class="container-fluid">
 	<div class="row fondo pb-2">
 			<div id="resultado" class="col-12"><p class="py-5"></p></div>
+			<div class="col-12">
+				<div id="resultadoBusImg">cadena de texto</div>
+			</div>
 	</div>
 </div>
-
-<!-- -----------------------------------------  modal----------------------------------------------  -->
-<div class="modal fade" id="modalBusqueda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title lead" id="exampleModalLongTitle">Editar Datos</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- contenido del modal -->	
-						<form action="../controlador/addItemFormal.php" method="post" onsubmit="return sub_envio()">
-							<small id="modalRespuesta"></small>		
-							<div id="esconder" class=""><a class="btn btn-sm btn-info col-12" onclick="loadGrupos();esconde()">EDITAR LOS DATOS</a></div>						
-							<div id="grupos"></div>
-
-							<div id="familias"></div>
-							
-							<div id="materiales"></div>
-							<div id="tipoPag"></div>
-							<!-- fin conttenido del modal -->
-						</div>
-						<div class="modal-footer">
-							<input id="esconder2" type="submit" class=" btn btn-secondary btn-sm " name="btn_dc" value="Datos Correctos">
-							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm invisible" name="btn_add" value="Agregar">
-						</form>
-					</div>
-			</div>
-		</div>
-	</div>
 
 	
 	<footer>
@@ -97,110 +68,6 @@
 </html>
 <script>
 
-
-
-
-
-// modal---------
-	function selGrupo() {
-		//alert("diste click");
-		$("#familias").html("");
-		$("#tipoPag").html("");
-		$("#materiales").html("");
-		document.getElementById('grupo').selected = "true";
-        var select = document.getElementById("grupo");
-        var index = select.selectedIndex; 
-        var value = select.options[index].value;
-		var text = select.options[index].text;
-		if(value != "1"){
-				$.ajax({
-				url: './../controlador/TraerFamilias2.php',
-				type: 'POST',
-						dataType: 'html',
-						data: { valor: value }
-			}).done(function(respuesta){
-				// console.log('logrado');
-				$("#familias").html(respuesta)
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-		}//fin if
-	};
-
-	function loadGrupos(){
-        var grupo = [
-            "CADENAS Y CORREAS",
-            "ELEMENTOS DE FIJACION",
-            "EQUIPOS INDUSTRIALES",
-            "FILTROS Y LUBRICANTES",
-            "HERRAMIENTAS E INSTRUMENTOS",
-            "MATERIALES DE CONSTRUCCION Y FERRETERIA",
-            "MATERIALES DE GASFITERIA",
-            "MATERIALES Y ARTICULOS DE REFRIGERACION",
-            "MATERIALES Y ARTICULOS ELECTRICOS",
-            "MOTORES Y MOTORREDUCTORES",
-            "REPUESTOS MAQUINAS",
-            "RODAMIENTOS Y SELLOS"
-        ];
-        var txt = "<select class='form-control form-control-sm my-2' name='grupo' id='grupo' onclick='selGrupo()'><option value='1' onclick='selGrupo()'>Selecciona Grupo de items</option>";
-        grupo.forEach(function(element) {
-            txt += "<option value='"+element+"' onclick='selGrupo()'>"+element+"</option>";
-        });
-        txt += "</select>";
-        $("#grupos").html(txt);
-	};
-
-	function selFamilia(){
-		$("#tipoPag").html("");
-		$("#materiales").html("");
-		document.getElementById('familia').selected = "true";
-        var select = document.getElementById("familia");
-        var index = select.selectedIndex; 
-        var value = select.options[index].value;
-		var text = select.options[index].text;
-		if(value != "1"){
-			$.ajax({
-				url: './../controlador/TraeInputs2.php',
-				type: 'POST',
-				dataType: 'html',
-				data: { valor: value},
-			})
-			.done(function(respuesta){
-				//console.log('logrado');
-				$("#tipoPag").html(respuesta)
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});//fin fail
-		}//fin if
-	}
-
-	function traeMaterialMOD(){
-		var tipo = $('#acaSaleElTipoMod').val();
-		$.ajax({
-			url: './../controlador/consultaMateriales2.php',
-			type: 'POST',
-			dataType: 'html',
-			data: { valor: tipo},
-		})
-		.done(function(respuesta){
-			// console.log('logrado');
-			$("#materiales").html(respuesta)
-		})//fin done
-		.fail(function(){
-			console.log('error');
-		});
-	}
-
-	function sub_envio() {
-			var dato = confirm("Estas seguro de los datos");
-			if(dato){
-					return true;
-			} else {
-					return false;
-			}
-  }
 
 
 
@@ -302,7 +169,7 @@
 		//var dato = confirm("Estas seguro de los datos");
 		if(true){
 			$.ajax({
-				url: './../controlador/busqueda1.php',
+				url: './../controlador/busqueda2.php',
 				type: 'post',
 				dataType: 'html',
 				data: { valor1: grupo,
@@ -320,61 +187,27 @@
 		} else {
 			return false;
 		}
-  }
+ 	}
 
-
-
-		// muestra el modal
-
-	function modalShow() {
-		$("#grupos").html("");
-		$("#familias").html("");
-		$("#materiales").html("");
-		$("#tipoPag").html("");
-		document.getElementById('editorB').selected = "true";
-		var select = document.getElementById("editorB");
+	function showwwwImagen() {
+		document.getElementById('buscaUserImg').selected = "true";
+		var select = document.getElementById("buscaUserImg");
 		var index = select.selectedIndex; 
 		var value = select.options[index].value;
 		var text = select.options[index].text;
-
-		var txt = text.split("-")
+		var nuevoTexto = text.replace("*", " ")
+		//var elTextO = text.indexOf("/");
 		var txt2 = text.split("*")
 		var inp ="";
 		for (var i=0; i < txt2.length; i++) {
-			//inp+=(txt2[i] + "  ");
-			inp+=`
-				<input type="text" class="form-control form-control-sm my-1" value="`+txt2[i] +`" name="`+i+`" readonly>
-			`;
-	  }
-	 
-		if(true){
-			$('#modalBusqueda').modal('show')
-			$("#modalRespuesta").html(inp)
-			//loadGrupos()
+			inp+=(txt2[i] + "  ");
 		}
+		//console.log(inp)
+		$("#resultadoBusImg").html(inp)
+			
 	}
 
-	function esconde() {
-		var element = document.getElementById("esconder");
-		element.classList.add("invisible");
-		var element2 = document.getElementById("esconder2");
-		element2.classList.add("invisible");
-		var element = document.getElementById("mostrarBTN");
-		element.classList.remove("invisible");
-	}
 
-	function muestra() {
-		var element = document.getElementById("esconder");
-		element.classList.remove("invisible");
-		var element2 = document.getElementById("esconder2");
-		 element2.classList.remove("invisible");
-		 var element2 = document.getElementById("mostrarBTN");
-		element2.classList.add("invisible");
-	}
-
-	function reiniciaMod() {
-		
-	}
 
 </script>
 <!--
