@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "barras";
+  src: url("fonts/Paskowy.ttf");
+}
+
+@font-face {
+  font-family: "pixel";
+  src: url("fonts/Pixeled.ttf");
+}
+
+@font-face {
+  font-family: "pixel-fino";
+  src: url("fonts/post_pixel-7.ttf");
+}
+
+.bg-semitrans {
+	background-color: rgba(255, 255, 255, 0.25)
+}
+body  {
+		background: linear-gradient(to bottom, #aac8f6, white) no-repeat;
+		height: 100vh;
+}
+.img_login {
+	position: relative;
+    top: -50px;
+    transition: .5s ease;
+}
+.login:hover .img_login{
+	top: -40px;
+	transition: .5s ease;
+	transform: rotate(25deg);
+}
+.imgfondo{
+	background-image: url(../img_/ariztia2.jpg);
+	height: 600px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+.zentre{
+	height: 500px;
+	padding-top: 20%;
+}
+.fondo{
+	background-color: rgba(255,255,255, 0.4);
+}
+
+
+
+

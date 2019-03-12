@@ -1,0 +1,97 @@
+<?php
+$codigo = "N/A";
+$imagen = "N/A";
+$descripcion = "N/A";
+$grupo = "N/A";
+$familia = "N/A";
+$tipo = "N/A";
+$material = "N/A";
+$dato_2 = "N/A";
+$dato_3 = "N/A";
+$dato_4 = "N/A";
+$dato_5 = "N/A";
+$dato_6 = "N/A";
+$dato_7 = "N/A";
+$nn = count($_POST);
+var_dump($_FILES['ima);
+echo("Han llegado ".$nn." datos</br>");// cuenta los datos por post que llegan
+// metodo para carga y guardado de archivo de imagen
+$directorio = "../vista/img_/";//-****************cambiar esta direccion por la que usara para gusrdar las imagenes
+$directorioDB = $directorio.($_FILES['imagenFoto']['name']);
+$fichero_subido = $_SERVER['DOCUMENT_ROOT'].$directorio.($_FILES['imagenFoto']['name']);
+
+move_uploaded_file($_FILES['imagenFoto']['tmp_name'], $fichero_subido);
+
+// Verifica que la variable contenga algun dato y si es asi sobreescribe la variable de lo contrario su valos sera N/A
+if(isset($_FILES['imagenFoto']['tmp_name'])){
+    $imagen = $_FILES['imagenFoto']['name'];
+    // echo $imagen."</br>";
+}
+
+
+if(isset($_POST['codigo_item'])){
+    $codigo = $_POST["codigo_item"];
+    // echo $codigo."</br>";
+}
+if(isset($_POST['codigo_item'])){
+    $descripcion = $_POST["codigo_item"];
+    // echo $descripcion."</br>";
+}
+if(isset($_POST['grupo'])){
+    $grupo = $_POST["grupo"];
+    // echo $grupo."</br>";
+}
+if(isset($_POST['familia'])){
+    $familia = $_POST["familia"];
+    // echo $familia."</br>";
+}
+if(isset($_POST['tipo'])){
+    $tipo = $_POST["tipo"];
+    // echo $tipo."</br>";
+}
+if(isset($_POST['material'])){
+    $material = $_POST["material"];
+    // echo $material."</br>";
+}
+if(isset($_POST['dato_2'])){
+    $dato_2 = $_POST["dato_2"];
+    // echo $dato_2."</br>";
+}
+if(isset($_POST['dato_3'])){
+    $dato_3 = $_POST["dato_3"];
+    // echo $dato_3."</br>";
+}
+if(isset($_POST['dato_4'])){
+    $dato_4 = $_POST["dato_4"];
+    // echo $dato_4."</br>";
+}
+if(isset($_POST['dato_5'])){
+    $dato_5 = $_POST["dato_5"];
+    // echo $dato_5."</br>";
+}
+if(isset($_POST['dato_6'])){
+    $dato_6 = $_POST["dato_6"];
+    // echo $dato_6."</br>";
+}
+if(isset($_POST['dato_7'])){
+    $dato_7 = $_POST["dato_7"];
+    // echo $dato_7."</br>";
+}
+
+// muestra todos los datos recibidos desde la app
+echo "Codigo: ".$codigo."<br>Dir.Imagen: ".$directorioDB."<br>Descripción: ".$descripcion."<br>Grupo: ".$grupo."<br>Familia: ".$familia."<br>Tipo: ".$tipo."<br>Material: ".$material."<br>Dato tecnico 1: "
+    .$dato_2."<br>Dato tecnico 2: ".$dato_3."<br>Dato tecnico 3: ".$dato_4."<br>Dato tecnico 4: "
+    .$dato_5."<br>Dato tecnico 5: ".$dato_6."<br>Dato tecnico 6: ".$dato_7;
+
+    
+// $descripcion = $_POST["descripcion_item"];
+// $grupo = $_POST['grupo'];
+// $familia = $_POST['familia'];
+// $tipo = $_POST['tipo'];
+// $material = $_POST['material'];
+// $dato_2 = $_POST['dato_2'];
+// $dato_3 = $_POST['dato_3'];
+// $dato_4 = $_POST['dato_4'];
+// $dato_5 = $_POST['dato_5'];
+// $dato_6 = $_POST['dato_6'];
+// $dato_7 = $_POST['dato_7'];
