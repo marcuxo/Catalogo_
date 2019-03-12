@@ -32,6 +32,7 @@ body  {
 }
 .imgfondo{
 	background-image: url(../img_/ariztia2.jpg);
+	background-attachment: fixed;
 	height: 600px;
 	background-position: center;
 	background-repeat: no-repeat;

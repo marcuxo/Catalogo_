@@ -21,7 +21,7 @@ session_start();
 		 </div>
 		 <div class="col-4 text-right">
 		 	<a href="buscadorDeItems.php" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> Buscar</a>
-		 	<a href="buscadorDeItems.php" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> Busqueda avanzada</a>
+		 	<a href="busuqedaAvanzadaUSR.php" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> Busqueda avanzada</a>
 			<a href="index.php" class="btn btn-sm btn-success"><i class="fas fa-home"></i> Inicio</a>
 		 </div>
  	</div>

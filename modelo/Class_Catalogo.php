@@ -2026,6 +2026,32 @@ class Catalogo
         }
     }
 
+	public function traer_familia5($dato)
+    {
+        try {
+            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
+			$query->bindParam(1, $dato);
+            $query->execute();
+
+            $data = $query->fetchAll();
+            if(!empty($data)){
+                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaXfoto' onclick='selFamiliaXfoto()'><option value='1' onclick='selFamiliaXfoto()'>Selecciona Familia</option>";
+                foreach ($data as $fila):
+                		$salida.=  "
+                		   <option value='".$fila['nombre']."' onclick='selFamiliaXfoto()'>".$fila['nombre']."</option>";
+                endforeach;
+                $salida.= "</select></div>";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+
     public function traer_material()//sin uso
     {
     	 try {

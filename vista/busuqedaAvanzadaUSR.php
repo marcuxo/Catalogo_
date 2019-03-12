@@ -17,13 +17,10 @@
 					<h1 class="text-info font-italic"></h1>
 				</div>
 				<div class="col-6 text-right py-2">
-					
-					<a href="Mantenedor_Datos.php" class="btn btn-sm btn-success">Mantenedor Datos</a>
+
+					<a href="index.php" class="btn btn-sm btn-info text-white"><i class="fas fa-home"></i> Inicio</a>
+					<a href="" class="btn btn-sm btn-info text-white disabled"><i class="fas fa-search"></i> Busqueda Avanzada</a>
 	
-					<a href="buscadorDeItems.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
-					<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white disabled"><i class="fas fa-search"></i> Editar Items Antiguo</a>
-	
-					<button onclick="CerrarCession()" class="btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Salir</button>
 				</div>
 				<div class="col bg-info p-1"></div>
 			</div>
