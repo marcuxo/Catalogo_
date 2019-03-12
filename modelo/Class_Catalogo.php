@@ -1259,6 +1259,115 @@ class Catalogo
 	}
 
 
+    public function traeDatos_1_7_Xtipo($dato)// ++++++++++++++++++++++++++++++++++uso en mantenedor+++++++++++++++++++++++++++++++++++++++++++
+    {
+        try {
+        	//esta consulta carga los items de ingreso de datos vacios
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query->bindParam(1, $dato);
+            $query->execute();
+            $data = $query->fetchAll();
+
+
+
+            if(!empty($data)){
+            	//recorrido para la carga de los items de llenado de datos vacios
+                $salida="<div class='row'>";
+                foreach ($data as $fila):
+
+                	if($fila['dato_3'] == "N/A"){
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            	<script>
+								traetipoXtipo();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                            }
+                	} else if($fila['dato_4'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            	<script>
+								traetipoXtipo();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";
+                            }
+                	} else if($fila['dato_5'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            	<script>
+								traetipoXtipo();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	//$salida .= $salida2;
+                            	
+                           }
+
+                	} else if($fila['dato_6'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            	<script>
+								traetipoXtipo();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	}
+                	} else if($fila['dato_7'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            	<script>
+								traetipoXtipo();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                             }
+                	} else {
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            	<script>
+								traetipoXtipo();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	}
+                	}
+                    
+                endforeach;
+				$salida.= "</div>";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+            
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
+
+
     public function traeDatos_1_7_foto($dato)// ++++++++++++++++++++++++++++++++++uso en modal+++++++++++++++++++++++++++++++++++++++++++
     {
         try {
@@ -2026,7 +2135,7 @@ class Catalogo
         }
     }
 
-	public function traer_familia5($dato)
+	public function traer_familiaXtipo($dato)
     {
         try {
             $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
@@ -2035,10 +2144,10 @@ class Catalogo
 
             $data = $query->fetchAll();
             if(!empty($data)){
-                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaXfoto' onclick='selFamiliaXfoto()'><option value='1' onclick='selFamiliaXfoto()'>Selecciona Familia</option>";
+                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaXfoto' onclick='selFamiliaXfoto();loadImagenXtipo()'><option value='1' onclick='selFamiliaXfoto();loadImagenXtipo()'>Selecciona Familia</option>";
                 foreach ($data as $fila):
                 		$salida.=  "
-                		   <option value='".$fila['nombre']."' onclick='selFamiliaXfoto()'>".$fila['nombre']."</option>";
+                		   <option value='".$fila['nombre']."' onclick='selFamiliaXfoto();loadImagenXtipo()'>".$fila['nombre']."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
@@ -2093,6 +2202,33 @@ class Catalogo
                 foreach ($data as $fila):
                 		$salida.=  "
                 		   <option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
+                endforeach;
+                $salida.= "</select></div>";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+
+    public function buscaTipoXtipo($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
+    {
+    	try {
+            $query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
+
+            $query->execute();
+
+            $data = $query->fetchAll();
+            if(!empty($data)){
+                $salida="<div class='input-group input-group-sm col-14'><select onclick='loadImagenXtipo()' class='form-control form-control-sm' name='tipo' id='tipoXtipo' required>
+                <option onclick='loadImagenXtipo()' value='seleccionar'>Seleccione el Tipo</option>";
+                foreach ($data as $fila):
+                		$salida.=  "
+                		   <option value='".$fila['nombre_tipo']."' onclick='loadImagenXtipo()'>".$fila['nombre_tipo']."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
@@ -2363,7 +2499,7 @@ class Catalogo
             $cont = count($data);
             $salida;
             if(!empty($data)){
-				$salida ="<div class='col-4 text-right'>
+				$salida ="<div class='col-3 text-right'>
 				<h1 class='text-white lead'>".$data1."</h1>";
                 foreach ($data as $fila):
 						$salida.= "

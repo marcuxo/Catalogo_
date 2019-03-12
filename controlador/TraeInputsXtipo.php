@@ -1,6 +1,5 @@
 <?php
 require_once './../modelo/Class_Catalogo.php';
 $catalogo = Catalogo::singleton();
-$dato = $_POST['valor'];
-$catalogo->traer_familia5($dato);
-//echo $dato;
+$data = $_POST['valor'];
+$catalogo->traeDatos_1_7_Xtipo($data);

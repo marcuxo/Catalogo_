@@ -54,16 +54,27 @@ if(!isset($_SESSION['usuario'])){
 
 <finder2>
 
-<div class="container-fluid">
-	<div class="row">
+	<div class="container-fluid">
+		<div class="row">
 
-			<div class="col-4" id="gruposFinder2"></div>
-			<div class="col-4 pt-2" id="familiaXtipo"></div>
-			<div class="col-4 pt-2" id="tipoXtipo"></div>
+				<div class="col-4" id="gruposFinder2"></div>
+				<div class="col-4 pt-2" id="familiaXtipo"></div>
+				<div class="col-4 pt-2" id="materialXtipo"></div>
+				<div class="col-4 pt-2" id="tipoXtipo"></div>
 
+		</div>
+		<!-- id="loading" -->
+		<div class="row d-flex justify-content-center">
+
+				<div class='col-3 text-right bg-info'>
+						<h1 class='text-white lead'>TEXTO</h1>
+							<div class='col'>
+								<label class='fondo text-white'>TEXTO</label>
+							</div>
+					</div>
+	
+		</div>
 	</div>
-</div>
-<div id="loading" class="col-12"></div>
 </finder2>
 
 <!-- footer o pie de pagina -->
@@ -576,65 +587,83 @@ if(!isset($_SESSION['usuario'])){
     txt += "</select>";
     $("#gruposFinder2").html(txt);
 	};
-	
-function selGrupoFinder() {
-	document.getElementById('grupoFinder2').selected = "true";
-	var select = document.getElementById("grupoFinder2");
-	var index = select.selectedIndex; 
-	var value = select.options[index].value;
-	var text = select.options[index].text;
-	if(value != 1){
-		$.ajax({
-			url: './../controlador/TraerFamilias5.php',
-			type: 'POST',
-			dataType: 'html',
-				data: { valor: value},
-			}).done(function(respuesta){
-				// console.log('logrado');
-				$("#familiaXtipo").html(respuesta)
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-	}
-}
-
-function selFamiliaXfoto() {
-	document.getElementById('familiaXfoto').selected = "true";
-	var select = document.getElementById("familiaXfoto");
-	var index = select.selectedIndex; 
-	var value = select.options[index].value;
-	var text = select.options[index].text;
-	if(value != 1){
-		$.ajax({
-			url: './../controlador/TraerFamilias5.php',
-			type: 'POST',
-			dataType: 'html',
-				data: { valor: value},
-			}).done(function(respuesta){
-				// console.log('logrado');
-				$("#tipoXtipo").html(respuesta)
-				loadImagenXtipo()
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-	}
-}
-
-function loadImagenXtipo() {
+		
+	function selGrupoFinder() {
+		document.getElementById('grupoFinder2').selected = "true";
+		var select = document.getElementById("grupoFinder2");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+		if(value != 1){
 			$.ajax({
-			url: './../controlador/cargaImagen.php',
-			type: 'POST',
-					dataType: 'html',
-			}).done(function(respuesta){
+				url: './../controlador/TraerFamiliasXtipo.php',
+				type: 'POST',
+				dataType: 'html',
+					data: { valor: value},
+				}).done(function(respuesta){
+					// console.log('logrado');
+					$("#familiaXtipo").html(respuesta)
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+		}
+	}
+
+	function selFamiliaXfoto() {
+		document.getElementById('familiaXfoto').selected = "true";
+		var select = document.getElementById("familiaXfoto");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+		if(value != 1){
+			$.ajax({
+				url: './../controlador/traeInputsXtipo.php',
+				type: 'POST',
+				dataType: 'html',
+					data: { valor: value},
+				}).done(function(respuesta){
+					// console.log('logrado');
+					$("#tipoXtipo").html(respuesta)
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+		}
+	}
+
+	function traetipoXtipo() {
+			var tipo = $('#acaSaleElTipo').val();
+			$.ajax({
+				url: './../controlador/traeTipoXtipo.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor: tipo},
+			})
+			.done(function(respuesta){
 				// console.log('logrado');
-				$("#loading").html(respuesta)
+				$("#materialXtipo").html(respuesta)
+
 			})//fin done
 			.fail(function(){
 				console.log('error');
 			});
-	}
+		}
+
+	function loadImagenXtipo() {
+
+	$.ajax({
+	url: './../controlador/cargaImagen.php',
+	type: 'POST',
+			dataType: 'html',
+	}).done(function(respuesta){
+		// console.log('logrado');
+		$("#loading").html(respuesta)
+	})//fin done
+	.fail(function(){
+		console.log('error');
+	});
+}
 
 
 
