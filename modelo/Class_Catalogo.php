@@ -2461,8 +2461,8 @@ class Catalogo
 			$query->bindParam(1, $fami);
 			$query->bindParam(2, $tipo);
 			$query->bindParam(3, $img);
-
 			$query->execute();
+			header('Location: ../vista/Mantenedor_Datos_.php');
 			$this->dbh = null;
 		} catch (PDOException $e){
 				$e->getMessage();
