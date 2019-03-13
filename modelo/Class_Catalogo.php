@@ -1467,7 +1467,7 @@ class Catalogo
 				
 				$salida.= "</div>";
 				$salida.= "<div class='input-group input-group-sm col-14 pt-2'>
-					<input type='file' name='fotoTipoImg' id='fotoTipoImg' class='form-control form-control-sm'>
+					<input type='file' name='fotoTipoImg' id='fotoTipoImg' class='form-control form-control-sm' accept='image/x-png,image/jpeg'>
 					</div>";
 				
             }else{
@@ -2456,33 +2456,17 @@ class Catalogo
 	public function agregaFotoTipo($fami, $tipo, $img)
 	{
 		echo("se agrega la foto al tipo".$fami." ".$tipo." ".$img);
-
-		if($tipo == "N/A"){
 			try{
-								$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
-								$query->bindParam(1, $fami);
-								$query->bindParam(2, $tipo);
-								$query->bindParam(3, $img);
+					$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
+					$query->bindParam(1, $fami);
+					$query->bindParam(2, $tipo);
+					$query->bindParam(3, $img);
 
-								$query->execute();
-								$this->dbh = null;
-						} catch (PDOException $e){
-								$e->getMessage();
-						}
-		} else {
-			try{
-								$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
-								$query->bindParam(1, $fami);
-								$query->bindParam(2, $tipo);
-								$query->bindParam(3, $img);
-
-								$query->execute();
-								$this->dbh = null;
-						} catch (PDOException $e){
-								$e->getMessage();
-						}
-		}
-
+					$query->execute();
+					$this->dbh = null;
+			} catch (PDOException $e){
+					$e->getMessage();
+			}
 	}
 
 	public function cargaImagen()//carga las imagenes de la tabla de imagenes por tipo

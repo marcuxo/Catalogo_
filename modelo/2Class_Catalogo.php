@@ -809,13 +809,13 @@ class Catalogo
     public function Correo($msg)
     {
     	$to = 'pruebas.correo.dev@gmail.com';
-	$subject = 'the subject';
-	//$message = 'Hola mundo desde el mail';
-	$headers[]= 'MiME-Version: 1.0';
-	$headers[]= 'Content-type: text/html; charset=iso-8859-1';
+		$subject = 'the subject';
+		//$message = 'Hola mundo desde el mail';
+		$headers[]= 'MiME-Version: 1.0';
+		$headers[]= 'Content-type: text/html; charset=iso-8859-1';
 
-	mail($to, $subject, $msg, implode("\r\n", $headers));
-	echo "<center><p class='lead'>Correo enviado, revisa la bandeja de entrada o spam del correo ".$to."<p><center>";
+		mail($to, $subject, $msg, implode("\r\n", $headers));
+		echo "<center><p class='lead'>Correo enviado, revisa la bandeja de entrada o spam del correo ".$to."<p><center>";
 
     }
 

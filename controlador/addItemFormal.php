@@ -47,8 +47,8 @@ if(isset($_POST['btn_add'])){
     if(isset($_POST['dato_8'])){
         $dato8 = $_POST['dato_8'];
     }
-    $catalogo->addDato_DM($grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8);
-    //echo  $grupo."--".$familia."--".$tipo."--".$material."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7."--".$dato8;
+    //$catalogo->addDato_DM($grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8);
+    echo  $grupo."--".$familia."--".$tipo."--".$material."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7."--".$dato8;
 
 }
 else if(isset($_POST['btn_dc'])){

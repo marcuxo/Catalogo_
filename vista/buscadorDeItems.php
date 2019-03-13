@@ -15,10 +15,11 @@
 <header>
 	<div class="container-fluid mb-3 bg-primary">
 		<div class="row align-items-center">
-			<div class="col-11">
+			<div class="col-10">
 				<h1 class="font-italic text-info">Buscador</h1>
 			</div>
-			<div class="col-1 text-right">
+			<div class="col-2 text-right">
+				<a href="index.php" class="btn btn-sm btn-info"><i class="fas fa-home"></i> Inicio</a>
 				<a href="Login_Mantenedor.php" class="btn btn-sm btn-info"><i class="fas fa-sign-in-alt"></i> Entrar</a>
 			</div>
 			<div class="col bg-info p-1"></div>

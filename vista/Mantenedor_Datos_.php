@@ -190,7 +190,7 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="data.php" method="GET" onsubmit="return sub_envio()">
+						<form action="./../controlador/addItemFormal.php" method="POST" onsubmit="return sub_envio()">
 							<small id="modalRespuesta"></small>			
 							<div id="newGrupo"></div>
 							<div id="newFamilia"></div>
@@ -458,6 +458,8 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 
+	
+
 	//modal nuevo item
 	function loadGrupos3(){
     var grupo = [
@@ -492,14 +494,14 @@ if(!isset($_SESSION['usuario'])){
 		var value = select.options[index].value;
 		var text = select.options[index].text;
 		if(value != "1"){
-				$.ajax({
-				url: './../controlador/TraerFamiliasFoto.php',
-				type: 'POST',
-						dataType: 'html',
-						data: { valor: value }
+			$.ajax({
+			url: './../controlador/TraerFamilias4.php',
+			type: 'POST',
+					dataType: 'html',
+					data: { valor: value }
 			}).done(function(respuesta){
 				// console.log('logrado');
-				$("#fotoFamilia").html(respuesta)
+				$("#newFamilia").html(respuesta)
 			})//fin done
 			.fail(function(){
 				console.log('error');
@@ -652,18 +654,18 @@ if(!isset($_SESSION['usuario'])){
 
 	function loadImagenXtipo() {
 
-	$.ajax({
-	url: './../controlador/cargaImagen.php',
-	type: 'POST',
-			dataType: 'html',
-	}).done(function(respuesta){
-		// console.log('logrado');
-		$("#loading").html(respuesta)
-	})//fin done
-	.fail(function(){
-		console.log('error');
-	});
-}
+		$.ajax({
+		url: './../controlador/cargaImagen.php',
+		type: 'POST',
+				dataType: 'html',
+		}).done(function(respuesta){
+			// console.log('logrado');
+			$("#loading").html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
 
 
 
@@ -705,3 +707,26 @@ if(!isset($_SESSION['usuario'])){
 		</form>
 	</finder>
 	 -->
+
+
+
+	 <!-- 
+
+grupo=RODAMIENTOS+Y+SELLOS
+familia=RODAMIENTO
+tipo=BOLA
+material=ACERO
+dato_4=dato_3
+dato_5=dato_4
+dato_6=dato_5
+dato_7=dato_6
+dato_8=dato_opcional
+btn_add=Agregar	
+
+		-->
+		
+		<!-- rupo=RODAMIENTOS+Y+SELLOS
+			familia=RODAMIENTO
+			fotoTipoImg=deadpool.jpg
+			tipo=AGUJAS
+			btn_add=Agregar -->
