@@ -52,8 +52,9 @@
 <div class="container-fluid">
 	<div class="row fondo pb-2">
 			<div id="resultado" class="col-12"><p class="py-5"></p></div>
-			<div class="col-12 pt-3">
-				<div id="resultadoBusImg" class="text-center"></div>
+			<div class="col-12 pt-3 bg-success text-center">
+				<!-- <div id="resultadoBusImg" class="text-center"></div> -->
+				<a class="lead text-white pl-2 bg-success" id="resultadoBusImg" onclick="copiarAlPortapapeles('resultadoBusImg')" data-toggle="tooltip" title="Haz Click para COPIAR"></a>
 			</div>
 	</div>
 </div>
@@ -76,34 +77,55 @@
 	<script type="text/javascript" src="./JS/sweetAlert.js"></script>
 </body>
 </html>
+
+<style>
+
+/* a:active { 
+	font-size: 50px;
+	color: lime !important; 
+	animation: 3s;
+} */
+
+</style>
 <script>
 
+		// --------------Funcion que copia texto con un click------------------------
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
 
-
+function copiarAlPortapapeles(id_elemento) {
+  var aux = document.createElement("input");
+  aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
+}
 
 		// --------------formulario pagina------------------------
-	function loadGrupos2(){
-					var grupo = [
-					"CADENAS Y CORREAS",
-					"ELEMENTOS DE FIJACION",
-					"EQUIPOS INDUSTRIALES",
-					"FILTROS Y LUBRICANTES",
-					"HERRAMIENTAS E INSTRUMENTOS",
-					"MATERIALES DE CONSTRUCCION Y FERRETERIA",
-					"MATERIALES DE GASFITERIA",
-					"MATERIALES Y ARTICULOS DE REFRIGERACION",
-					"MATERIALES Y ARTICULOS ELECTRICOS",
-					"MOTORES Y MOTORREDUCTORES",
-					"REPUESTOS MAQUINAS",
-					"RODAMIENTOS Y SELLOS"
-			];
-			var txt = "<select class='form-control form-control-sm my-2' name='grupo' id='grupo2' onclick='selGrupo2()'><option value='1' onclick='selGrupo2()'>Selecciona Grupo de items</option>";
-			grupo.forEach(function(element) {
-					txt += "<option value='"+element+"' onclick='selGrupo2()'>"+element+"</option>";
-			});
-			txt += "</select>";
-			$("#grupos2").html(txt);
-	};
+		function loadGrupos2(){
+						var grupo = [
+						"CADENAS Y CORREAS",
+						"ELEMENTOS DE FIJACION",
+						"EQUIPOS INDUSTRIALES",
+						"FILTROS Y LUBRICANTES",
+						"HERRAMIENTAS E INSTRUMENTOS",
+						"MATERIALES DE CONSTRUCCION Y FERRETERIA",
+						"MATERIALES DE GASFITERIA",
+						"MATERIALES Y ARTICULOS DE REFRIGERACION",
+						"MATERIALES Y ARTICULOS ELECTRICOS",
+						"MOTORES Y MOTORREDUCTORES",
+						"REPUESTOS MAQUINAS",
+						"RODAMIENTOS Y SELLOS"
+				];
+				var txt = "<select class='form-control form-control-sm my-2' name='grupo' id='grupo2' onclick='selGrupo2()'><option value='1' onclick='selGrupo2()'>Selecciona Grupo de items</option>";
+				grupo.forEach(function(element) {
+						txt += "<option value='"+element+"' onclick='selGrupo2()'>"+element+"</option>";
+				});
+				txt += "</select>";
+				$("#grupos2").html(txt);
+		};
 
 	function selGrupo2() {
 		//alert("diste click");
@@ -213,7 +235,7 @@
 			inp+=(txt2[i] + "  ");
 		}
 		//console.log(inp)
-		$("#resultadoBusImg").html('<p class="lead text-white pl-2 bg-success">'+inp+'</p>')
+		$("#resultadoBusImg").html(inp)
 			
 	}
 

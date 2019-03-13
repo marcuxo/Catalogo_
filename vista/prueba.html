@@ -3,6 +3,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Verificacion Datos</title>
+	<link rel="stylesheet" href="CSS/bootstrap-4.css">
 	<link rel="stylesheet" href="CSS/estilos.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 </head>
@@ -20,6 +21,10 @@
 		</div>
 
 
+		<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Haz Click para COPIAR">
+			Tooltip on top
+		</button>
+
 
 
 		<div class="container">
@@ -30,26 +35,66 @@
 			</div>
 		</div>
 
-
-		<div id="resultadoBusImg">ddddd</div>
-		<button onclick="okidoki()">click</button>
+		<a href="" class="text-info" id="p1" onclick="copiarAlPortapapeles('p1')" data-toggle="tooltip" title="Haz Click para COPIAR">P1: Soy el primer párrafo</a>
+		<a href="" class="text-info jittery" id="p2" onclick="copiarAlPortapapeles('p2')" data-toggle="tooltip" title="Haz Click para COPIAR">P2: Soy el segundo párrafo</a>
+		
+		<br/><br/>
+<a href="" class="animacion lead" data-toggle="tooltip" title="Haz Click para COPIAR">deberia pasar algo</a>
 	</center>
+
+
+	<!-- imports de javascript para funcionalidad -->
+	<script type="text/javascript" src="./JS/jquery.js"></script>
+	<script type="text/javascript" src="./JS/tether.1.4.js"></script>
+	<script type="text/javascript" src="./JS/bootstrap.4.alfa.js"></script>
 </body>
 </html>
+<style>
+.animacion:hover { 
+	animation-delay: initial;
+	animation-name: nombre;
+	animation-duration: 300ms;
+	/* animation-delay: 0s; */
+	animation-iteration-count: 1;
+}
+
+@keyframes nombre {
+	0% {
+		font-size: 20px;
+	}
+	25% {
+		font-size: 18px;
+	}
+	50% {
+		font-size: 20px;
+	}
+	75% {
+		font-size: 22px;
+	}
+	100% {
+		font-size: 20px;
+	}
+ 
+}
+
+
+
+</style>
 
 <script>
 
-function okidoki() {
-	var text = "uno*dos*tres*cuatro*cinco*seis";
-	elTextO = "";
-	var txt2 = text.split("*")
-	var inp ="";
-	for (var i=0; i < txt2.length; i++) {
-		inp+=(txt2[i] + "  ");
-	}
-	console.log(inp)
-	
+function copiarAlPortapapeles(id_elemento) {
+  var aux = document.createElement("input");
+  aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
 }
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 </script>
 
