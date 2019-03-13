@@ -1467,7 +1467,7 @@ class Catalogo
 				
 				$salida.= "</div>";
 				$salida.= "<div class='input-group input-group-sm col-14 pt-2'>
-					<input type='file' name='fotoTipoImg' id='fotoTipoImg' class='form-control form-control-sm' accept='image/x-png,image/jpeg'>
+					<input type='file' name='fotoTipoImg' id='fotoTipoImg' class='form-control form-control-sm ' accept='image/x-png,image/jpeg'>
 					</div>";
 				
             }else{
@@ -2456,23 +2456,23 @@ class Catalogo
 	public function agregaFotoTipo($fami, $tipo, $img)
 	{
 		echo("se agrega la foto al tipo".$fami." ".$tipo." ".$img);
-			try{
-					$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
-					$query->bindParam(1, $fami);
-					$query->bindParam(2, $tipo);
-					$query->bindParam(3, $img);
+		try{
+			$query = $this->dbh->prepare('INSERT INTO foto_tipo VALUES(null,?,?,?)');
+			$query->bindParam(1, $fami);
+			$query->bindParam(2, $tipo);
+			$query->bindParam(3, $img);
 
-					$query->execute();
-					$this->dbh = null;
-			} catch (PDOException $e){
-					$e->getMessage();
-			}
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+				$e->getMessage();
+		}
 	}
 
 	public function cargaImagen()//carga las imagenes de la tabla de imagenes por tipo
 	{
-		$data1 = "RODAMIENTO";
-		$data2 = "MATERIALES Y ARTICULOS ELECTRICOS";
+		$data2 = "RODAMIENTO";
+		$data1 = "MATERIALES Y ARTICULOS ELECTRICOS";
 		try {
             $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ?');
             $query->bindParam(1, $data1);
@@ -2483,15 +2483,22 @@ class Catalogo
             $cont = count($data);
             $salida;
             if(!empty($data)){
-				$salida ="<div class='col-3 text-right'>
-				<h1 class='text-white lead'>".$data1."</h1>";
+				$salida ="<div class='col-12'>
+				<h1 class='text-white lead font-italic'>".$data1."</h1></div>";
                 foreach ($data as $fila):
 						$salida.= "
-						<div class='col'>
-							<label class='fondo text-white'>".$fila['nombre_tipo_foto']." <img src='".$fila['imagen_tipo_foto']."' class='w-25 rounded' id='img' onclick='showImg(this)'></label>
-                        </div>";
+
+						<div class='card m-2' style='width: 15rem;'>
+							<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+							<div class='card-block'>
+								<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+							</div>
+						</div>
+
+
+						";
                 endforeach;
-                $salida.= "</div>";
+                $salida.= "";
             }else{
                 $salida = "No se encontro lo que buscas";
             }

@@ -54,7 +54,7 @@ if(!isset($_SESSION['usuario'])){
 
 <finder2>
 
-	<div class="container-fluid">
+	<div class="container-fluid pb-5">
 		<div class="row">
 
 				<div class="col-4" id="gruposFinder2"></div>
@@ -64,15 +64,11 @@ if(!isset($_SESSION['usuario'])){
 
 		</div>
 		<!-- id="loading" -->
-		<div class="row d-flex justify-content-center">
+		<!-- <div class="row d-flex justify-content-center"> -->
+		<div class="row d-flex justify-content-center" id="loading">
+	<!-- borrar -->
 
-				<div class='col-3 text-right bg-info'>
-						<h1 class='text-white lead'>TEXTO</h1>
-							<div class='col'>
-								<label class='fondo text-white'>TEXTO</label>
-							</div>
-					</div>
-	
+<!-- borrar -->
 		</div>
 	</div>
 </finder2>
@@ -88,8 +84,8 @@ if(!isset($_SESSION['usuario'])){
 	</div>
 </footer>
 
-		<!-- -----------------------------------------  MODAL FOTO POR TIPO----------------------------------------------  -->
-		<div class="modal fade" id="modalFotoTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<!-- -----------------------------------------  MODAL FOTO POR TIPO----------------------------------------------  -->
+	<div class="modal fade" id="modalFotoTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -100,7 +96,7 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="../controlador/addImgTipo.php" method="POST" onsubmit="return sub_envio()" enctype="multipart/form-data">
+						<form action="../controlador/addImgTipo.php" method="POST" onsubmit="return sub_envioFotoXitem()" enctype="multipart/form-data">
 							<small id="modalRespuesta"></small>			
 							<div id="fotoGrupo"></div>
 							<div id="fotoFamilia"></div>
@@ -206,6 +202,8 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 
+
+
 <!-- imports de javascript para funcionalidad -->
  	<script type="text/javascript" src="./JS/jquery.js"></script>
  	<script type="text/javascript" src="./JS/tether.1.4.js"></script>
@@ -218,6 +216,15 @@ if(!isset($_SESSION['usuario'])){
 </html>
 
 <script>
+	function sub_envio() {
+		var data = confirm("esta seguro de los datos INGRESADOS");
+		if(data){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
  //modal carga de foto a item
 	function showMfoto() {
 		$("#fotoFamilia").html("");
@@ -322,7 +329,19 @@ if(!isset($_SESSION['usuario'])){
 			console.log('error');
 		});
 	}
+	
+	function sub_envioFotoXitem() {
 
+	}
+
+	function verificaImagen() {
+		var data = confirm("verificando");
+		if(data){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
   //modal carga y activa items inactivos
 	function showModalItemInactivo(){
@@ -627,6 +646,8 @@ if(!isset($_SESSION['usuario'])){
 				}).done(function(respuesta){
 					// console.log('logrado');
 					$("#tipoXtipo").html(respuesta)
+				loadImagenXtipo()
+
 				})//fin done
 				.fail(function(){
 					console.log('error');
@@ -645,7 +666,6 @@ if(!isset($_SESSION['usuario'])){
 			.done(function(respuesta){
 				// console.log('logrado');
 				$("#materialXtipo").html(respuesta)
-
 			})//fin done
 			.fail(function(){
 				console.log('error');
