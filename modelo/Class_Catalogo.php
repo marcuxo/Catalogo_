@@ -2471,8 +2471,6 @@ class Catalogo
 
 	public function cargaImagen($fam, $tipo)//carga las imagenes de la tabla de imagenes por tipo
 	{
-		$data2 = "RODAMIENTO";
-		$data1 = "MATERIALES Y ARTICULOS ELECTRICOS";
 		try {
             $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ? AND nombre_tipo_foto = ?');
             $query->bindParam(1, $fam);
