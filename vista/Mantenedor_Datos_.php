@@ -610,6 +610,10 @@ if(!isset($_SESSION['usuario'])){
 	};
 		
 	function selGrupoFinder() {
+		$("#familiaXfoto").html("");
+		$("#materialXtipo").html("");
+		$("#tipoXtipo").html("");
+		$("#loading").html("");
 		document.getElementById('grupoFinder2').selected = "true";
 		var select = document.getElementById("grupoFinder2");
 		var index = select.selectedIndex; 
@@ -632,6 +636,9 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 	function selFamiliaXfoto() {
+		$("#materialXtipo").html("");
+		$("#tipoXtipo").html("");
+		//$("#materiales").html("");
 		document.getElementById('familiaXfoto').selected = "true";
 		var select = document.getElementById("familiaXfoto");
 		var index = select.selectedIndex; 
@@ -646,8 +653,7 @@ if(!isset($_SESSION['usuario'])){
 				}).done(function(respuesta){
 					// console.log('logrado');
 					$("#tipoXtipo").html(respuesta)
-				loadImagenXtipo()
-
+					loadImagenXtipoF()
 				})//fin done
 				.fail(function(){
 					console.log('error');
@@ -666,18 +672,25 @@ if(!isset($_SESSION['usuario'])){
 			.done(function(respuesta){
 				// console.log('logrado');
 				$("#materialXtipo").html(respuesta)
+				loadImagenXtipo()
 			})//fin done
 			.fail(function(){
 				console.log('error');
 			});
 		}
 
-	function loadImagenXtipo() {
+	function loadImagenXtipoF() {
+		textT = "N/A";
+		document.getElementById('familiaXfoto').selected = "true";
+		var selectF = document.getElementById("familiaXfoto");
+		var indexF = selectF.selectedIndex;
+		var textF = selectF.options[indexF].text;
 
 		$.ajax({
 		url: './../controlador/cargaImagen.php',
 		type: 'POST',
-				dataType: 'html',
+		dataType: 'html',
+		data: { valor: textF , valor2: textT},
 		}).done(function(respuesta){
 			// console.log('logrado');
 			$("#loading").html(respuesta)
@@ -687,7 +700,30 @@ if(!isset($_SESSION['usuario'])){
 		});
 	}
 
+	function loadImagenXtipo() {
+		document.getElementById('familiaXfoto').selected = "true";
+		var selectF = document.getElementById("familiaXfoto");
+		var indexF = selectF.selectedIndex;
+		var textF = selectF.options[indexF].text;
 
+		document.getElementById('tipoXtipo').selected = "true";
+		var selectT = document.getElementById("tipoXtipo");
+		var indexT = selectT.selectedIndex;
+		var textT = selectT.options[indexT].text;
+
+		$.ajax({
+		url: './../controlador/cargaImagen.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: textF , valor2: textT},
+		}).done(function(respuesta){
+			// console.log('logrado');
+			$("#loading").html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
 
 </script>
 

@@ -2469,13 +2469,14 @@ class Catalogo
 		}
 	}
 
-	public function cargaImagen()//carga las imagenes de la tabla de imagenes por tipo
+	public function cargaImagen($fam, $tipo)//carga las imagenes de la tabla de imagenes por tipo
 	{
 		$data2 = "RODAMIENTO";
 		$data1 = "MATERIALES Y ARTICULOS ELECTRICOS";
 		try {
-            $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ?');
-            $query->bindParam(1, $data1);
+            $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ? AND nombre_tipo_foto = ?');
+            $query->bindParam(1, $fam);
+            $query->bindParam(2, $tipo);
 			
             $query->execute();
 
@@ -2484,19 +2485,28 @@ class Catalogo
             $salida;
             if(!empty($data)){
 				$salida ="<div class='col-12'>
-				<h1 class='text-white lead font-italic'>".$data1."</h1></div>";
-                foreach ($data as $fila):
-						$salida.= "
+				<h1 class='text-white lead font-italic'>".$fam."</h1></div>";
+								foreach ($data as $fila):
+									if($fila['nombre_tipo_foto'] != "N/A"){
+										$salida.= "
+										<div class='card m-2' style='width: 15rem;'>
+											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+											<div class='card-block'>
+												<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+											</div>
+										</div>
+										";
+									} else {
+										$salida.= "
+										<div class='card m-2' style='width: 15rem;'>
+											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+											<div class='card-block'>
+												<p class='card-text'>".$fila['nombre_famili_foto']."</p>
+											</div>
+										</div>
+										";
+									}
 
-						<div class='card m-2' style='width: 15rem;'>
-							<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
-							<div class='card-block'>
-								<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
-							</div>
-						</div>
-
-
-						";
                 endforeach;
                 $salida.= "";
             }else{
