@@ -49,5 +49,21 @@ body  {
 }
 
 
+.copyClick:active { 
+	animation-delay: initial;
+	animation-name: nombre;
+	animation-duration: 300ms;
+	/* animation-delay: 0s; */
+	animation-iteration-count: 1;
+}
 
+@keyframes nombre {
+	0% {
+		font-size: 19px;
+	}
+	100% {
+		font-size: 20px;
+	}
+ 
+}
 

@@ -52,10 +52,17 @@
 <div class="container-fluid">
 	<div class="row fondo pb-2">
 			<div id="resultado" class="col-12"><p class="py-5"></p></div>
-			<div class="col-12 pt-3 bg-success text-center">
+			<div class="col-12 pt-3 text-center">
 				<!-- <div id="resultadoBusImg" class="text-center"></div> -->
-				<a class="lead text-white pl-2 bg-success" id="resultadoBusImg" onclick="copiarAlPortapapeles('resultadoBusImg')" data-toggle="tooltip" title="Haz Click para COPIAR"></a>
 			</div>
+	</div>
+</div>
+<div class="container-fluid mt-2 bg-success">
+	<div class="row">
+		<div id="copyONclick" class="col-12 text-center invisible">
+		<a class="lead text-white pl-2 copyClick" id="resultadoBusImg" onclick="copiarAlPortapapeles('resultadoBusImg')" data-toggle="tooltip" title="Haz Click para COPIAR"></a>
+
+		</div>
 	</div>
 </div>
 
@@ -235,6 +242,7 @@ function copiarAlPortapapeles(id_elemento) {
 			inp+=(txt2[i] + "  ");
 		}
 		//console.log(inp)
+		$('#copyONclick').removeClass('invisible')
 		$("#resultadoBusImg").html(inp)
 			
 	}
