@@ -76,9 +76,9 @@ if(!isset($_SESSION['usuario'])){
 <!-- footer o pie de pagina -->
 <footer>
 	<div class="container mt-5 fixed-bottom">
-		<div class="row">
+		<div class="row fondo">
 			<div class="col text-center rounded-top">
-				<small class="fondo">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="text-gray-dark">Marco Urrutia</a></label></small>
+				<small class="">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="text-gray-dark font-italic">Marco Urrutia</a></label></small>
 			</div>
 		</div>
 	</div>

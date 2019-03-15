@@ -131,7 +131,7 @@ function validaFormulario(user, pass) {
 		 console.log(respuesta);
 		 if(respuesta == "ok"){
 		 	console.log("la respuesta es ok");
-		 	location.href ="./Mantenedor_Datos.php";
+		 	location.href ="./Mantenedor_Datos_.php";
 		 }else{
 		 	$("#rspta_login").html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
 			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+

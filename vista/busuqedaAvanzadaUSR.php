@@ -70,8 +70,8 @@
 	<footer>
 			<div class="container mt-5 fixed-bottom">
 				<div class="row">
-					<div class="col text-center rounded-top">
-						<small class="text-primary">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="">Marco Urrutia</a></label></small>
+					<div class="col text-center rounded-top bg-info">
+						<small class="">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="font-italic text-gray-dark">Marco Urrutia</a></label></small>
 					</div>
 				</div>
 			</div>
@@ -111,7 +111,7 @@ function copiarAlPortapapeles(id_elemento) {
 }
 
 		// --------------formulario pagina------------------------
-		function loadGrupos2(){
+	function loadGrupos2(){
 						var grupo = [
 						"CADENAS Y CORREAS",
 						"ELEMENTOS DE FIJACION",

@@ -2396,7 +2396,7 @@ class Catalogo
     	try {
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE '.$data_1.' AND familia LIKE '.$data_2.' OR subfamilia LIKE '.$data_3.'');
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ? OR subfamilia LIKE ?');
-			$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ?');
+			$query = $this->dbh->prepare('SELECT * FROM all_items WHERE estado_item = 1 AND (grupo LIKE ? or familia LIKE ?)');
 			$query->bindParam(1, $data_1);
             $query->bindParam(2, $data_2);
             //$query->bindParam(3, $data_3);
@@ -2408,7 +2408,7 @@ class Catalogo
                 $salida="<div class='input-group input-group-sm col-14'><select multiple class='form-control form-control-sm table-hover' name='editorB' id='editorB' style='height:320px'>";
                 foreach ($data as $fila):
                 		$salida.=  "
-                		   <option value='' onclick='modalShow();muestra();'>".$fila['grupo']."*".$fila['familia']."*".$fila['subfamilia']."*".$fila['descripcion']."</option>";
+                		   <option value='' onclick='modalShow();muestra();'>".$fila['codigo']."*".$fila['grupo']."*".$fila['familia']."*".$fila['subfamilia']."*".$fila['descripcion']."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
@@ -2439,7 +2439,7 @@ class Catalogo
                 $salida="<div class='input-group input-group-sm col-14'><select multiple class='form-control form-control-sm table-hover' name='buscaUserImg' id='buscaUserImg' style='height:320px'>";
                 foreach ($data as $fila):
                 		$salida.=  "
-                		   <option value='' onclick='showwwwImagen();'>".$fila['grupo']."*".$fila['familia']."*".$fila['subfamilia']."*".$fila['descripcion']."</option>";
+                		   <option value='' onclick='showwwwImagen();'>".$fila['codigo']."*".$fila['grupo']."*".$fila['familia']."*".$fila['subfamilia']."*".$fila['descripcion']."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
@@ -2482,12 +2482,12 @@ class Catalogo
             $cont = count($data);
             $salida;
             if(!empty($data)){
-				$salida ="<div class='col-12'>
-				<h1 class='text-white lead font-italic'>".$fam."</h1></div>";
+				$salida ="<div class='col-12 fondo'>
+				<strong><h3 class='text-white font-italic'>".$fam."</h3></strong></div>";
 								foreach ($data as $fila):
 									if($fila['nombre_tipo_foto'] != "N/A"){
 										$salida.= "
-										<div class='card m-2' style='width: 15rem;'>
+										<div class='card m-2 fondo' style='width: 15rem;'>
 											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
 											<div class='card-block'>
 												<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
@@ -2496,7 +2496,7 @@ class Catalogo
 										";
 									} else {
 										$salida.= "
-										<div class='card m-2' style='width: 15rem;'>
+										<div class='card m-2 fondo' style='width: 15rem;'>
 											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
 											<div class='card-block'>
 												<p class='card-text'>".$fila['nombre_famili_foto']."</p>
@@ -2603,24 +2603,30 @@ class Catalogo
 		}
 	}
 
-	public function addDato_DM($grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8)
+	public function addDato_DM($code, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8)
 	{
-		echo "Desde class=".$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
+		echo "Desde class=".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
 
 		try{
-			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0","N/A","N/A","N/A",?,?,?,?,?,?,?,?,?,?)');
-			$query->bindParam(1, $grupo);
-			$query->bindParam(2, $familia);
-			$query->bindParam(3, $tipo);
-			$query->bindParam(4, $material);
-			$query->bindParam(5, $dato3);
-			$query->bindParam(6, $dato4);
-			$query->bindParam(7, $dato5);
-			$query->bindParam(8, $dato6);
-			$query->bindParam(9, $dato7);
-			$query->bindParam(10, $dato8);
+			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?)');
+			$query->bindParam(1, $code);
+			$query->bindParam(2, $grupo);
+			$query->bindParam(3, $familia);
+			$query->bindParam(4, $tipo);
+			$query->bindParam(5, $material);
+			$query->bindParam(6, $dato3);
+			$query->bindParam(7, $dato4);
+			$query->bindParam(8, $dato5);
+			$query->bindParam(9, $dato6);
+			$query->bindParam(10, $dato7);
+			$query->bindParam(11, $dato8);
 
 			$query->execute();
+
+			$query2 = $this->dbh->prepare('UPDATE all_items SET estado_item = 0 WHERE CODIGO = ?');
+			$query2->bindParam(1, $code);
+			$query2->execute();
+
 			$this->dbh = null;
 		} catch (PDOException $e){
 			$e->getMessage();

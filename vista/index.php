@@ -47,10 +47,10 @@
 </content>
 
 <footer>
-	<div class="container mt-5 fixed-bottom">
+	<div class="container mt-5 fixed-bottom fondo">
 		<div class="row">
-			<div class="col bg-primary text-center rounded-top">
-				<small class="text-white">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="text-white">Marco Urrutia</a></label></small>
+			<div class="col text-center rounded-top">
+				<small class="">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="font-italic text-gray-dark">Marco Urrutia</a></label></small>
 			</div>
 		</div>
 	</div>

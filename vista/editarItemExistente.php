@@ -24,7 +24,7 @@ if(!isset($_SESSION['usuario'])){
 			</div>
 			<div class="col-6 text-right py-2">
 				
-				<a href="Mantenedor_Datos.php" class="btn btn-sm btn-success">Mantenedor Datos</a>
+				<a href="Mantenedor_Datos_.php" class="btn btn-sm btn-success">Mantenedor Datos</a>
 
 				<a href="buscadorDeItems.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
 				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white disabled"><i class="fas fa-search"></i> Editar Items Antiguo</a>
@@ -88,7 +88,7 @@ if(!isset($_SESSION['usuario'])){
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<input id="esconder2" type="submit" class=" btn btn-secondary btn-sm " name="btn_dc" value="Datos Correctos">
+							<!-- <input id="esconder2" type="submit" class=" btn btn-secondary btn-sm " name="btn_dc" value="Datos Correctos"> -->
 							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm invisible" name="btn_add" value="Agregar">
 						</form>
 					</div>
@@ -98,10 +98,10 @@ if(!isset($_SESSION['usuario'])){
 
 	
 	<footer>
-			<div class="container mt-5 fixed-bottom">
+			<div class="container mt-5 fixed-bottom bg-info rounded-top">
 				<div class="row">
 					<div class="col text-center rounded-top">
-						<small class="text-primary">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="">Marco Urrutia</a></label></small>
+						<small class="">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="font-italic text-gray-dark">Marco Urrutia</a></label></small>
 					</div>
 				</div>
 			</div>
@@ -375,8 +375,8 @@ if(!isset($_SESSION['usuario'])){
 	function esconde() {
 		var element = document.getElementById("esconder");
 		element.classList.add("invisible");
-		var element2 = document.getElementById("esconder2");
-		element2.classList.add("invisible");
+		// var element2 = document.getElementById("esconder2");
+		// element2.classList.add("invisible");
 		var element = document.getElementById("mostrarBTN");
 		element.classList.remove("invisible");
 	}
@@ -384,8 +384,8 @@ if(!isset($_SESSION['usuario'])){
 	function muestra() {
 		var element = document.getElementById("esconder");
 		element.classList.remove("invisible");
-		var element2 = document.getElementById("esconder2");
-		 element2.classList.remove("invisible");
+		// var element2 = document.getElementById("esconder2");
+		//  element2.classList.remove("invisible");
 		 var element2 = document.getElementById("mostrarBTN");
 		element2.classList.add("invisible");
 	}

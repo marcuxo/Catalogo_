@@ -47,8 +47,9 @@ if(isset($_POST['btn_add'])){
     if(isset($_POST['dato_8'])){
         $dato8 = $_POST['dato_8'];
     }
-    //$catalogo->addDato_DM($grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8);
-    echo  $grupo."--".$familia."--".$tipo."--".$material."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7."--".$dato8;
+    $codigo = $_POST['0'];
+    $catalogo->addDato_DM($codigo, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8);
+    //echo  $codigo."--".$grupo."--".$familia."--".$tipo."--".$material."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7."--".$dato8;
 
 }
 else if(isset($_POST['btn_dc'])){
@@ -59,7 +60,7 @@ else if(isset($_POST['btn_dc'])){
     $dato_4 = $_POST['3'];
     // $catalogo->traeDatos_1_7_foto($data);
     // echo $dato_1."--".$dato_2."--".$dato_3."--".$dato_4;
-    $catalogo->addDato_DC($dato_1, $dato_2, $dato_3, $dato_4);
+    //$catalogo->addDato_DC($dato_1, $dato_2, $dato_3, $dato_4);
 } else {
     echo "ninguna de las nateriores.";
 }
