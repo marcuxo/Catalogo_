@@ -36,10 +36,11 @@
 		<div class="col-4">
 			<div id="grupos2" class="col-14"></div>
 			<div id="familias2" class="col-14"></div>
+			<div id="tipo"></div>
+			<div id="tipoPagUno"></div>
 		</div>
 			<div class="col-4" id="lado">
-				<div id="tipo"></div>
-				<div id="tipoPagUno"></div>
+				<div class="row d-flex justify-content-center" id="loading"></div>
 			</div>
 			<div class="col-1">
 				<button type="submit"	class="btn btn-sm btn-info">Buscar!!</button>
@@ -68,7 +69,7 @@
 
 	
 	<footer>
-			<div class="container mt-5 fixed-bottom">
+			<div class="container mt-5 ">
 				<div class="row">
 					<div class="col text-center rounded-top bg-info">
 						<small class="">Para Mantencion Ariztia por <label><a href="#marcourrutia" class="font-italic text-gray-dark">Marco Urrutia</a></label></small>
@@ -218,6 +219,8 @@ function copiarAlPortapapeles(id_elemento) {
 			.done(function(respuesta){
 				// console.log('logrado');
 				$("#resultado").html(respuesta)
+				$("#resultadoBusImg").html("")
+				loadImagenXtipo()
 			})//fin done
 			.fail(function(){
 				console.log('error');
@@ -247,7 +250,32 @@ function copiarAlPortapapeles(id_elemento) {
 			
 	}
 
+	function loadImagenXtipo() {
+		// document.getElementById('familiaXfoto').selected = "true";
+		// var selectF = document.getElementById("familiaXfoto");
+		// var indexF = selectF.selectedIndex;
+		// var textF = selectF.options[indexF].text;
 
+		// document.getElementById('tipoXtipo').selected = "true";
+		// var selectT = document.getElementById("tipoXtipo");
+		// var indexT = selectT.selectedIndex;
+		// var textT = selectT.options[indexT].text;
+		var familia = $('#familiaSelPag').val();
+		var tipo = $('#tipoSelMod').val();
+
+		$.ajax({
+		url: './../controlador/cargaImagen2.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: familia , valor2: tipo},
+		}).done(function(respuesta){
+			// console.log('logrado');
+			$("#loading").html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
 
 </script>
 <!--

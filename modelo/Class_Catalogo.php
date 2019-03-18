@@ -2522,19 +2522,37 @@ class Catalogo
     	try {
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE '.$data_1.' AND familia LIKE '.$data_2.' OR subfamilia LIKE '.$data_3.'');
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ? OR subfamilia LIKE ?');
-			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE grupo_dato_f LIKE ? AND familia_dato_f LIKE ?');
+			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE grupo_dato_f LIKE ? AND familia_dato_f LIKE ? AND dato1_dato_f LIKE ? AND estado_dato_f = 1');
 			$query->bindParam(1, $data_1);
             $query->bindParam(2, $data_2);
-            //$query->bindParam(3, $data_3);
+            $query->bindParam(3, $data_3);
             $query->execute();
 
 
-            $data = $query->fetchAll();
+			$data = $query->fetchAll();
+			$textConcat = "";
             if(!empty($data)){
                 $salida="<div class='input-group input-group-sm col-14'><select multiple class='form-control form-control-sm table-hover' name='buscaUserImg' id='buscaUserImg' style='height:320px'>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='' onclick='showwwwImagen();'>".$fila['codigo_dato_f']."</option>";
+				foreach ($data as $fila):
+					if($fila['dato1_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato1_dato_f'];
+					}if($fila['dato2_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato2_dato_f'];
+					}if($fila['dato3_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato3_dato_f'];
+					}if($fila['dato4_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato4_dato_f'];
+					}if($fila['dato5_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato5_dato_f'];
+					}if($fila['dato6_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato6_dato_f'];
+					}if($fila['dato7_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato7_dato_f'];
+					}if($fila['dato8_dato_f'] != "N/A"){
+						$textConcat .= "*".$fila['dato8_dato_f'];
+					}
+						$salida.=  "
+                		   <option value='' onclick='showwwwImagen();'>".$fila['codigo_dato_f']."*".$fila['grupo_dato_f']."*".$fila['familia_dato_f']."".$textConcat."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
@@ -2612,6 +2630,49 @@ class Catalogo
         }
 	}
 
+		
+	public function cargaImagen2($fam, $tipo)//carga las imagenes de la tabla de imagenes por tipo
+	{
+		try {
+            $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ? AND nombre_tipo_foto = ?');
+            $query->bindParam(1, $fam);
+            $query->bindParam(2, $tipo);
+			
+            $query->execute();
+
+            $data = $query->fetchAll();
+            $cont = count($data);
+            $salida;
+            if(!empty($data)){
+				$salida ="<div class='col-12 fondo'></div>";
+								foreach ($data as $fila):
+									if($fila['nombre_tipo_foto'] != "N/A"){
+										$salida.= "
+										<div class='card m-2 fondo' style='width: 15rem;'>
+											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+
+										</div>
+										";
+									} else {
+										$salida.= "
+										<div class='card m-2 fondo' style='width: 15rem;'>
+											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+
+										</div>
+										";
+									}
+
+                endforeach;
+                $salida.= "";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
 	public function cargaInactivos()
 	{
 		try {

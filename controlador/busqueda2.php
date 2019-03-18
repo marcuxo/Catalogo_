@@ -2,7 +2,7 @@
 require_once './../modelo/Class_Catalogo.php';
 $catalogo = Catalogo::singleton();
 if(!isset($_POST['valor3'])){
-    $data3 = " ";
+    $data3 = "N/A";
     $data1 = strtolower($_POST['valor1']);
     $data2 = strtolower($_POST['valor2']);
     $mos = ucwords($data1." ".$data2." ".$data3);
