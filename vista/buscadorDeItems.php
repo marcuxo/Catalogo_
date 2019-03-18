@@ -44,10 +44,16 @@
 	<br>
 	<div ></div>
 	<p id="resultadoBusqueda" class="lead text-muted">No haz buscado nada aun :)</p>
-	<br><br><br><br>
+	<br>
+	<div class="container-fluid mt-2">
+		<div class="row">
+			<div id="copyONclick" class="col-12  bg-success text-center invisible">
+			<a class="lead text-white pl-2 copyClick" id="resultadoBusqueda2" onclick="copiarAlPortapapeles('resultadoBusqueda2')" data-toggle="tooltip" title="Haz Click para COPIAR"></a>
+			</div>
+		</div>
+	</div>
 
 </div>
-
 <!-- footer o pie de pagina -->
 <footer>
 	<div class="container mt-5 fixed-bottom">
@@ -69,3 +75,18 @@
 	<script type="text/javascript" src="./JS/sweetAlert.js"></script>
 </body>
 </html>
+
+<script>
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+
+	function copiarAlPortapapeles(id_elemento) {
+		var aux = document.createElement("input");
+		aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+		document.body.appendChild(aux);
+		aux.select();
+		document.execCommand("copy");
+		document.body.removeChild(aux);
+	}
+</script>

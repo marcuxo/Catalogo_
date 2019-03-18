@@ -57,9 +57,9 @@
 			</div>
 	</div>
 </div>
-<div class="container-fluid mt-2 bg-success">
+<div class="container-fluid mt-2">
 	<div class="row">
-		<div id="copyONclick" class="col-12 text-center invisible">
+		<div id="copyONclick" class="col-12  bg-success text-center invisible">
 		<a class="lead text-white pl-2 copyClick" id="resultadoBusImg" onclick="copiarAlPortapapeles('resultadoBusImg')" data-toggle="tooltip" title="Haz Click para COPIAR"></a>
 
 		</div>

@@ -244,7 +244,7 @@ $msgConcatenado = '
 echo $msgConcatenado;
 $enviaMail->Correo($msgConcatenado);
 ?>
-<meta http-equiv="refresh" content="5;../vista/Mantenedor_Datos.php" />
+<meta http-equiv="refresh" content="5;../vista/Mantenedor_Datos_.php" />
 
 
 

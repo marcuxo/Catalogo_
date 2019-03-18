@@ -31,7 +31,7 @@ function itemSeleccionado2() {
 }
 
 //muestra la imagen del item seleccionado en el select multiple si existe
-function itemSeleccionado() {
+function itemSeleccionado3() {
 	document.getElementById('selectBuscado').selected = "true";
     var select = document.getElementById("selectBuscado");
     var index = select.selectedIndex; 
@@ -39,6 +39,24 @@ function itemSeleccionado() {
     var text = select.options[index].text;
 	//swal(value);
 	window.open(value,'popup','width=490,height=350,toolbar=no,scrollbars=no,top=100,left=100')
+}
+
+function itemSeleccionado() {
+	document.getElementById('selectBuscado').selected = "true";
+    var select = document.getElementById("selectBuscado");
+    var index = select.selectedIndex; 
+    var value = select.options[index].value;
+    var text = select.options[index].text;
+	//var nuevoTexto = text.replace("*", " ")
+		//var elTextO = text.indexOf("/");
+		var txt2 = text.split("*")
+		var inp ="";
+		for (var i=0; i < txt2.length; i++) {
+			inp+=(txt2[i] + "  ");
+		}
+		//console.log(inp)
+		$('#copyONclick').removeClass('invisible')
+		$("#resultadoBusqueda2").html(inp)
 }
 
 function popup(page) {

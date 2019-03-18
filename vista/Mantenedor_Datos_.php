@@ -30,9 +30,9 @@ if(!isset($_SESSION['usuario'])){
 						Editar Items
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" onclick="modalShow2()">Nuevo Item</a>
+						<a class="dropdown-item" onclick="modalShow2()">Nuevo tipo</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showMfoto()">Agregar Foto Item</a>
+						<a class="dropdown-item" onclick="showMfoto()">Agregar Foto tipo</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" onclick="showModalItemInactivo()" >Activar Item</a>
 						<div class="dropdown-divider"></div>
@@ -186,7 +186,7 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="./../controlador/addItemFormal.php" method="POST" onsubmit="return sub_envio()">
+						<form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()">
 							<small id="modalRespuesta"></small>			
 							<div id="newGrupo"></div>
 							<div id="newFamilia"></div>
@@ -480,6 +480,8 @@ if(!isset($_SESSION['usuario'])){
 	
 
 	//modal nuevo item
+
+	
 	function loadGrupos3(){
     var grupo = [
         "CADENAS Y CORREAS",
@@ -530,8 +532,8 @@ if(!isset($_SESSION['usuario'])){
 
 	function selFamilia3() {
 		
-		// $("#newMaterial").html("");
-		// $("#newTipo").html("");
+		$("#newMaterial").html("");
+		$("#newTipo").html("");
 		document.getElementById('familiaNew').selected = "true";
     var select = document.getElementById("familiaNew");
     var index = select.selectedIndex; 
@@ -539,7 +541,7 @@ if(!isset($_SESSION['usuario'])){
 		var text = select.options[index].text;
 		if(value != "1"){
 			$.ajax({
-				url: './../controlador/TraeInputs4.php',
+				url: './../controlador/TraeInputsXtipo2.php',
 				type: 'POST',
 				dataType: 'html',
 				data: { valor: value},
@@ -554,21 +556,22 @@ if(!isset($_SESSION['usuario'])){
 		}//fin if
 	}
 
-	function traeMaterialNew() {
-		var tipo = $('#acaSaleElTipoNew').val();
-		$.ajax({
-			url: './../controlador/consultaMateriales.php',
-			type: 'POST',
-			dataType: 'html',
-			data: { valor: tipo},
-		})
-		.done(function(respuesta){
-			// console.log('logrado');
-			$("#newMaterial").html(respuesta)
-		})//fin done
-		.fail(function(){
-			console.log('error');
-		});
+	function traetipoXtipo2() {
+			var tipo = $('#acaSaleElTipo').val();
+			$.ajax({
+				url: './../controlador/traeTipoXtipo.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor: tipo},
+			})
+			.done(function(respuesta){
+				// console.log('logrado');
+				$("#newMaterial").html(respuesta)
+				loadImagenXtipo()
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
 	}
 
 	function modalShow2() {
@@ -677,7 +680,7 @@ if(!isset($_SESSION['usuario'])){
 			.fail(function(){
 				console.log('error');
 			});
-		}
+	}
 
 	function loadImagenXtipoF() {
 		textT = "N/A";

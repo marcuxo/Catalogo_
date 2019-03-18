@@ -1368,6 +1368,101 @@ class Catalogo
 	}
 
 
+    public function traeDatos_1_7_Xtipo2($dato)// ++++++++++++++++++++++++++++++++++uso en mantenedor+++++++++++++++++++++++++++++++++++++++++++
+    {
+        try {
+        	//esta consulta carga los items de ingreso de datos vacios
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query->bindParam(1, $dato);
+            $query->execute();
+            $data = $query->fetchAll();
+
+
+
+            if(!empty($data)){
+            	//recorrido para la carga de los items de llenado de datos vacios
+                $salida="<div class='col'>";
+                foreach ($data as $fila):
+
+                	if($fila['dato_3'] == "N/A"){
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            		<input id='acaSaleElTipo' name='elTipo' value=".$fila['fk_tipo']." class='invisible'>
+															
+															<input id='acaSaleElTipo' name='sacaTipo' placeholder='Ingrese el nuevo Tipo' class='col-14 form-control form-control-sm'></div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                            }
+                	} else if($fila['dato_4'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            		<input id='acaSaleElTipo' name='elTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            
+															<input id='acaSaleElTipo' name='sacaTipo' placeholder='Ingrese el nuevo Tipo' class='col-14 form-control form-control-sm'>	</div>";
+                            }
+                	} else if($fila['dato_5'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            		<input id='acaSaleElTipo' name='elTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	
+															<input id='acaSaleElTipo' name='sacaTipo' placeholder='Ingrese el nuevo Tipo' class='col-14 form-control form-control-sm'></div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	//$salida .= $salida2;
+                            	
+                           }
+
+                	} else if($fila['dato_6'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            		<input id='acaSaleElTipo' name='elTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	
+															<input id='acaSaleElTipo' name='sacaTipo' placeholder='Ingrese el nuevo Tipo' class='col-14 form-control form-control-sm'></div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	}
+                	} else if($fila['dato_7'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            		<input id='acaSaleElTipo' name='elTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	
+															<input id='acaSaleElTipo' name='sacaTipo' placeholder='Ingrese el nuevo Tipo' class='col-14 form-control form-control-sm'></div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                             }
+                	} else {
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo' class='p-0 m-0 b-0'>
+                            		<input id='acaSaleElTipo' name='elTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	
+															<input id='acaSaleElTipo' name='sacaTipo' placeholder='Ingrese el nuevo Tipo' class='col-14 form-control form-control-sm'></div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	}
+                	}
+                    
+                endforeach;
+				$salida.= "</div>";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+            
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
     public function traeDatos_1_7_foto($dato)// ++++++++++++++++++++++++++++++++++uso en modal+++++++++++++++++++++++++++++++++++++++++++
     {
         try {
@@ -2005,8 +2100,8 @@ class Catalogo
 	}
 	
 	    //carga el primer select multiple donde se cargan los datos de la familia de repuestos
-    public function traer_familia($dato)
-    {
+	public function traer_familia($dato)
+	{
         try {
             $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
 			$query->bindParam(1, $dato);
@@ -2313,7 +2408,7 @@ class Catalogo
     public function Login($user, $pass)
     {
         try {
-            $query = $this->dbh->prepare('SELECT usuario, clave FROM login_mantenedor WHERE usuario = ? AND clave = ?');
+            $query = $this->dbh->prepare('SELECT usuario, clave FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
             $query->bindParam(1, $user);
             $query->bindParam(2, $pass);
             $query->execute();
@@ -2331,8 +2426,8 @@ class Catalogo
     }
 
 	// metodo que recibe un parametro para buscar las coincidencias en la base de datos
-    public function BuscarB($dato)
-    {
+	public function BuscarB($dato)
+	{
         try {
             $query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ? OR serie LIKE ? OR material LIKE ? OR medida LIKE ? OR subfamilia LIKE ? OR familia LIKE ?');
             //$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
@@ -2355,7 +2450,7 @@ class Catalogo
                 ";
                 foreach ($data as $fila):
                         $salida.=  "
-                           <option value='".$fila['img']."' onclick='itemSeleccionado()'>Codigo: ".$fila['codigo']." -Descripcion: ".$fila['descripcion']." -Subfamilia: ".$fila['subfamilia']."</option>";
+                           <option value='".$fila['img']."' onclick='itemSeleccionado()'>".$fila['codigo']."*".$fila['descripcion']."*".$fila['familia']."*".$fila['subfamilia']."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
@@ -2605,7 +2700,7 @@ class Catalogo
 
 	public function addDato_DM($code, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8)
 	{
-		echo "Desde class=".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
+		echo "Datos Ingresados Correctamente : ".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
 
 		try{
 			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?)');
@@ -2626,7 +2721,9 @@ class Catalogo
 			$query2 = $this->dbh->prepare('UPDATE all_items SET estado_item = 0 WHERE CODIGO = ?');
 			$query2->bindParam(1, $code);
 			$query2->execute();
-
+			echo "Datos ingresados correctamente<br>";
+			echo "Sera redireccionado en 3 segundos<br>";
+			echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=../vista/Mantenedor_Datos_.php'>";
 			$this->dbh = null;
 		} catch (PDOException $e){
 			$e->getMessage();
@@ -2651,4 +2748,44 @@ class Catalogo
 			$e->getMessage();
 		}
 	}
-}
+
+	public function addNewTipo($tabla, $newTipo)
+	{
+		try{
+				$query = $this->dbh->prepare('SELECT * FROM '.$tabla.' WHERE nombre_tipo = '.$newTipo.'');
+				$query->execute();
+
+				$data = $query->fetchAll();
+				if(empty($data)){
+					$query = $this->dbh->prepare('INSERT INTO '.$tabla.' VALUES ("'.$newTipo.'")');
+					$query->execute();
+					echo "Datos ingresados correctamente<br>";
+					echo "Sera redireccionado en 3 segundos<br>";
+					echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=../vista/Mantenedor_Datos_.php'>";
+				}else{
+						echo "El dato que se intenta ingresar YA EXISTE.";
+						echo "Sera redireccionado en 3 segundos<br>";
+						echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=../vista/Mantenedor_Datos_.php'>";
+				}
+				$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+	public function crearTabla(){
+		try{
+			$query = $this->dbh->prepare('CREATE TABLE marco_urrutia(id varchar(50),nombre varchar(50))');
+			//$query->bindParam(1, $id);
+
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+
+
+
+}//fin class

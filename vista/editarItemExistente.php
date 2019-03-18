@@ -393,6 +393,11 @@ if(!isset($_SESSION['usuario'])){
 	function reiniciaMod() {
 		
 	}
+	
+
+	function CerrarCession() {
+	location.href ="./../controlador/CerrarSession.php";
+	}
 
 </script>
 <!--
