@@ -2522,7 +2522,7 @@ class Catalogo
     	try {
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE '.$data_1.' AND familia LIKE '.$data_2.' OR subfamilia LIKE '.$data_3.'');
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ? OR subfamilia LIKE ?');
-			$query = $this->dbh->prepare('SELECT * FROM all_items WHERE grupo LIKE ? AND familia LIKE ?');
+			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE grupo_dato_f LIKE ? AND familia_dato_f LIKE ?');
 			$query->bindParam(1, $data_1);
             $query->bindParam(2, $data_2);
             //$query->bindParam(3, $data_3);
@@ -2534,7 +2534,7 @@ class Catalogo
                 $salida="<div class='input-group input-group-sm col-14'><select multiple class='form-control form-control-sm table-hover' name='buscaUserImg' id='buscaUserImg' style='height:320px'>";
                 foreach ($data as $fila):
                 		$salida.=  "
-                		   <option value='' onclick='showwwwImagen();'>".$fila['codigo']."*".$fila['grupo']."*".$fila['familia']."*".$fila['subfamilia']."*".$fila['descripcion']."</option>";
+                		   <option value='' onclick='showwwwImagen();'>".$fila['codigo_dato_f']."</option>";
                 endforeach;
                 $salida.= "</select></div>";
             }else{
