@@ -383,7 +383,7 @@ if(!isset($_SESSION['usuario'])){
 		var index = select.selectedIndex; 
 		var value = select.options[index].value;
 		var text = select.options[index].text;
-		var conItem = confirm("Esta seguro de activar este Item");
+		var conItem = confirm("Esta seguro de ACTIVAR este Item");
 		if(conItem){
 			console.log("El dato a fue ACTIVADO");
 			
@@ -450,7 +450,7 @@ if(!isset($_SESSION['usuario'])){
 		var index = select.selectedIndex; 
 		var value = select.options[index].value;
 		var text = select.options[index].text;
-		var conItem = confirm("Esta seguro de activar este Item");
+		var conItem = confirm("Esta seguro de DESACTIVAR este Item");
 		if(conItem){
 			console.log("El dato a fue ACTIVADO");
 			
@@ -463,7 +463,7 @@ if(!isset($_SESSION['usuario'])){
 				// console.log('logrado');
 				//$("#dInactivo").html(respuesta)
 				loadItemsActivos();
-				swal("el dato fue ACTIVADO.");
+				swal("el dato fue DESACTIVADO.");
 			})//fin done
 			.fail(function(){
 				console.log('error');

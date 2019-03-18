@@ -2649,14 +2649,14 @@ class Catalogo
 									if($fila['nombre_tipo_foto'] != "N/A"){
 										$salida.= "
 										<div class='card m-2 fondo' style='width: 15rem;'>
-											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image' height='200px'>
 
 										</div>
 										";
 									} else {
 										$salida.= "
 										<div class='card m-2 fondo' style='width: 15rem;'>
-											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image' height='200px'>
 
 										</div>
 										";
