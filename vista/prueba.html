@@ -45,7 +45,9 @@
 			<span class="display-4 text-primary" id="countdown"></span>
 	</div>
 	<div class="container">
-			<span class="display-4 text-primary" id="finalizamos"></span>
+		<span class="lead text-primary" id="">Actividad en Pagina</span>
+		<span class="lead text-primary" id="empezamos"></span>
+		<span class="lead text-primary" id="finalizamos"></span>
 	</div>
 	<!-- imports de javascript para funcionalidad -->
 	<script type="text/javascript" src="./JS/jquery.js"></script>
@@ -88,15 +90,25 @@
 			t=setTimeout("e()",6000);//600.000 = 10 minutos //1000 = 1 segundo. //eliminar los puntos al llevar  al afuncion
 	}
 	window.onblur=window.onmousemove=function() {
+		document.getElementById('finalizamos').innerHTML = "";
+
 			if(t) clearTimeout(t);
+			start_();
 			contadorInactividad();
+	}
+	function start_() {
+		var time = new Date();
+		hora = time.getHours();
+		minuto = time.getMinutes();
+		segundos = time.getSeconds();
+		document.getElementById('empezamos').innerHTML = "<br>Desde= "+hora+":"+minuto+":"+segundos;//esto se puede editar, puede ser una redireccion o un mensaje
 	}
 	function stop_() {
 		var time = new Date();
 		hora = time.getHours();
 		minuto = time.getMinutes();
 		segundos = time.getSeconds();
-		document.getElementById('finalizamos').innerHTML = "<br>"+hora+":"+minuto+":"+segundos;//esto se puede editar, puede ser una redireccion o un mensaje
+		document.getElementById('finalizamos').innerHTML = "<br>Hasta= "+hora+":"+minuto+":"+segundos;//esto se puede editar, puede ser una redireccion o un mensaje
 	}
 </script>
 
