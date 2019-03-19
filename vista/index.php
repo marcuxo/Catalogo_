@@ -16,6 +16,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-8">
+			<div class="col-6"><img src="img_/logo.png" height="150px"></div>
 
 			</div>
 			<div class="col-4 text-right">

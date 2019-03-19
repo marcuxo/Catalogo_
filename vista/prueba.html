@@ -41,8 +41,9 @@
 		<br/><br/>
 <a href="" class="animacion lead" data-toggle="tooltip" title="Haz Click para COPIAR">deberia pasar algo</a>
 	</center>
-
-
+	<div class="container">
+			<span class="lead text-primary" id="countdown"></span>
+	</div>
 	<!-- imports de javascript para funcionalidad -->
 	<script type="text/javascript" src="./JS/jquery.js"></script>
 	<script type="text/javascript" src="./JS/tether.1.4.js"></script>
@@ -85,6 +86,24 @@
 	window.onblur=window.onmousemove=function() {
 			if(t) clearTimeout(t);
 			contadorInactividad();
+	}
+</script>
+
+<script>
+//contador atras de segundos
+	window.onload = updateClock;
+
+	var totalTime = 10;
+
+	function updateClock() {
+		document.getElementById('countdown').innerHTML = totalTime;
+		if(totalTime==0){
+			console.log('Final');
+		document.getElementById('countdown').innerHTML = "Boomm!!!!!!!";
+		}else{
+			totalTime-=1;
+			setTimeout("updateClock()",1000);
+		}
 	}
 </script>
 
