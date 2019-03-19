@@ -109,7 +109,7 @@ if(!isset($_SESSION['usuario'])){
 <script>
 
 //conjunt de funciones que cierran session despues de n minutos
-function e() {
+	function e() {
     document.body.appendChild( document.createTextNode("Fin Session") );
     document.body.appendChild( document.createElement("BR") );
 		location.href ="./../controlador/CerrarSession.php";
@@ -129,14 +129,14 @@ function e() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
 
-function copiarAlPortapapeles(id_elemento) {
-  var aux = document.createElement("input");
-  aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
-  document.body.appendChild(aux);
-  aux.select();
-  document.execCommand("copy");
-  document.body.removeChild(aux);
-}
+	function copiarAlPortapapeles(id_elemento) {
+		var aux = document.createElement("input");
+		aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+		document.body.appendChild(aux);
+		aux.select();
+		document.execCommand("copy");
+		document.body.removeChild(aux);
+	}
 
 		// --------------formulario pagina------------------------
 	function loadGrupos2(){
