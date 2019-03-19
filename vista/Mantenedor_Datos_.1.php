@@ -57,9 +57,8 @@ if(!isset($_SESSION['usuario'])){
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-4"><img src="img_/logo.png" height="150px"></div>
-		<div class="col-4 text-center"><h1 class="display-4 text-white">busqueda por imagen</h1></div>
-		<div class="col-4 text-right"><img src="img_/logo_mante.png" height="150px"></div>
+		<div class="col-6"><img src="img_/logo.png" height="150px"></div>
+		<div class="col-6 text-right"><img src="img_/logo_mante.png" height="150px"></div>
 	</div>
 </div>
 <finder2>
@@ -240,7 +239,7 @@ if(!isset($_SESSION['usuario'])){
 			if(t) clearTimeout(t);
 			contadorInactividad();
 	}//conjunt de funciones que cierran session despues de n minutos
-
+//confirmacion de envio de formulario
 	function sub_envio() {
 		var data = confirm("esta seguro de los datos INGRESADOS");
 		if(data){
@@ -505,7 +504,6 @@ if(!isset($_SESSION['usuario'])){
 	
 
 	//modal nuevo item
-
 	
 	function loadGrupos3(){
     var grupo = [

@@ -42,7 +42,7 @@
 <a href="" class="animacion lead" data-toggle="tooltip" title="Haz Click para COPIAR">deberia pasar algo</a>
 	</center>
 	<div class="container">
-			<span class="lead text-primary" id="countdown"></span>
+			<span class="display-4 text-primary" id="countdown"></span>
 	</div>
 	<!-- imports de javascript para funcionalidad -->
 	<script type="text/javascript" src="./JS/jquery.js"></script>
@@ -70,10 +70,10 @@
 }
 
 
-
 </style>
 
 <script type="text/javascript">
+//redirecciona al no tener actividad en n minutos
 	function e() {
     document.body.appendChild( document.createTextNode("Fin Session") );
     document.body.appendChild( document.createElement("BR") );
@@ -99,7 +99,7 @@
 		document.getElementById('countdown').innerHTML = totalTime;
 		if(totalTime==0){
 			console.log('Final');
-		document.getElementById('countdown').innerHTML = "Boomm!!!!!!!";
+		document.getElementById('countdown').innerHTML = "Boomm!!!";
 		}else{
 			totalTime-=1;
 			setTimeout("updateClock()",1000);

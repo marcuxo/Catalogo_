@@ -2582,52 +2582,188 @@ class Catalogo
 		}
 	}
 
+	public function cargaImagenRES($fam, $tipo)//carga las imagenes de la tabla de imagenes por tipo
+	{
+		if($tipo != "N/A"){
+			try {
+				$query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ? AND nombre_tipo_foto = ?');
+				$query->bindParam(1, $fam);
+				$query->bindParam(2, $tipo);
+				
+				$query->execute();
+	
+				$data = $query->fetchAll();
+				$cont = count($data);
+				$salida;
+				if(!empty($data)){
+					$salida ="<div class='col-12 fondo'></div>";
+									foreach ($data as $fila):
+										if($fila['nombre_tipo_foto'] != "N/A"){
+											$salida.= "
+											<div class='card m-2 fondo' style='width: 15rem;'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+												<div class='card-block'>
+													<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+												</div>
+											</div>
+											";
+										} else {
+											$salida.= "
+											<div class='card m-2 fondo' style='width: 15rem;'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+												<div class='card-block'>
+													<p class='card-text'>".$fila['nombre_famili_foto']."</p>
+												</div>
+											</div>
+											";
+										}
+	
+					endforeach;
+					$salida.= "";
+				}else{
+					$salida = "No se encontro lo que buscas";
+				}
+				echo $salida;
+				$this->dbh = null;
+			}catch (PDOException $e) {
+				$e->getMessage();
+			}
+		} else {
+			try {
+				$query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ?');
+				$query->bindParam(1, $fam);
+				
+				$query->execute();
+	
+				$data = $query->fetchAll();
+				$cont = count($data);
+				$salida;
+				if(!empty($data)){
+					$salida ="<div class='col-12 fondo'></div>";
+									foreach ($data as $fila):
+										if($fila['nombre_tipo_foto'] != "N/A"){
+											$salida.= "
+											<div class='card m-2 fondo' style='width: 15rem;'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+												<div class='card-block'>
+													<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+												</div>
+											</div>
+											";
+										} else {
+											$salida.= "
+											<div class='card m-2 fondo' style='width: 15rem;'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
+												<div class='card-block'>
+													<p class='card-text'>".$fila['nombre_famili_foto']."</p>
+												</div>
+											</div>
+											";
+										}
+	
+					endforeach;
+					$salida.= "";
+				}else{
+					$salida = "No se encontro lo que buscas";
+				}
+				echo $salida;
+				$this->dbh = null;
+			}catch (PDOException $e) {
+				$e->getMessage();
+			}
+		}
+	}
+
 	public function cargaImagen($fam, $tipo)//carga las imagenes de la tabla de imagenes por tipo
 	{
-		try {
-            $query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ? AND nombre_tipo_foto = ?');
-            $query->bindParam(1, $fam);
-            $query->bindParam(2, $tipo);
-			
-            $query->execute();
-
-            $data = $query->fetchAll();
-            $cont = count($data);
-            $salida;
-            if(!empty($data)){
-				$salida ="<div class='col-12 fondo'>
-				<strong><h3 class='text-white font-italic'>".$fam."</h3></strong></div>";
-								foreach ($data as $fila):
-									if($fila['nombre_tipo_foto'] != "N/A"){
-										$salida.= "
-										<div class='card m-2 fondo' style='width: 15rem;'>
-											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
-											<div class='card-block'>
-												<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+		if($tipo != "N/A"){
+			try {
+				$query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ? AND nombre_tipo_foto = ?');
+				$query->bindParam(1, $fam);
+				$query->bindParam(2, $tipo);
+				
+				$query->execute();
+	
+				$data = $query->fetchAll();
+				$cont = count($data);
+				$salida;
+				if(!empty($data)){
+					$salida ="<div class='col-12 fondo'></div>";
+									foreach ($data as $fila):
+										if($fila['nombre_tipo_foto'] != "N/A"){
+											$salida.= "
+											<div class='col-2 m-2 fondo'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image' width='150px'>
+												<div class='col'>
+													<p class='lead'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+												</div>
 											</div>
-										</div>
-										";
-									} else {
-										$salida.= "
-										<div class='card m-2 fondo' style='width: 15rem;'>
-											<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image'>
-											<div class='card-block'>
-												<p class='card-text'>".$fila['nombre_famili_foto']."</p>
+											";
+										} else {
+											$salida.= "
+											<div class='col-2 m-2 fondo'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image' width='150px'>
+												<div class='col'>
+													<p class='card-text'>".$fila['nombre_famili_foto']."</p>
+												</div>
 											</div>
-										</div>
-										";
-									}
-
-                endforeach;
-                $salida.= "";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
+											";
+										}
+	
+					endforeach;
+					$salida.= "";
+				}else{
+					$salida = "No se encontro lo que buscas";
+				}
+				echo $salida;
+				$this->dbh = null;
+			}catch (PDOException $e) {
+				$e->getMessage();
+			}
+		} else {
+			try {
+				$query = $this->dbh->prepare('SELECT * FROM foto_tipo WHERE nombre_famili_foto = ?');
+				$query->bindParam(1, $fam);
+				
+				$query->execute();
+	
+				$data = $query->fetchAll();
+				$cont = count($data);
+				$salida;
+				if(!empty($data)){
+					$salida ="<div class='col-12 fondo'></div>";
+									foreach ($data as $fila):
+										if($fila['nombre_tipo_foto'] != "N/A"){
+											$salida.= "
+											<div class='col-2 m-2 fondo' style='width: 15rem;'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image' width='150px'>
+												<div class='col'>
+													<p class='card-text'>".$fila['nombre_famili_foto']." ".$fila['nombre_tipo_foto']."</p>
+												</div>
+											</div>
+											";
+										} else {
+											$salida.= "
+											<div class='col-2 m-2 fondo' style='width: 15rem;'>
+												<img class='w-100' src='".$fila['imagen_tipo_foto']."' alt='Card image' width='150px'>
+												<div class='col'>
+													<p class='card-text'>".$fila['nombre_famili_foto']."</p>
+												</div>
+											</div>
+											";
+										}
+	
+					endforeach;
+					$salida.= "";
+				}else{
+					$salida = "No se encontro lo que buscas";
+				}
+				echo $salida;
+				$this->dbh = null;
+			}catch (PDOException $e) {
+				$e->getMessage();
+			}
+		}
 	}
 
 		
