@@ -3,6 +3,8 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
 	header('Location: index.php');
+} else {
+	$_SESSION["usuario"] = "Administrador de Datos";
 }
 ?>
 <!DOCTYPE html>
@@ -24,10 +26,12 @@ if(!isset($_SESSION['usuario'])){
 				<h1 class="text-info font-italic">Mantenedor de Datos</h1>
 			</div>
 			<div class="col-6 text-right">
-				
+				<!-- Muestra en nombre de la session -->
+				<?php echo '<label class="text-info font-italic mr-3">Bienvenido '.$_SESSION["usuario"].'</label>'; ?>
+
 				<div class="btn-group">
 					<button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Editar Items
+							<i class="fas fa-pen"></i> Editar Items
 					</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" onclick="modalShow2()">Nuevo tipo</a>
@@ -40,8 +44,8 @@ if(!isset($_SESSION['usuario'])){
 					</div>
 				</div>
 
-				<a href="buscadorDeItems.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
-				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Editar Items Antiguo</a>
+				<a href="busquedaAvanzada.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
+				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="far fa-edit"></i> Editar Items Antiguo</a>
 
 				<button onclick="CerrarCession()" class="btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Salir</button>
 			</div>
@@ -51,7 +55,12 @@ if(!isset($_SESSION['usuario'])){
 </header> 
 <!-- /desplega todos los datos a medida que se selecciones pra su conpletado y previo envio de datos  -->
 
-
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-6"><img src="img_/logo.png" height="150px"></div>
+		<div class="col-6 text-right"><img src="img_/logo_mante.png" height="150px"></div>
+	</div>
+</div>
 <finder2>
 
 	<div class="container-fluid pb-5">
@@ -216,6 +225,21 @@ if(!isset($_SESSION['usuario'])){
 </html>
 
 <script>
+//conjunt de funciones que cierran session despues de n minutos
+	function e() {
+    document.body.appendChild( document.createTextNode("Fin Session") );
+    document.body.appendChild( document.createElement("BR") );
+		location.href ="./../controlador/CerrarSession.php";
+	}
+	var t=null;
+	function contadorInactividad() {
+			t=setTimeout("e()",600000);//600.000 = 10 minutos //60.000 = 1 minuto.// eliminar los puntos al llevar  al afuncion
+	}
+	window.onblur=window.onmousemove=function() {
+			if(t) clearTimeout(t);
+			contadorInactividad();
+	}//conjunt de funciones que cierran session despues de n minutos
+
 	function sub_envio() {
 		var data = confirm("esta seguro de los datos INGRESADOS");
 		if(data){
@@ -730,62 +754,3 @@ if(!isset($_SESSION['usuario'])){
 
 </script>
 
-
-<!-- <finder class="invisible">
-	<form method="POST" id="FormUno" action="../controlador/DatosIngreso.php" onsubmit="return submit_Envio_datos()" enctype="multipart/form-data">
-	<div class="container-fluid">
-		<div class="row pt-1 align-items-center">
-			<div class="col-12 py-1">
-					<div class="row">
-						<div class="input-group col-6 input-group-sm invisible">
-							<span class="input-group-addon" id="basic-addon1">Descripción Item</span>
-							<input type="text" class="form-control form-control-sm" name="descripcion_item" placeholder="Ingrese el nombre del repuesto o item">
-						</div>
-						<div class="input-group col-6 input-group-sm invisible">
-							<span class="input-group-addon" id="basic-addon1">Codigo Item</span>
-							<input type="text" class="form-control form-control-sm " name="codigo_item" placeholder="Ingrese el Codigo del repuesto o item">
-						</div>
-					</div>
-				</div>
-				<div class="col-6" id="cargaGrupo"></div>
-				<div class="col-5" id="cargar"></div>
-					<div class="col-1 text-center" id="carga3">
-						<button class="btn btn-primary" >Enviar</button>
-					</div>
-				<div class="col-6 px-5" id="carga2"></div>
-				<div class="col-6 px-5" >
-					<!-- div que contiene la carga de imagen -->
-					<!-- 
-					<div class="col text-center invisible">
-							<input type="file" name="imagenFoto" id="imagenFoto" accept="image/*" class="btn btn-sm btn-info form-control col" onclick="imagen_load()" required>
-							<div class="m-2" id=""><img id="imgSalida" width="40%" height="40%" src="img_/previa_2.png" /></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</finder>
-	 -->
-
-
-
-	 <!-- 
-
-grupo=RODAMIENTOS+Y+SELLOS
-familia=RODAMIENTO
-tipo=BOLA
-material=ACERO
-dato_4=dato_3
-dato_5=dato_4
-dato_6=dato_5
-dato_7=dato_6
-dato_8=dato_opcional
-btn_add=Agregar	
-
-		-->
-		
-		<!-- rupo=RODAMIENTOS+Y+SELLOS
-			familia=RODAMIENTO
-			fotoTipoImg=deadpool.jpg
-			tipo=AGUJAS
-			btn_add=Agregar -->

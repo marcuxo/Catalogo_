@@ -19,15 +19,18 @@ if(!isset($_SESSION['usuario'])){
 <header>
 	<div class="container-fluid bg-primary">
 		<div class="row align-items-center">
-			<div class="col-6">
-				<h1 class="text-info font-italic"></h1>
+			<div class="col-4">
+		<div class="col-6"><img src="img_/logo.png" height="75px"></div>
+		<h1 class="text-info font-italic"></h1>
 			</div>
-			<div class="col-6 text-right py-2">
+			<div class="col-8 text-right py-2">
+					<!-- Muestra en nombre de la session -->
+					<?php echo '<label class="text-info font-italic mr-3">Bienvenido '.$_SESSION["usuario"].'</label>'; ?>
 				
-				<a href="Mantenedor_Datos_.php" class="btn btn-sm btn-success">Mantenedor Datos</a>
+				<a href="Mantenedor_Datos_.php" class="btn btn-sm btn-success"><i class="fas fa-pen"></i> Mantenedor Datos</a>
 
-				<a href="buscadorDeItems.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
-				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white disabled"><i class="fas fa-search"></i> Editar Items Antiguo</a>
+				<a href="busquedaAvanzada.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
+				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white disabled"><i class="far fa-edit"></i> Editar Items Antiguo</a>
 
 				<button onclick="CerrarCession()" class="btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Salir</button>
 			</div>
@@ -115,7 +118,20 @@ if(!isset($_SESSION['usuario'])){
 </html>
 <script>
 
-
+//conjunt de funciones que cierran session despues de n minutos
+function e() {
+    document.body.appendChild( document.createTextNode("Fin Session") );
+    document.body.appendChild( document.createElement("BR") );
+		location.href ="./../controlador/CerrarSession.php";
+	}
+	var t=null;
+	function contadorInactividad() {
+			t=setTimeout("e()",600000);//600.000 = 10 minutos //60.000 = 1 minuto.// eliminar los puntos al llevar  al afuncion
+	}
+	window.onblur=window.onmousemove=function() {
+			if(t) clearTimeout(t);
+			contadorInactividad();
+	}//conjunt de funciones que cierran session despues de n minutos
 
 
 

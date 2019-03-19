@@ -19,7 +19,7 @@
 				<div class="col-6 text-right py-2">
 
 					<a href="index.php" class="btn btn-sm btn-info text-white"><i class="fas fa-home"></i> Inicio</a>
-					<a href="" class="btn btn-sm btn-info text-white disabled"><i class="fas fa-search"></i> Busqueda Avanzada</a>
+					<a href="" class="btn btn-sm btn-info text-white disabled"><i class="fas fa-search"></i> Busqueda</a>
 	
 				</div>
 				<div class="col bg-info p-1"></div>
@@ -36,11 +36,11 @@
 		<div class="col-4">
 			<div id="grupos2" class="col-14"></div>
 			<div id="familias2" class="col-14"></div>
-			<div id="tipo"></div>
 			<div id="tipoPagUno"></div>
+			<div id="tipo"></div>
 		</div>
 			<div class="col-4" id="lado">
-				<div class="row d-flex justify-content-center" id="loading"></div>
+				<div class="row d-flex justify-content-center" id="loading" style="height: 220px"></div>
 			</div>
 			<div class="col-1">
 				<button type="submit"	class="btn btn-sm btn-info">Buscar!!</button>
@@ -137,9 +137,10 @@ function copiarAlPortapapeles(id_elemento) {
 
 	function selGrupo2() {
 		//alert("diste click");
-		// $("#familias2").html("");
-		// $("#tipo22").html("");
-		// $("#materiales2").html("");
+		 $("#familias2").html("");
+		 $("#tipo").html("");
+		 $("#tipoPagUno").html("");
+		 $("#loading").html("");
 		document.getElementById('grupo2').selected = "true";
         var select = document.getElementById("grupo2");
         var index = select.selectedIndex; 
@@ -163,6 +164,7 @@ function copiarAlPortapapeles(id_elemento) {
 
 	function selFamilia2(){
 		//$("#materiales").html("");
+		$("#loading").html("");
 		document.getElementById('familiaSelPag').selected = "true";
         var select = document.getElementById("familiaSelPag");
         var index = select.selectedIndex; 
@@ -186,6 +188,7 @@ function copiarAlPortapapeles(id_elemento) {
 	}
 
 	function traeMaterial(){
+		$("#loading").html("");
 		var tipo = $('#acaSaleElTipo').val();
 		$.ajax({
 			url: './../controlador/consultaMateriales.php',
@@ -251,15 +254,6 @@ function copiarAlPortapapeles(id_elemento) {
 	}
 
 	function loadImagenXtipo() {
-		// document.getElementById('familiaXfoto').selected = "true";
-		// var selectF = document.getElementById("familiaXfoto");
-		// var indexF = selectF.selectedIndex;
-		// var textF = selectF.options[indexF].text;
-
-		// document.getElementById('tipoXtipo').selected = "true";
-		// var selectT = document.getElementById("tipoXtipo");
-		// var indexT = selectT.selectedIndex;
-		// var textT = selectT.options[indexT].text;
 		var familia = $('#familiaSelPag').val();
 		var tipo = $('#tipoSelMod').val();
 
@@ -278,23 +272,3 @@ function copiarAlPortapapeles(id_elemento) {
 	}
 
 </script>
-<!--
-0=RODAMIENTOS+Y+SELLOS
-1=RODAMIENTO
-2=CONTRATO+MEYN
-3=CM+RODAMIENTO+6002+2RS+S.S.+89.0689.017.0003
-btn_dc=ok
-
-grupo=RODAMIENTOS+Y+SELLOS
-familia=RODAMIENTO
-tipo=seleccionar
-material=ACERO
-dato_3=dato_3
-dato_4=dato_3
-dato_5=dato_4
-dato_6=dato_5
-dato_7=dato_6
-dato_8=dato_opcional
-btn_add=ok
-
- -->

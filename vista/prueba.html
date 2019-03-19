@@ -72,7 +72,23 @@
 
 </style>
 
-<script>
+<script type="text/javascript">
+	function e() {
+    document.body.appendChild( document.createTextNode("Fin Session") );
+    document.body.appendChild( document.createElement("BR") );
+		location.href ="./../controlador/CerrarSession.php";
+	}
+	var t=null;
+	function contadorInactividad() {
+			t=setTimeout("e()",600000);//600.000 = 10 minutos //60.000 = 1 minuto.// eliminar los puntos al llevar  al afuncion
+	}
+	window.onblur=window.onmousemove=function() {
+			if(t) clearTimeout(t);
+			contadorInactividad();
+	}
+</script>
+
+<!-- <script>
 
 function copiarAlPortapapeles(id_elemento) {
   var aux = document.createElement("input");
@@ -121,4 +137,4 @@ var end = new Date('12/17/2100 9:30 AM');
     }
 
     timer = setInterval(showRemaining, 1000);
-</script>
+</script> -->

@@ -20,8 +20,7 @@ session_start();
  			<h1 class="display-4 text-white font-italic invisible">Login_</h1>
 		 </div>
 		 <div class="col-4 text-right">
-		 	<a href="buscadorDeItems.php" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> Buscar</a>
-		 	<a href="busuqedaAvanzadaUSR.php" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> Busqueda avanzada</a>
+		 	<a href="busquedaAvanzadaUSR.php" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> Busqueda</a>
 			<a href="index.php" class="btn btn-sm btn-success"><i class="fas fa-home"></i> Inicio</a>
 		 </div>
  	</div>
@@ -39,7 +38,7 @@ session_start();
 
 						<div class="input-group">
 							<span class="input-group-addon corm-control" id="sizing-addon2"><i class='fas fa-user-shield'></i></span>
-							<input type="text" class="form-control" placeholder="Ingrese su Usuario" aria-describedby="sizing-addon2">
+							<input type="text" class="form-control" name="usuarioL" placeholder="Ingrese su Usuario" aria-describedby="sizing-addon2">
 						</div><br>
 						<div class="input-group">
 							<span class="input-group-addon corm-control" id="sizing-addon2"><i class="fas fa-key"></i></span>
