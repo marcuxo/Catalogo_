@@ -22,10 +22,10 @@ if(!isset($_SESSION['usuario'])){
 <header>
 	<div class="container-fluid bg-primary">
 		<div class="row align-items-center">
-			<div class="col-6">
+			<div class="col-4">
 				<h1 class="text-info font-italic">Mantenedor de Datos</h1>
 			</div>
-			<div class="col-6 text-right">
+			<div class="col-8 text-right">
 				<!-- Muestra en nombre de la session -->
 				<?php echo '<label class="text-info font-italic mr-3">Bienvenido '.$_SESSION["usuario"].'</label>'; ?>
 
@@ -43,7 +43,7 @@ if(!isset($_SESSION['usuario'])){
 						<a class="dropdown-item" onclick="showModalItemActivo()" >Desactivar Item</a>
 					</div>
 				</div>
-
+				<a onclick="showModalAddUser()" class="btn btn-sm btn-info text-white"><i class="fas fa-plus-square"></i> ususario</a>
 				<a href="busquedaAvanzada.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
 				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="far fa-edit"></i> Editar Items Antiguo</a>
 
@@ -93,6 +93,51 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </footer>
+
+<!-- -----------------------------------------  MODAL ADD NEW USER----------------------------------------------  -->
+<div class="modal fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Agregar Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<form action="" method="get" onsubmit="return sub_AddUser()">
+							<div class="row invisible">
+								<div class="col-9">
+										<input type="text" class="form-control form-control-sm" placeholder="" name="" id="">
+								</div>
+								<div class="col-3">
+										<a class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i>Buscar</a>
+								</div>
+							</div>
+							<label for=""><small>Nombre de Usuario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="">
+							<label for=""><small>Contraseña:</small></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1">
+							<label for=""><small>Confirmar Contraseña:</small></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()">
+							<label for=""><small>Propietario Cuenta:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="">
+							<label for=""><small>Comentario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="">
+								<div class="text-center">
+									<p class="lead" id="respuestaLogin">respuesta</p>
+								</div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="reset" class="btn btn-danger btn-sm" name="btn_add" value="Borrar">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar">
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- -----------------------------------------  MODAL FOTO POR TIPO----------------------------------------------  -->
 	<div class="modal fade" id="modalFotoTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -206,6 +251,7 @@ if(!isset($_SESSION['usuario'])){
 						</div>
 						<div class="modal-footer">
 							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
+
 						</form>
 					</div>
 			</div>
@@ -753,5 +799,44 @@ if(!isset($_SESSION['usuario'])){
 		});
 	}
 
+
+//modal addUser
+	function showModalAddUser() {
+		// $("#newFamilia").html("");
+		// $("#newMaterial").html("");
+		// $("#newTipo").html("");
+		if(true){
+			$('#modalNewUser').modal('show')
+		}
+	}
+
+	function sub_AddUser() {
+		add_ = confirm("Esta seguro de los datos ingresados")
+		if(add_){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	function passValida() {
+		var clave1 = $('#clave1').val();
+		var clave2 = $('#clave2').val();
+		if(clave1 != clave2){
+			$("#respuestaLogin").html("Las Claves son Distintas intentelo denuevo")
+			document.getElementById("clave1").focus()
+			focus
+		} else {
+			$("#respuestaLogin").html("")
+		}
+	}
 </script>
 
+
+usuaro=marco
+clave1=123456
+clave2=123456
+nombre=marco+urrutia
+info=solo+puede+editar+datos
+btn_add=Agregar

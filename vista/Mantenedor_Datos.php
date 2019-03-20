@@ -39,7 +39,7 @@ if(!isset($_SESSION['usuario'])){
 						<a class="dropdown-item" onclick="showModalItemActivo()" >Desactivar Item</a>
 					</div>
 				</div>
-
+				<a onclick="showModalAddUser()" class="btn btn-sm btn-info text-white"><i class="far fa-plus-square"></i> ususario</a>
 				<a href="buscadorDeItems.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
 				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Editar Items Antiguo</a>
 
@@ -94,6 +94,30 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </footer>
+
+	<!-- -----------------------------------------  MODAL ADD NEW USER----------------------------------------------  -->
+	<div class="modal fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Agregar Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<form action="../controlador/addImgTipo.php" method="POST" onsubmit="return sub_envio()">
+
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar">
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
 
 		<!-- -----------------------------------------  MODAL FOTO POR TIPO----------------------------------------------  -->
 		<div class="modal fade" id="modalFotoTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -566,6 +590,16 @@ if(!isset($_SESSION['usuario'])){
 			$('#modalNuevoItem').modal('show')
 		//	$("#modalRespuesta").html(inp)
 			loadGrupos3()
+		}
+	}
+
+	
+	function showModalAddUser() {
+		// $("#newFamilia").html("");
+		// $("#newMaterial").html("");
+		// $("#newTipo").html("");
+		if(true){
+			$('#modalNewUser').modal('show')
 		}
 	}
 
