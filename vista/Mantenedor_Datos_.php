@@ -106,7 +106,7 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="" method="get" onsubmit="return sub_AddUser()">
+						<form id="formAddUser" action="" method="get" onsubmit="return sub_AddUser()">
 							<div class="row invisible">
 								<div class="col-9">
 										<input type="text" class="form-control form-control-sm" placeholder="" name="" id="">
@@ -116,17 +116,17 @@ if(!isset($_SESSION['usuario'])){
 								</div>
 							</div>
 							<label for=""><small>Nombre de Usuario:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="">
-							<label for=""><small>Contraseña:</small></label>
-								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1">
-							<label for=""><small>Confirmar Contraseña:</small></label>
-								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()">
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuario" required>
+							<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1"></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1" required>
+							<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2"></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()" required>
 							<label for=""><small>Propietario Cuenta:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="">
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombre" required>
 							<label for=""><small>Comentario:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="">
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="info" required>
 								<div class="text-center">
-									<p class="lead" id="respuestaLogin">respuesta</p>
+									
 								</div>
 							<!-- fin conttenido del modal -->
 						</div>
@@ -807,16 +807,24 @@ if(!isset($_SESSION['usuario'])){
 		// $("#newTipo").html("");
 		if(true){
 			$('#modalNewUser').modal('show')
+			document.getElementById("formAddUser").reset();
+
 		}
 	}
 
 	function sub_AddUser() {
-		add_ = confirm("Esta seguro de los datos ingresados")
-		if(add_){
-			return true;
+		if(passValida()){
+			add_ = confirm("Esta seguro de los datos ingresados")
+			if(add_){
+				return true;
+			} else {
+				return false;
+			}
 		} else {
+			alert("Las contraseñas no coinciden");
 			return false;
 		}
+		
 	}
 
 
@@ -824,11 +832,15 @@ if(!isset($_SESSION['usuario'])){
 		var clave1 = $('#clave1').val();
 		var clave2 = $('#clave2').val();
 		if(clave1 != clave2){
-			$("#respuestaLogin").html("Las Claves son Distintas intentelo denuevo")
+			$("#cl_1").html("Clave distinta")
+			$("#cl_2").html("Clave distinta")
 			document.getElementById("clave1").focus()
-			focus
+			return false;
 		} else {
-			$("#respuestaLogin").html("")
+			
+			$("#cl_1").html("")
+			$("#cl_2").html("")
+			return true;
 		}
 	}
 </script>
