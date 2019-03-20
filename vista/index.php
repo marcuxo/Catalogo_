@@ -34,8 +34,8 @@
 					<div class="row">
 						<div class="fondo col-1"></div>
 						<div class="fondo col-10 py-5 rounded">
-							<a href="busquedaAvanzadaUSR.php" class="btn btn-secondary mx-5"><i class="fas fa-search"></i> Busqueda</a>
-							<a href="Login_Mantenedor.php" class="btn btn-secondary mx-5"><i class="fas fa-user-circle"></i> Entrar</a>
+							<a href="busquedaAvanzadaUSR.php" class="btn btn-outline-primary mx-5"><i class="fas fa-search"></i> Busqueda</a>
+							<a href="Login_Mantenedor.php" class="btn btn-outline-primary mx-5"><i class="fas fa-user-circle"></i> Entrar</a>
 						</div>
 					<div class="fondo col-1"></div>
 					</div>

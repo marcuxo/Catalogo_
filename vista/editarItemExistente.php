@@ -20,8 +20,7 @@ if(!isset($_SESSION['usuario'])){
 	<div class="container-fluid bg-primary">
 		<div class="row align-items-center">
 			<div class="col-4">
-		<div class="col-6"><img src="img_/logo.png" height="75px"></div>
-		<h1 class="text-info font-italic"></h1>
+			<div class="col-6"><img src="img_/logo.png" height="75px"></div>
 			</div>
 			<div class="col-8 text-right py-2">
 					<!-- Muestra en nombre de la session -->
