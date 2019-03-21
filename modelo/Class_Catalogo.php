@@ -1463,6 +1463,7 @@ class Catalogo
             $e->getMessage();
         }
 	}
+
     public function traeDatos_1_7_foto($dato)// ++++++++++++++++++++++++++++++++++uso en modal+++++++++++++++++++++++++++++++++++++++++++
     {
         try {
@@ -2282,7 +2283,6 @@ class Catalogo
         }
     }
 
-
     public function buscaTipo($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
     {
     	try {
@@ -2391,7 +2391,8 @@ class Catalogo
         }catch (PDOException $e) {
             $e->getMessage();
         }
-    }
+	}
+	
     public function Correo($msg)
     {
     	$to = 'crusok@live.cl';
@@ -2809,6 +2810,7 @@ class Catalogo
             $e->getMessage();
         }
 	}
+
 	public function cargaInactivos()
 	{
 		try {
@@ -2982,7 +2984,20 @@ class Catalogo
 		}
 	}
 
+	public function addUserDB($user, $pass, $nombre, $info){
+		try {
+            $query = $this->dbh->prepare('INSERT INTO login_mantenedor VALUES(null, ?, ?, ?, "1", ?)');
+            $query->bindParam(1, $user);
+            $query->bindParam(2, $pass);
+            $query->bindParam(3, $nombre);
+            $query->bindParam(4, $info);
+            $query->execute();
 
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
 
 
 }//fin class
