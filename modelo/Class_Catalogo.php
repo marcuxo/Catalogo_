@@ -2410,7 +2410,7 @@ class Catalogo
     public function Login($user, $pass)
     {
         try {
-            $query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ? AND estado_login = "1"');
+            $query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
             $query->bindParam(1, $user);
             $query->bindParam(2, $pass);
             $query->execute();
@@ -2418,11 +2418,15 @@ class Catalogo
             $data = $query->fetchAll();
 
 						$_SESSION["usuario"] = $data[0]["nombre_login"];
-            if(!empty($data)){
+						if($data[0]["estado_login"] == "1"){
+							if(!empty($data)){
 								echo $data[0]["tipo_user_login"];
-            }else{
-                echo "no_ok";
-				}
+							}else{
+									echo "no_ok";
+							}
+						} else {
+							echo "bloqueo";
+						}
 		
             $this->dbh = null;
         }catch (PDOException $e) {

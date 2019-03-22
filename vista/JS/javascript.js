@@ -133,13 +133,20 @@ function validaFormulario(user, pass) {
 		 	location.href ="./Mantenedor_Datos_.php";
 		 } else if(respuesta == "Privilegiado"){
 			location.href ="./Mantenedor_Datos_.php";
-		 } else{
+		 } else if (respuesta == "bloqueo"){
 			$("#rspta_login").html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
-		 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-		 "<span aria-hidden='true'>&times;</span>"+
-		 "</button>"+
-			 "<strong>ERROR!</strong>Los datos ingresados son incorrectos."+
-		 "</div>");
+			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+			"<span aria-hidden='true'>&times;</span>"+
+			"</button>"+
+				"<strong>BLOQUEADO!</strong> La cuenta esta bloqueada comuniquese con el administrador."+
+			"</div>")
+		 } else{
+				$("#rspta_login").html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
+			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+			"<span aria-hidden='true'>&times;</span>"+
+			"</button>"+
+				"<strong>ERROR!</strong> Los datos ingresados son incorrectos."+
+			"</div>");
 		 return false;
 		}
 	})//fin done

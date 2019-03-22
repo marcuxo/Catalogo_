@@ -50,10 +50,6 @@ if(!isset($_SESSION['usuario'])){
 						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> Agregar Usuario</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i> Modificar Usuario</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalMantenUsuario()"><i class="fas fa-users-cog"></i> Administrar Usuarios</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalSuperUser()" ><i class="fas fa-user-tie"></i> Usuario privilegiado</a>
 					</div>
 				</div>
 
@@ -106,95 +102,6 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </footer>
-<!-- -----------------------------------------  MODAL SUPER USER----------------------------------------------  -->
-<div class="modal fade" id="modalSuperUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title lead" id="exampleModalLongTitle">Crear Super Usuario</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- contenido del modal -->	
-					<!-- <form id="formAddUser" method="POST" onsubmit="return sub_AddUser()"> -->
-						<div class="row invisible">
-							<div class="col-9">
-									<input type="text" class="form-control form-control-sm" placeholder="" name="" id="">
-							</div>
-							<div class="col-3">
-									<a class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i>Buscar</a>
-							</div>
-						</div>
-						<label for=""><small>Nombre de Usuario:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuario" required>
-						<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1"></label>
-							<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1" required>
-						<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2"></label>
-							<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()" required>
-						<label for=""><small>Propietario Cuenta:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombre" required>
-						<label for=""><small>Comentario:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="info" required>
-							<div class="text-center">
-								
-							</div>
-						<!-- fin conttenido del modal -->
-					</div>
-					<div class="modal-footer">
-						<input type="reset" class="btn btn-danger btn-sm" name="btn_add" value="Borrar">
-						<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar" onclick="sub_AddUser()">
-					<!-- </form> -->
-				</div>
-		</div>
-	</div>
-</div>
-
-	<!-- -----------------------------------------  MODAL editar o desactivar usuario----------------------------------------------  -->
-	<div class="modal fade" id="modalMantenedorUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title lead" id="exampleModalLongTitle">Administrar Usuarios</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- contenido del modal -->	
-						<!-- <form id="formAddUser" method="POST" onsubmit="return sub_AddUser()"> -->
-							<div class="row invisible">
-								<div class="col-9">
-										<input type="text" class="form-control form-control-sm" placeholder="" name="" id="">
-								</div>
-								<div class="col-3">
-										<a class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i>Buscar</a>
-								</div>
-							</div>
-							<label for=""><small>Nombre de Usuario:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuario" required>
-							<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1"></label>
-								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1" required>
-							<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2"></label>
-								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()" required>
-							<label for=""><small>Propietario Cuenta:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombre" required>
-							<label for=""><small>Comentario:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="info" required>
-								<div class="text-center">
-									
-								</div>
-							<!-- fin conttenido del modal -->
-						</div>
-						<div class="modal-footer">
-							<input type="reset" class="btn btn-danger btn-sm" name="btn_add" value="Borrar">
-							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar" onclick="sub_AddUser()">
-						<!-- </form> -->
-					</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- -----------------------------------------  MODAL CAMBIAR CLAVE----------------------------------------------  -->
 	<div class="modal fade" id="modalCambiaClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -269,7 +176,7 @@ if(!isset($_SESSION['usuario'])){
 												<input class="form-check-input" type="radio" name="tipoUser" id="superUser" value="privilegiado"> Usuario Privilegiado
 											</label>
 										</div>
-									
+									<p class="text-danger"><small>** Por defecto la cuenta creada quedara ACTIVADA **</small></p>
 								</div>
 							<!-- fin conttenido del modal -->
 						</div>
@@ -1118,7 +1025,7 @@ if(!isset($_SESSION['usuario'])){
 
 
 		//alert(usr+clv+nm+inf+tipo);
-		var conf = confirm("Esta seguro d elos datos ingresados");
+		var conf = confirm("Esta seguro de los datos ingresados");
 		if(conf){
 			if(newClave != "" && newCuenta != "0" && actides != "3"){
 				$.ajax({
@@ -1151,47 +1058,6 @@ if(!isset($_SESSION['usuario'])){
 
 
 
-	//MODAL MANTENEDOR DE USUARIO
-
-	function showModalMantenUsuario() {
-		if(true){
-			$('#modalMantenedorUsuario').modal('show')
-			// //document.getElementById("formAddUser").reset();
-			// $('#usuario').val("");
-			// $('#clave1').val("");
-			// $('#clave2').val("");
-			// $('#nombre').val("");
-			// $('#info').val("");
-
-		}
-	}
-
-
-//MODAL CREAR SUPER USUARIO
-
-	function showModalSuperUser() {
-		if(true){
-			$('#modalSuperUser').modal('show')
-			// //document.getElementById("formAddUser").reset();
-			// $('#usuario').val("");
-			// $('#clave1').val("");
-			// $('#clave2').val("");
-			// $('#nombre').val("");
-			// $('#info').val("");
-
-		}
-	}
-
-
-
 
 
 </script>
-selUserDB=6
-crudNombre=Joel+Herrera
-crudUser=joel
-crudClaveN=nuevaclave
-crudTypoCuentaOld=Administrador
-crudTypoCuentaNew=Privilegiado
-crudInfo=solo+puede+editar+datos+new+data
-btn_add=Agregar
