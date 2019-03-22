@@ -14,7 +14,7 @@ $dato5 = "N/A";
 $dato6 = "N/A";
 $dato7 = "N/A";
 $dato8 = "N/A";
-
+$fechora = $_POST['horaActual'];
 if(isset($_POST['btn_add'])){
     //echo "datos modificados";
     if(isset($_POST['grupo'])){
@@ -48,19 +48,7 @@ if(isset($_POST['btn_add'])){
         $dato8 = $_POST['dato_8'];
     }
     $codigo = $_POST['0'];
-    $catalogo->addDato_DM($codigo, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8);
-    //echo  $codigo."--".$grupo."--".$familia."--".$tipo."--".$material."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7."--".$dato8;
-
-}
-else if(isset($_POST['btn_dc'])){
-    //echo "datos  correctos";
-    $dato_1 = $_POST['0'];
-    $dato_2 = $_POST['1'];
-    $dato_3 = $_POST['2'];
-    $dato_4 = $_POST['3'];
-    // $catalogo->traeDatos_1_7_foto($data);
-    // echo $dato_1."--".$dato_2."--".$dato_3."--".$dato_4;
-    //$catalogo->addDato_DC($dato_1, $dato_2, $dato_3, $dato_4);
-} else {
-    echo "ninguna de las nateriores.";
+    $catalogo->addDato_DM($codigo, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8, $fechora);
+    //echo  $codigo."--".$grupo."--".$familia."--".$tipo."--".$material."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7."--".$dato8."--".$fechora;
+    
 }

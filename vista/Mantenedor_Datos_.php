@@ -3,8 +3,6 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
 	header('Location: index.php');
-} else {
-	$_SESSION["usuario"] = "Administrador de Datos";
 }
 ?>
 <!DOCTYPE html>
@@ -51,7 +49,7 @@ if(!isset($_SESSION['usuario'])){
 					<div class="dropdown-menu">
 						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> Agregar Usuario</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i> Cambiar clave</a>
+						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i> Modificar Usuario</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" onclick="showModalMantenUsuario()"><i class="fas fa-users-cog"></i> Administrar Usuarios</a>
 						<div class="dropdown-divider"></div>
@@ -153,102 +151,12 @@ if(!isset($_SESSION['usuario'])){
 	</div>
 </div>
 
-<!-- -----------------------------------------  MODAL editar o desactivar usuario----------------------------------------------  -->
-<div class="modal fade" id="modalMantenedorUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title lead" id="exampleModalLongTitle">Administrar Usuarios</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- contenido del modal -->	
-					<!-- <form id="formAddUser" method="POST" onsubmit="return sub_AddUser()"> -->
-						<div class="row invisible">
-							<div class="col-9">
-									<input type="text" class="form-control form-control-sm" placeholder="" name="" id="">
-							</div>
-							<div class="col-3">
-									<a class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i>Buscar</a>
-							</div>
-						</div>
-						<label for=""><small>Nombre de Usuario:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuario" required>
-						<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1"></label>
-							<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1" required>
-						<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2"></label>
-							<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()" required>
-						<label for=""><small>Propietario Cuenta:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombre" required>
-						<label for=""><small>Comentario:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="info" required>
-							<div class="text-center">
-								
-							</div>
-						<!-- fin conttenido del modal -->
-					</div>
-					<div class="modal-footer">
-						<input type="reset" class="btn btn-danger btn-sm" name="btn_add" value="Borrar">
-						<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar" onclick="sub_AddUser()">
-					<!-- </form> -->
-				</div>
-		</div>
-	</div>
-</div>
-
-<!-- -----------------------------------------  MODAL CAMBIAR CLAVE----------------------------------------------  -->
-<div class="modal fade" id="modalCambiaClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title lead" id="exampleModalLongTitle">Agregar Usuario</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- contenido del modal -->	
-					<!-- <form id="formAddUser" method="POST" onsubmit="return sub_AddUser()"> -->
-						<div class="row invisible">
-							<div class="col-9">
-									<input type="text" class="form-control form-control-sm" placeholder="" name="" id="">
-							</div>
-							<div class="col-3">
-									<a class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i>Buscar</a>
-							</div>
-						</div>
-						<label for=""><small>Nombre de Usuario:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuario" required>
-						<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1"></label>
-							<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1" required>
-						<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2"></label>
-							<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2" onchange="passValida()" required>
-						<label for=""><small>Propietario Cuenta:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombre" required>
-						<label for=""><small>Comentario:</small></label>
-							<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="info" required>
-							<div class="text-center">
-								
-							</div>
-						<!-- fin conttenido del modal -->
-					</div>
-					<div class="modal-footer">
-						<input type="reset" class="btn btn-danger btn-sm" name="btn_add" value="Borrar">
-						<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar" onclick="sub_AddUser()">
-					<!-- </form> -->
-				</div>
-		</div>
-	</div>
-</div>
-
-<!-- -----------------------------------------  MODAL ADD NEW USER----------------------------------------------  -->
-<div class="modal fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<!-- -----------------------------------------  MODAL editar o desactivar usuario----------------------------------------------  -->
+	<div class="modal fade" id="modalMantenedorUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title lead" id="exampleModalLongTitle">Agregar Usuario</h5>
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Administrar Usuarios</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -282,6 +190,107 @@ if(!isset($_SESSION['usuario'])){
 						<div class="modal-footer">
 							<input type="reset" class="btn btn-danger btn-sm" name="btn_add" value="Borrar">
 							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm" name="btn_add" value="Agregar" onclick="sub_AddUser()">
+						<!-- </form> -->
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL CAMBIAR CLAVE----------------------------------------------  -->
+	<div class="modal fade" id="modalCambiaClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Modificar Datos de Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<!-- <form id="formAddUser" method="GET"> -->
+							<div class="row">
+								<div class="col" id="LoadCuentas">
+								</div>
+							</div>
+							<hr>
+							<!-- <label for=""><small>Nombre:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="Nombre Apellido" name="" id="" readonly>
+							<label for=""><small>Nombre de Usuario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="Usuario" name="" id="" readonly>
+							<label for=""><small>Contraseña actual:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="clave" name="" id="" readonly>
+							<label for=""><small>Nueva Contraseña:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="clave" name="" id="" readonly>
+							<label for=""><small>Tipo Cuenta:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="tipo cuenta" name="" id="" readonly>
+								<select name="" id="" class="form-control form-control-sm">
+									<option value="">Selecciona nuevo tipo de cuenta</option>
+									<option value="admin">Administrador</option>
+									<option value="super">Privilegiado</option>
+								</select>
+							<label for=""><small>Comentario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="Comentario de la cuenta" name="" id="" required> -->
+								<div class="" id="acaLosDatosDelUsuario">
+								</div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm col" name="btn_add" value="Agregar" onclick="sub_CrudUser()">
+						<!-- </form> -->
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL ADD NEW USER----------------------------------------------  -->
+	<div class="modal fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Agregar Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<!-- <form id="formAddUser" method="POST" onsubmit="return sub_AddUser()"> -->
+
+							<label for=""><small>Nombre de Usuario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuarioAdd">
+
+							<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1Add"></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1Add">
+
+							<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2Add"></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2Add" onchange="passValida()">
+
+							<label for=""><small>Propietario Cuenta:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombreAdd">
+
+							<label for=""><small>Comentario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="infoAdd">
+
+								<div class="text-center">
+									<hr>
+									<p class="lead">Tipo de Cuenta</p>
+									<div class="form-check form-check-inline">
+											<label class="form-check-label" data-toggle="tooltip" title="Este tipo de usuario solo puede modificar los datos de los items">
+												<input class="form-check-input" type="radio" name="tipoUser" id="adminUser" value="administrador"> Usuario Administrador
+											</label>
+										</div>
+										<div class="form-check form-check-inline" data-toggle="tooltip" title="Este tipo de usuario puede crear cuentas de usuarios y modificar items">
+											<label class="form-check-label">
+												<input class="form-check-input" type="radio" name="tipoUser" id="superUser" value="privilegiado"> Usuario Privilegiado
+											</label>
+										</div>
+									
+								</div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm col" name="btn_add" value="Agregar" onclick="sub_AddUser()">
 						<!-- </form> -->
 					</div>
 			</div>
@@ -951,24 +960,31 @@ if(!isset($_SESSION['usuario'])){
 
 //modal addUser
 
+
 	function showModalAddUser() {
-		// $("#newFamilia").html("");
-		// $("#newMaterial").html("");
-		// $("#newTipo").html("");
 		if(true){
 			$('#modalNewUser').modal('show')
-			//document.getElementById("formAddUser").reset();
-			$('#usuario').val("");
-			$('#clave1').val("");
-			$('#clave2').val("");
-			$('#nombre').val("");
-			$('#info').val("");
-
+			$('#usuarioAdd').val("");
+			$('#clave1Add').val("");
+			$('#clave2Add').val("");
+			$('#nombreAdd').val("");
+			$('#infoAdd').val("");
+			document.getElementById("adminUser").checked = false;
+			document.getElementById("superUser").checked = false;
 		}
 	}
 
+
 	function sub_AddUser() {
-		if(passValida()){
+		var user = $('#usuarioAdd').val();
+		var cl1 = $('#clave1Add').val();
+		var cl2 = $('#clave2Add').val();
+		var nombre = $('#nombreAdd').val();
+		var info = $('#infoAdd').val();
+		che1 =document.getElementById("adminUser");
+		che2 = document.getElementById("superUser");
+		
+		if(user != "" && cl1 != "" && cl2 != "" && nombre != "" && info != "" && passValida() && (che1.checked || che2.checked)){
 			add_ = confirm("Esta seguro de los datos ingresados")
 			if(add_){
 				addUsser_DB()
@@ -976,17 +992,28 @@ if(!isset($_SESSION['usuario'])){
 				alert("Verifica los datos")
 			}
 		} else {
-			alert("Las contraseñas no coinciden");
-
+			alert("Completa Todos Los Datos");
 		}
 		
 	}
 
 	function addUsser_DB() {
-		var usr = $('#usuario').val();
-		var clv = $('#clave1').val();
-		var nm = $('#nombre').val();
-		var inf = $('#info').val();
+
+		var usr = $('#usuarioAdd').val();
+		var clv = $('#clave1Add').val();
+		var nm = $('#nombreAdd').val();
+		var inf = $('#infoAdd').val();
+		
+		che1 =document.getElementById("adminUser");
+		che2 = document.getElementById("superUser");
+		if(che1.checked){
+			tipo = che1.value;
+		}
+		if(che2.checked){
+			tipo = che2.value;
+		}
+
+		//alert(usr+clv+nm+inf+tipo);
 			$.ajax({
 				url: './../controlador/addNewUser.php',
 				type: 'POST',
@@ -994,12 +1021,14 @@ if(!isset($_SESSION['usuario'])){
 				data: { valor1: usr,
 					valor2: clv,
 					valor3: nm,
-					valor4: inf},
+					valor4: inf,
+					valor5: tipo},
 			})
 			.done(function(respuesta){
 				// console.log('logrado');
-				alert("Los datos se ingresaron correctamente"+respuesta)
+				console.log(respuesta);
 				$('#modalNewUser').modal('hide')
+				swal("Operacion realizada con EXITO!")
 				//$("#rsptaAddUser").html(respuesta)
 			})//fin done
 			.fail(function(){
@@ -1007,37 +1036,134 @@ if(!isset($_SESSION['usuario'])){
 			});
 	}
 
+
 	function passValida() {
-		var clave1 = $('#clave1').val();
-		var clave2 = $('#clave2').val();
+		var clave1 = $('#clave1Add').val();
+		var clave2 = $('#clave2Add').val();
 		if(clave1 != clave2){
-			$("#cl_1").html("Clave distinta")
-			$("#cl_2").html("Clave distinta")
-			document.getElementById("clave1").focus()
+			$("#cl_1Add").html("Clave distinta")
+			$("#cl_2Add").html("Clave distinta")
+			document.getElementById("clave1Add").focus()
 			return false;
 		} else {
-			
-			$("#cl_1").html("")
-			$("#cl_2").html("")
+			$("#cl_1Add").html(".")
+			$("#cl_2Add").html(".")
 			return true;
 		}
 	}
 
 
-//modal cambio clave
+//modal crud
 
 	function showModalChangePass() {
 		if(true){
 			$('#modalCambiaClave').modal('show')
-			// //document.getElementById("formAddUser").reset();
-			// $('#usuario').val("");
-			// $('#clave1').val("");
-			// $('#clave2').val("");
-			// $('#nombre').val("");
-			// $('#info').val("");
-
+			$('#acaLosDatosDelUsuario').html("")
+			loadCuentasUser()
 		}
 	}
+	
+	function loadCuentasUser() {
+		$.ajax({
+		url: './../controlador/loadUsers.php',
+		type: 'POST',
+		dataType: 'html',
+		}).done(function(respuesta){
+			// console.log('logrado');
+			//$("#loading").html(respuesta)
+			$('#LoadCuentas').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+
+	function seleccionaUser() {
+		$("#acaLosDatosDelUsuario").html('<i class="text-center fas fa-spinner fa-spin fa-5x text-success"></i>')
+		document.getElementById('selUserDB').selected = "true";
+		var select = document.getElementById("selUserDB");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+
+		$.ajax({
+		url: './../controlador/traeUsuario.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: value },
+		})
+		.done(function(respuesta){
+			//alert(respuesta);
+			$("#acaLosDatosDelUsuario").html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+
+	function verClave() {
+		document.getElementById('crudClaveN').type = 'text';
+	}
+
+	function ocultaClave() {
+		document.getElementById('crudClaveN').type = 'password';
+	}
+
+	function verClaveOld() {
+		document.getElementById('crudClaveO').type = 'text';
+	}
+
+	function ocultaClaveOld() {
+		document.getElementById('crudClaveO').type = 'password';
+	}
+
+	function sub_CrudUser() {
+		document.getElementById('selUserDB').selected = "true";
+		var select = document.getElementById("selUserDB");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+
+		var nombre = $('#crudNombre').val();
+		var usuario = $('#crudUser').val();
+		var newClave = $('#crudClaveN').val();
+		var oldCuenta = $('#crudTypoCuentaOld').val();
+		var newCuenta = $('#crudTypoCuentaNew').val();
+		var info = $('#crudInfo').val();
+
+
+		//alert(usr+clv+nm+inf+tipo);
+		var conf = confirm("Esta seguro d elos datos ingresados");
+		if(conf){
+			if(newClave != "" && newCuenta != "0"){
+				$.ajax({
+				url: './../controlador/crudUser.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor1: value,
+					valor2: nombre,
+					valor3: usuario,
+					valor4: newClave,
+					valor5: newCuenta,
+					valor6: info},
+			})
+			.done(function(respuesta){
+				console.log(respuesta);
+				$('#modalCambiaClave').modal('hide')
+				swal("Operacion realizada con EXITO!")
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+			} else {
+				alert("Completa todos los campos")
+			}
+		} else {
+			alert("Verifica los datos");
+		}
+	}
+
+
 
 	//MODAL MANTENEDOR DE USUARIO
 
@@ -1069,12 +1195,17 @@ if(!isset($_SESSION['usuario'])){
 
 		}
 	}
+
+
+
+
+
 </script>
-
-
-usuaro=marco
-clave1=123456
-clave2=123456
-nombre=marco+urrutia
-info=solo+puede+editar+datos
+selUserDB=6
+crudNombre=Joel+Herrera
+crudUser=joel
+crudClaveN=nuevaclave
+crudTypoCuentaOld=Administrador
+crudTypoCuentaNew=Privilegiado
+crudInfo=solo+puede+editar+datos+new+data
 btn_add=Agregar

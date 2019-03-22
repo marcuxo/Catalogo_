@@ -222,8 +222,8 @@ $msgConcatenado = '
 <div class="container my-5">
 	<div class="row">
 		<div class="col">
-			<a href="http://192.168.1.152/Catalogo_/vista/prueba.html" class="btn btn-success">Agregar los datos</a>
-			<a href="http://192.168.1.152/Catalogo_/vista/prueba.html" class="btn btn-danger">Eliminar los datos</a>
+			<a href="http://192.168.1.152/Catalogo_/vista/" class="btn btn-success">Agregar los datos</a>
+			<a href="http://192.168.1.152/Catalogo_/vista/" class="btn btn-danger">Eliminar los datos</a>
 		</div>
 	</div>
 </div>

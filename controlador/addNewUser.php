@@ -6,7 +6,7 @@ $user = $_POST['valor1'];
 $clave = $_POST['valor2'];
 $nombre = $_POST['valor3'];
 $info = $_POST['valor4'];
+$tipo = $_POST['valor5'];
 
-// echo $user.$clave.$nombre.$info;
-
-$catalogo->addUserDB($user,$clave,$nombre,$info);
+ //echo $user.$clave.$nombre.$info.$tipo;
+$catalogo->addUserDB($user,$clave,$nombre,$info,$tipo);

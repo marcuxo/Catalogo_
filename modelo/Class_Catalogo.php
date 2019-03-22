@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Catalogo
 {
     private static $instancia;
@@ -2409,17 +2410,20 @@ class Catalogo
     public function Login($user, $pass)
     {
         try {
-            $query = $this->dbh->prepare('SELECT usuario, clave FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
+            $query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
             $query->bindParam(1, $user);
             $query->bindParam(2, $pass);
             $query->execute();
 
             $data = $query->fetchAll();
+
+						$_SESSION["usuario"] = $data[0]["nombre_login"];
             if(!empty($data)){
-               echo "ok";
+								echo $data[0]["tipo_user_login"];
             }else{
                 echo "no_ok";
-            }
+				}
+		
             $this->dbh = null;
         }catch (PDOException $e) {
             $e->getMessage();
@@ -2897,12 +2901,12 @@ class Catalogo
 		}
 	}
 
-	public function addDato_DM($code, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8)
+	public function addDato_DM($code, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8, $fechora)
 	{
 		echo "Datos Ingresados Correctamente : ".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
 
 		try{
-			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?)');
+			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"1","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--")');
 			$query->bindParam(1, $code);
 			$query->bindParam(2, $grupo);
 			$query->bindParam(3, $familia);
@@ -2914,6 +2918,7 @@ class Catalogo
 			$query->bindParam(9, $dato6);
 			$query->bindParam(10, $dato7);
 			$query->bindParam(11, $dato8);
+			$query->bindParam(12, $fechora);
 
 			$query->execute();
 
@@ -2984,19 +2989,107 @@ class Catalogo
 		}
 	}
 
-	public function addUserDB($user, $pass, $nombre, $info){
+	public function addUserDB($user, $pass, $nombre, $info, $tipo){
 		try {
-            $query = $this->dbh->prepare('INSERT INTO login_mantenedor VALUES(null, ?, ?, ?, "1", ?)');
+            $query = $this->dbh->prepare('INSERT INTO login_mantenedor VALUES(null, ?, ?, ?, "1", ?, ?)');
             $query->bindParam(1, $user);
             $query->bindParam(2, $pass);
             $query->bindParam(3, $nombre);
             $query->bindParam(4, $info);
+            $query->bindParam(5, $tipo);
             $query->execute();
 
             $this->dbh = null;
         }catch (PDOException $e) {
             $e->getMessage();
         }
+	}
+
+	public function loadUsers(){
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM login_mantenedor ORDER BY nombre_login ASC');
+
+			$query->execute();
+
+			$data = $query->fetchAll();
+			$salida;
+			if(!empty($data)){
+				$salida ="<select multiple name='selUserDB' id='selUserDB' class='col-12 form-control form-control-sm'>";
+				foreach ($data as $fila):
+				$salida.= "
+				<option value='".$fila['id']."' onclick='seleccionaUser()'>".$fila['nombre_login']."</option>
+										";
+				endforeach;
+				$salida.= "</select>";
+			}else{
+				$salida = "<p class='lead text-success'>Upss! no se cargaron los datos</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
+
+	public function traemeElUser($id)
+	{
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE id = '.$id.'');
+
+			$query->execute();
+			$data = $query->fetchAll();
+			$salida ="";
+			if(!empty($data)){
+					foreach ($data as $fila):
+						$salida.= "
+						
+						<label><small>Nombre:</small></label><label class='invisible' id='crudUserId' value='".$fila['id']."'></label>
+							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['nombre_login']."' name='crudNombre' id='crudNombre' readonly>
+						<label><small>Nombre de Usuario:</small></label>
+							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['usuario']."' name='crudUser' id='crudUser'>
+						<label><small>Contraseña actual:</small></label><a onmousedown='verClaveOld()' onmouseup='ocultaClaveOld()' class=''><i class='pl-5 fas fa-eye'></i></a>	<label><small>Ver clave</small></label>
+							<input type='password' class='form-control form-control-sm mb-2' value='".$fila['clave']."' name='' id='crudClaveO' readonly>
+						<label><small>Nueva Contraseña:</small></label><a onmousedown='verClave()' onmouseup='ocultaClave()' class=''><i class='pl-5 fas fa-eye'></i></a>	<label><small>Ver clave</small></label>
+							<input type='password' class='form-control form-control-sm mb-2' placeholder='Ingrese La nueva Clave' name='crudClaveN' id='crudClaveN'>
+						<label><small>Tipo de Cuenta:</small></label>
+							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['tipo_user_login']."' name='crudTypoCuentaOld' id='crudTypoCuentaOld' readonly>
+						<select name='crudTypoCuentaNew' id='crudTypoCuentaNew' class='form-control form-control-sm'>
+							<option value='0'>Selecciona nuevo tipo de cuenta</option>
+							<option value='administrador'>Administrador</option>
+							<option value='Privilegiado'>Privilegiado</option>
+						</select>
+						<label><small>Comentario:</small></label>
+							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['info']."' name='crudInfo' id='crudInfo' required>
+										";
+					endforeach;
+					$salida.= "";
+			}else{
+					$salida = "<p class='lead text-success'>Upss! no se cargaron los datos</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
+
+	public function updateUserCrud($id,$nombre,$usuario,$nClave,$tCuenta,$info)
+	{
+		// echo "class: ".$id.$nombre.$usuario.$nClave.$tCuenta.$info;
+		try{
+			$query = $this->dbh->prepare('UPDATE login_mantenedor SET usuario = ?, clave = ?, info = ?, tipo_user_login = ? WHERE id = ?');
+			$query->bindParam(1, $usuario);
+			$query->bindParam(2, $nClave);
+			$query->bindParam(3, $info);
+			$query->bindParam(4, $tCuenta);
+			$query->bindParam(5, $id);
+
+			$query->execute();
+			echo "ok";
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
 	}
 
 

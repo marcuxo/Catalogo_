@@ -90,7 +90,8 @@ if(!isset($_SESSION['usuario'])){
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<!-- <input id="esconder2" type="submit" class=" btn btn-secondary btn-sm " name="btn_dc" value="Datos Correctos"> -->
+							<!-- contenedor de fecha y hora actual para generar un dato de ingreso con fecha actual de guardado en base de datos -->
+							<input type="text" name="horaActual" id="fechita"  class="form-control form-control-sm col-2 text-center invisible">
 							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm invisible" name="btn_add" value="Agregar">
 						</form>
 					</div>
@@ -414,24 +415,31 @@ function e() {
 	location.href ="./../controlador/CerrarSession.php";
 	}
 
+	function laFechita() {
+		var hoy = new Date();
+		var dd = hoy.getDate();
+		var mm = hoy.getMonth()+1;
+		var yyyy = hoy.getFullYear();
+		var hh = hoy.getHours();
+		var mi = hoy.getMinutes();
+		var ss = hoy.getSeconds();
+		dd=addZero(dd);
+		mm=addZero(mm);
+		hh=addZero(hh);
+		ss=addZero(ss);
+
+		function addZero(i) {
+				if (i < 10) {
+						i = '0' + i;
+				}
+				return i;
+		}
+		var fecha = dd+"-"+mm+"-"+yyyy+" "+hh+":"+mi+":"+ss;
+		$('#fecha').html(fecha)
+		$('#fechita').val(fecha)
+
+		setTimeout("laFechita()",1000);s
+	}
+	laFechita()
+
 </script>
-<!--
-0=RODAMIENTOS+Y+SELLOS
-1=RODAMIENTO
-2=CONTRATO+MEYN
-3=CM+RODAMIENTO+6002+2RS+S.S.+89.0689.017.0003
-btn_dc=ok
-
-grupo=RODAMIENTOS+Y+SELLOS
-familia=RODAMIENTO
-tipo=seleccionar
-material=ACERO
-dato_3=dato_3
-dato_4=dato_3
-dato_5=dato_4
-dato_6=dato_5
-dato_7=dato_6
-dato_8=dato_opcional
-btn_add=ok
-
- -->

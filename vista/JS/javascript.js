@@ -129,18 +129,19 @@ function validaFormulario(user, pass) {
 	})
 	.done(function(respuesta){
 		 console.log(respuesta);
-		 if(respuesta == "ok"){
-		 	console.log("la respuesta es ok");
+		 if(respuesta == "Administrador"){
 		 	location.href ="./Mantenedor_Datos_.php";
-		 }else{
-		 	$("#rspta_login").html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
-			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-			"<span aria-hidden='true'>&times;</span>"+
-			"</button>"+
-			  "<strong>ERROR!</strong>Los datos ingresados son incorrectos."+
-			"</div>");
-			return false;
-		 }
+		 } else if(respuesta == "Privilegiado"){
+			location.href ="./Mantenedor_Datos_.php";
+		 } else{
+			$("#rspta_login").html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
+		 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+		 "<span aria-hidden='true'>&times;</span>"+
+		 "</button>"+
+			 "<strong>ERROR!</strong>Los datos ingresados son incorrectos."+
+		 "</div>");
+		 return false;
+		}
 	})//fin done
 	.fail(function(){
 		console.log('error');
