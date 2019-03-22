@@ -214,29 +214,13 @@ if(!isset($_SESSION['usuario'])){
 								</div>
 							</div>
 							<hr>
-							<!-- <label for=""><small>Nombre:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="Nombre Apellido" name="" id="" readonly>
-							<label for=""><small>Nombre de Usuario:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="Usuario" name="" id="" readonly>
-							<label for=""><small>Contraseña actual:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="clave" name="" id="" readonly>
-							<label for=""><small>Nueva Contraseña:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="clave" name="" id="" readonly>
-							<label for=""><small>Tipo Cuenta:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="tipo cuenta" name="" id="" readonly>
-								<select name="" id="" class="form-control form-control-sm">
-									<option value="">Selecciona nuevo tipo de cuenta</option>
-									<option value="admin">Administrador</option>
-									<option value="super">Privilegiado</option>
-								</select>
-							<label for=""><small>Comentario:</small></label>
-								<input type="text" class="form-control form-control-sm mb-2" placeholder="" value="Comentario de la cuenta" name="" id="" required> -->
+							
 								<div class="" id="acaLosDatosDelUsuario">
 								</div>
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm col" name="btn_add" value="Agregar" onclick="sub_CrudUser()">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm col" name="btn_add" value="Modificar" onclick="sub_CrudUser()">
 						<!-- </form> -->
 					</div>
 			</div>
@@ -1053,7 +1037,7 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 
-//modal crud
+//modal CAMBIO CLAVE
 
 	function showModalChangePass() {
 		if(true){
@@ -1129,13 +1113,14 @@ if(!isset($_SESSION['usuario'])){
 		var newClave = $('#crudClaveN').val();
 		var oldCuenta = $('#crudTypoCuentaOld').val();
 		var newCuenta = $('#crudTypoCuentaNew').val();
+		var actides = $('#crudActivaDesactivaCta').val();
 		var info = $('#crudInfo').val();
 
 
 		//alert(usr+clv+nm+inf+tipo);
 		var conf = confirm("Esta seguro d elos datos ingresados");
 		if(conf){
-			if(newClave != "" && newCuenta != "0"){
+			if(newClave != "" && newCuenta != "0" && actides != "3"){
 				$.ajax({
 				url: './../controlador/crudUser.php',
 				type: 'POST',
@@ -1145,7 +1130,8 @@ if(!isset($_SESSION['usuario'])){
 					valor3: usuario,
 					valor4: newClave,
 					valor5: newCuenta,
-					valor6: info},
+					valor6: info,
+					valor7: actides},
 			})
 			.done(function(respuesta){
 				console.log(respuesta);

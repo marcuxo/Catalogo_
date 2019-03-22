@@ -2410,7 +2410,7 @@ class Catalogo
     public function Login($user, $pass)
     {
         try {
-            $query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
+            $query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ? AND estado_login = "1"');
             $query->bindParam(1, $user);
             $query->bindParam(2, $pass);
             $query->execute();
@@ -3055,12 +3055,31 @@ class Catalogo
 							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['tipo_user_login']."' name='crudTypoCuentaOld' id='crudTypoCuentaOld' readonly>
 						<select name='crudTypoCuentaNew' id='crudTypoCuentaNew' class='form-control form-control-sm'>
 							<option value='0'>Selecciona nuevo tipo de cuenta</option>
-							<option value='administrador'>Administrador</option>
+							<option value='Administrador'>Administrador</option>
 							<option value='Privilegiado'>Privilegiado</option>
 						</select>
 						<label><small>Comentario:</small></label>
-							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['info']."' name='crudInfo' id='crudInfo' required>
-										";
+							<input type='text' class='form-control form-control-sm mb-2' value='".$fila['info']."' name='crudInfo' id='crudInfo' required>";
+							if($fila['estado_login'] == "0"){
+								$salida.= "
+								<input type='text' class='form-control form-control-sm mb-2' value='Estado de la cuenta DESACTIVADO' name='crudTypoCuentaOld' id='crudTypoCuentaOld' readonly>
+								<select name='crudActivaDesactivaCta' id='crudActivaDesactivaCta' class='form-control form-control-sm'>
+									<option value='3'>Active o desactive la Cuenta</option>
+									<option value='1'>Activar</option>
+									<option value='0'>Desactivar</option>
+								</select>
+												";
+							} else {
+								$salida.= "
+								<input type='text' class='form-control form-control-sm mb-2' value='Estado de la cuenta ACTIVADO' readonly>
+								<select name='crudActivaDesactivaCta' id='crudActivaDesactivaCta' class='form-control form-control-sm'>
+									<option value='3'>Active o desactive la Cuenta</option>
+									<option value='1'>Activar</option>
+									<option value='0'>Desactivar</option>
+								</select>
+												";
+							}
+							
 					endforeach;
 					$salida.= "";
 			}else{
@@ -3073,16 +3092,17 @@ class Catalogo
 		}
 	}
 
-	public function updateUserCrud($id,$nombre,$usuario,$nClave,$tCuenta,$info)
+	public function updateUserCrud($id,$nombre,$usuario,$nClave,$tCuenta,$info,$stado)
 	{
 		// echo "class: ".$id.$nombre.$usuario.$nClave.$tCuenta.$info;
 		try{
-			$query = $this->dbh->prepare('UPDATE login_mantenedor SET usuario = ?, clave = ?, info = ?, tipo_user_login = ? WHERE id = ?');
+			$query = $this->dbh->prepare('UPDATE login_mantenedor SET usuario = ?, clave = ?, estado_login = ?, info = ?, tipo_user_login = ? WHERE id = ?');
 			$query->bindParam(1, $usuario);
 			$query->bindParam(2, $nClave);
-			$query->bindParam(3, $info);
-			$query->bindParam(4, $tCuenta);
-			$query->bindParam(5, $id);
+			$query->bindParam(3, $stado);
+			$query->bindParam(4, $info);
+			$query->bindParam(5, $tCuenta);
+			$query->bindParam(6, $id);
 
 			$query->execute();
 			echo "ok";
