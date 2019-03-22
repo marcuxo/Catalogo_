@@ -211,7 +211,7 @@ if(!isset($_SESSION['usuario'])){
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
+							<input type="button" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
 						</form>
 					</div>
 			</div>
@@ -292,7 +292,7 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<!-- <form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()"> -->
+						<!-- <form action="" method="get"> -->
 							<small id="modalRespuesta"></small>			
 							<div id="newGrupo"></div>
 							<div id="newFamilia"></div>
@@ -631,6 +631,7 @@ if(!isset($_SESSION['usuario'])){
 
 	function sel_newTipo_() {
 		var grupo = $("#grupoNew").val();
+		var familia = $("#familiaNew").val();
 		var material = $("#materialAddNewTipo").val();
 		var material2 = $("#materialAddNewTipo2").val();
 		var tipo = $("#newTipoTipo").val();
@@ -640,24 +641,25 @@ if(!isset($_SESSION['usuario'])){
 		var dT4 = $("#newTipoDT4").val();
 		
 		if(mat_creado != 1){
-			if(grupo != "1" && material != "1" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
+			if(grupo != "1" && familia != "1" && material != "1" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
 				var optn = confirm("Estas seguro de los datos ingresados");
 				if(optn){
 					$.ajax({
-						url: './../controlador/null.php',
-						type: 'GET',
+						url: './../controlador/addNewItem.php',
+						type: 'POST',
 						dataType: 'html',
-						data: { valor1: grupo,
-						valor2: material,
-						valor3: "N/A",
-						valor4: tipo,
+						data: { valor0: grupo,
+						valor1: familia,
+						valor2: tipo,
+						valor3: material,
+						valor4: "N/A",
 						valor5: dT1,
 						valor6: dT2,
 						valor7: dT3,
 						valor8: dT4 },
 					}).done(function(respuesta){
-						// console.log('logrado');
-						$("#dInactivo").html(respuesta)
+						console.log(respuesta);
+						//$("#dInactivo").html(respuesta)
 						$('#modalNuevoItem').modal('hide')
 					})//fin done
 						.fail(function(){
@@ -670,24 +672,25 @@ if(!isset($_SESSION['usuario'])){
 				swal("Completa Todos los Campos")
 			}
 		} else if(mat_creado == 1){
-			if(grupo != "1" && material2 != "" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
+			if(grupo != "1" && familia != "1" && material2 != "" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
 				var optn = confirm("Estas seguro de los datos ingresados");
 				if(optn){
 					$.ajax({
-						url: './../controlador/null.php',
-						type: 'GET',
+						url: './../controlador/addNewItem.php',
+						type: 'POST',
 						dataType: 'html',
-						data: { valor1: grupo,
-						valor2: "N/A",
-						valor3: material2,
-						valor4: tipo,
+						data: { valor0: grupo,
+						valor1: familia,
+						valor2: tipo,
+						valor3: "N/A",
+						valor4: material2,
 						valor5: dT1,
 						valor6: dT2,
 						valor7: dT3,
 						valor8: dT4 },
 					}).done(function(respuesta){
-						// console.log('logrado');
-						$("#dInactivo").html(respuesta)
+						console.log(respuesta);
+						//$("#dInactivo").html(respuesta)
 						$('#modalNuevoItem').modal('hide')
 					})//fin done
 						.fail(function(){
@@ -1239,3 +1242,4 @@ function showModNewFamili() {
 	}
 
 </script>
+

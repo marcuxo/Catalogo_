@@ -1,4 +1,8 @@
-
+<?php
+$txt = "hola :P ja ja ja";
+$carpeta= str_replace(' ','_',$txt);
+echo $carpeta;
+?>
 <html>
 <head>
 	<meta charset="UTF-8">

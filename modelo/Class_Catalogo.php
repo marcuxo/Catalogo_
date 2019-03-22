@@ -2215,7 +2215,7 @@ class Catalogo
 
             $data = $query->fetchAll();
             if(!empty($data)){
-                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaNew' onclick='selFamilia3()'><option value='1' onclick='selFamilia3()'>Selecciona Familia</option>";
+                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familiaNew' id='familiaNew' onclick='selFamilia3()'><option value='1' onclick='selFamilia3()'>Selecciona Familia</option>";
                 foreach ($data as $fila):
                 		$salida.=  "
                 		   <option value='".$fila['nombre']."' onclick='selFamilia3()'>".$fila['nombre']."</option>";
