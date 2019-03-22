@@ -3,8 +3,6 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
 	header('Location: index.php');
-} else {
-	$_SESSION["usuario"] = "Administrador de Datos";
 }
 ?>
 <!DOCTYPE html>
@@ -22,10 +20,10 @@ if(!isset($_SESSION['usuario'])){
 <header>
 	<div class="container-fluid bg-primary">
 		<div class="row align-items-center">
-			<div class="col-6">
+			<div class="col-4">
 				<h1 class="text-info font-italic">Mantenedor de Datos</h1>
 			</div>
-			<div class="col-6 text-right">
+			<div class="col-8 text-right">
 				<!-- Muestra en nombre de la session -->
 				<?php echo '<label class="text-info font-italic mr-3">Bienvenido '.$_SESSION["usuario"].'</label>'; ?>
 
@@ -34,13 +32,26 @@ if(!isset($_SESSION['usuario'])){
 							<i class="fas fa-pen"></i> Editar Items
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" onclick="modalShow2()">Nuevo tipo</a>
+						<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> Nuevo tipo</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showMfoto()">Agregar Foto tipo</a>
+						<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i> Agregar Foto tipo</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalItemInactivo()" >Activar Item</a>
+						<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> Activar Item</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalItemActivo()" >Desactivar Item</a>
+						<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i> Desactivar Item</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> Nueva Familia</a>
+					</div>
+				</div>
+				
+				<div class="btn-group">
+					<button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-edit"></i> Usuario
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> Agregar Usuario</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i> Modificar Usuario</a>
 					</div>
 				</div>
 
@@ -57,8 +68,9 @@ if(!isset($_SESSION['usuario'])){
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-6"><img src="img_/logo.png" height="150px"></div>
-		<div class="col-6 text-right"><img src="img_/logo_mante.png" height="150px"></div>
+		<div class="col-4"><img src="img_/logo.png" height="150px"></div>
+		<div class="col-4 text-center"><h1 class="display-4 text-white">busqueda por imagen</h1></div>
+		<div class="col-4 text-right"><img src="img_/logo_mante.png" height="150px"></div>
 	</div>
 </div>
 <finder2>
@@ -76,7 +88,7 @@ if(!isset($_SESSION['usuario'])){
 		<!-- <div class="row d-flex justify-content-center"> -->
 		<div class="row d-flex justify-content-center" id="loading">
 	<!-- borrar -->
-
+<p class="lead" id="rsptaAddUser"></p>
 <!-- borrar -->
 		</div>
 	</div>
@@ -92,6 +104,91 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </footer>
+
+	<!-- -----------------------------------------  MODAL CAMBIAR CLAVE----------------------------------------------  -->
+	<div class="modal fade" id="modalCambiaClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Modificar Datos de Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<!-- <form id="formAddUser" method="GET"> -->
+							<div class="row">
+								<div class="col" id="LoadCuentas">
+								</div>
+							</div>
+							<hr>
+							
+								<div class="" id="acaLosDatosDelUsuario">
+								</div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm col" name="btn_add" value="Modificar" onclick="sub_CrudUser()">
+						<!-- </form> -->
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL ADD NEW USER----------------------------------------------  -->
+	<div class="modal fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Agregar Usuario</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<!-- <form id="formAddUser" method="POST" onsubmit="return sub_AddUser()"> -->
+
+							<label for=""><small>Nombre de Usuario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Ingrese El Nombre de Usuario" name="usuaro" id="usuarioAdd">
+
+							<label for=""><small>Contraseña:</small></label><label class="text-danger ml-2" id="cl_1Add"></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña" name="clave1" id="clave1Add">
+
+							<label for=""><small>Confirmar Contraseña:</small></label><label class="text-danger ml-2" id="cl_2Add"></label>
+								<input type="password" class="form-control form-control-sm mb-2" placeholder="Ingrese la contraseña nuevamente" name="clave2" id="clave2Add" onchange="passValida()">
+
+							<label for=""><small>Propietario Cuenta:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Persona a cargo de la Cuenta" name="nombre" id="nombreAdd">
+
+							<label for=""><small>Comentario:</small></label>
+								<input type="text" class="form-control form-control-sm mb-2" placeholder="Comentario sobre la cuenta" name="info" id="infoAdd">
+
+								<div class="text-center">
+									<hr>
+									<p class="lead">Tipo de Cuenta</p>
+									<div class="form-check form-check-inline">
+											<label class="form-check-label" data-toggle="tooltip" title="Este tipo de usuario solo puede modificar los datos de los items">
+												<input class="form-check-input" type="radio" name="tipoUser" id="adminUser" value="administrador"> Usuario Administrador
+											</label>
+										</div>
+										<div class="form-check form-check-inline" data-toggle="tooltip" title="Este tipo de usuario puede crear cuentas de usuarios y modificar items">
+											<label class="form-check-label">
+												<input class="form-check-input" type="radio" name="tipoUser" id="superUser" value="privilegiado"> Usuario Privilegiado
+											</label>
+										</div>
+									<p class="text-danger"><small>** Por defecto la cuenta creada quedara ACTIVADA **</small></p>
+								</div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-success btn-sm col" name="btn_add" value="Agregar" onclick="sub_AddUser()">
+						<!-- </form> -->
+					</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- -----------------------------------------  MODAL FOTO POR TIPO----------------------------------------------  -->
 	<div class="modal fade" id="modalFotoTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -195,23 +292,49 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()">
+						<!-- <form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()"> -->
 							<small id="modalRespuesta"></small>			
 							<div id="newGrupo"></div>
 							<div id="newFamilia"></div>
-							<div id="newMaterial"></div>
 							<div id="newTipo"></div>
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
-						</form>
+							<input type="button" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar" onclick="sel_newTipo_()">
+
+						<!-- </form> -->
 					</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- -----------------------------------------  Modal familia----------------------------------------------  -->
+	<div class="modal fade" id="modalNewFalili" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Crear Nueva Familia</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<!-- <form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()"> -->
+							<small id="modalRespuesta"></small>			
+							<div id="grupoNweFam"></div>
+							<div class="pt-2" id="familiNweFam"></div>
+							<div class="pt-2" id="tipoNweFam"></div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar" onclick="sub_newFamili()">
 
+						<!-- </form> -->
+					</div>
+			</div>
+		</div>
+	</div>
 
 <!-- imports de javascript para funcionalidad -->
  	<script type="text/javascript" src="./JS/jquery.js"></script>
@@ -225,6 +348,7 @@ if(!isset($_SESSION['usuario'])){
 </html>
 
 <script>
+	var mat_creado = 0;
 //conjunt de funciones que cierran session despues de n minutos
 	function e() {
     document.body.appendChild( document.createTextNode("Fin Session") );
@@ -239,7 +363,7 @@ if(!isset($_SESSION['usuario'])){
 			if(t) clearTimeout(t);
 			contadorInactividad();
 	}//conjunt de funciones que cierran session despues de n minutos
-//confirmacion de envio de formulario
+
 	function sub_envio() {
 		var data = confirm("esta seguro de los datos INGRESADOS");
 		if(data){
@@ -503,7 +627,82 @@ if(!isset($_SESSION['usuario'])){
 
 	
 
-	//modal nuevo item
+	//modal nuevo item--
+
+	function sel_newTipo_() {
+		var grupo = $("#grupoNew").val();
+		var material = $("#materialAddNewTipo").val();
+		var material2 = $("#materialAddNewTipo2").val();
+		var tipo = $("#newTipoTipo").val();
+		var dT1 = $("#newTipoDT1").val();
+		var dT2 = $("#newTipoDT2").val();
+		var dT3 = $("#newTipoDT3").val();
+		var dT4 = $("#newTipoDT4").val();
+		
+		if(mat_creado != 1){
+			if(grupo != "1" && material != "1" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
+				var optn = confirm("Estas seguro de los datos ingresados");
+				if(optn){
+					$.ajax({
+						url: './../controlador/null.php',
+						type: 'GET',
+						dataType: 'html',
+						data: { valor1: grupo,
+						valor2: material,
+						valor3: "N/A",
+						valor4: tipo,
+						valor5: dT1,
+						valor6: dT2,
+						valor7: dT3,
+						valor8: dT4 },
+					}).done(function(respuesta){
+						// console.log('logrado');
+						$("#dInactivo").html(respuesta)
+						$('#modalNuevoItem').modal('hide')
+					})//fin done
+						.fail(function(){
+						console.log('error');
+					});swal("Ingesando datos");
+				} else {
+					swal("Verifica TODOS los datos")
+				}
+			} else {
+				swal("Completa Todos los Campos")
+			}
+		} else if(mat_creado == 1){
+			if(grupo != "1" && material2 != "" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
+				var optn = confirm("Estas seguro de los datos ingresados");
+				if(optn){
+					$.ajax({
+						url: './../controlador/null.php',
+						type: 'GET',
+						dataType: 'html',
+						data: { valor1: grupo,
+						valor2: "N/A",
+						valor3: material2,
+						valor4: tipo,
+						valor5: dT1,
+						valor6: dT2,
+						valor7: dT3,
+						valor8: dT4 },
+					}).done(function(respuesta){
+						// console.log('logrado');
+						$("#dInactivo").html(respuesta)
+						$('#modalNuevoItem').modal('hide')
+					})//fin done
+						.fail(function(){
+						console.log('error');
+					});swal("Ingesando datos");
+				} else {
+					swal("Verifica TODOS los datos")
+				}
+			} else {
+				swal("Completa Todos los Campos")
+			}
+		}
+
+		
+	}
 	
 	function loadGrupos3(){
     var grupo = [
@@ -562,34 +761,37 @@ if(!isset($_SESSION['usuario'])){
     var index = select.selectedIndex; 
     var value = select.options[index].value;
 		var text = select.options[index].text;
+
 		if(value != "1"){
-			$.ajax({
-				url: './../controlador/TraeInputsXtipo2.php',
-				type: 'POST',
-				dataType: 'html',
-				data: { valor: value},
-			})
-			.done(function(respuesta){
-				//console.log('logrado');
-				$("#newTipo").html(respuesta)
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});//fin fail
-		}//fin if
+			inputsIngreso = "<label><small>Tipo</small></label><input pype='text' class='form-control form-control-sm' placeholder='Ej:' name='newTipoTipo' id='newTipoTipo'>";
+			inputsIngreso += "<div id='mateEsconder'><small>Material</small></label><p id='materiales__here'> Cargando Materiales... .</p></div>";
+			inputsIngreso += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
+			inputsIngreso += "<label><small>Dato tecnico 1</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Medida ' name='newTipoDT1' id='newTipoDT1'>";
+			inputsIngreso += "<label><small>Dato tecnico 2</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Voltage' name='newTipoDT2' id='newTipoDT2'>";
+			inputsIngreso += "<label><small>Dato tecnico 3</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Color' name='newTipoDT3' id='newTipoDT3'>";
+			inputsIngreso += "<label><small>Dato tecnico 4</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Modelo' name='newTipoDT4' id='newTipoDT4'>";
+			traetipoXtipo2()
+			$("#newTipo").html(inputsIngreso);
+		}
+		
+	}
+
+	function generarNewMaterial() {
+		mat_creado += 1;
+		$("#mateEsconder").html("");
+		newMat = "<label><small>Material</small></label><input type='text' class='form-control form-control-sm col-12' placeholder='Ej: Madera Carton Metal Vinilo ' name='materialAddNewTipo2' id='materialAddNewTipo2'>";
+		$("#materialNoEsta").html(newMat);
 	}
 
 	function traetipoXtipo2() {
-			var tipo = $('#acaSaleElTipo').val();
 			$.ajax({
-				url: './../controlador/traeTipoXtipo.php',
+				url: './../controlador/traelosMateriales.php',
 				type: 'POST',
 				dataType: 'html',
-				data: { valor: tipo},
 			})
 			.done(function(respuesta){
 				// console.log('logrado');
-				$("#newMaterial").html(respuesta)
+				$("#materiales__here").html(respuesta)
 				loadImagenXtipo()
 			})//fin done
 			.fail(function(){
@@ -751,5 +953,289 @@ if(!isset($_SESSION['usuario'])){
 		});
 	}
 
-</script>
 
+//modal addUser
+
+
+	function showModalAddUser() {
+		if(true){
+			$('#modalNewUser').modal('show')
+			$('#usuarioAdd').val("");
+			$('#clave1Add').val("");
+			$('#clave2Add').val("");
+			$('#nombreAdd').val("");
+			$('#infoAdd').val("");
+			document.getElementById("adminUser").checked = false;
+			document.getElementById("superUser").checked = false;
+		}
+	}
+
+
+	function sub_AddUser() {
+		var user = $('#usuarioAdd').val();
+		var cl1 = $('#clave1Add').val();
+		var cl2 = $('#clave2Add').val();
+		var nombre = $('#nombreAdd').val();
+		var info = $('#infoAdd').val();
+		che1 =document.getElementById("adminUser");
+		che2 = document.getElementById("superUser");
+		
+		if(user != "" && cl1 != "" && cl2 != "" && nombre != "" && info != "" && passValida() && (che1.checked || che2.checked)){
+			add_ = confirm("Esta seguro de los datos ingresados")
+			if(add_){
+				addUsser_DB()
+			} else {
+				alert("Verifica los datos")
+			}
+		} else {
+			alert("Completa Todos Los Datos");
+		}
+		
+	}
+
+	function addUsser_DB() {
+
+		var usr = $('#usuarioAdd').val();
+		var clv = $('#clave1Add').val();
+		var nm = $('#nombreAdd').val();
+		var inf = $('#infoAdd').val();
+		
+		che1 =document.getElementById("adminUser");
+		che2 = document.getElementById("superUser");
+		if(che1.checked){
+			tipo = che1.value;
+		}
+		if(che2.checked){
+			tipo = che2.value;
+		}
+
+		//alert(usr+clv+nm+inf+tipo);
+			$.ajax({
+				url: './../controlador/addNewUser.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor1: usr,
+					valor2: clv,
+					valor3: nm,
+					valor4: inf,
+					valor5: tipo},
+			})
+			.done(function(respuesta){
+				// console.log('logrado');
+				console.log(respuesta);
+				$('#modalNewUser').modal('hide')
+				swal("Operacion realizada con EXITO!")
+				//$("#rsptaAddUser").html(respuesta)
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+	}
+
+
+	function passValida() {
+		var clave1 = $('#clave1Add').val();
+		var clave2 = $('#clave2Add').val();
+		if(clave1 != clave2){
+			$("#cl_1Add").html("Clave distinta")
+			$("#cl_2Add").html("Clave distinta")
+			document.getElementById("clave1Add").focus()
+			return false;
+		} else {
+			$("#cl_1Add").html(".")
+			$("#cl_2Add").html(".")
+			return true;
+		}
+	}
+
+
+//modal CAMBIO CLAVE
+
+	function showModalChangePass() {
+		if(true){
+			$('#modalCambiaClave').modal('show')
+			$('#acaLosDatosDelUsuario').html("")
+			loadCuentasUser()
+		}
+	}
+	
+	function loadCuentasUser() {
+		$.ajax({
+		url: './../controlador/loadUsers.php',
+		type: 'POST',
+		dataType: 'html',
+		}).done(function(respuesta){
+			// console.log('logrado');
+			//$("#loading").html(respuesta)
+			$('#LoadCuentas').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+
+	function seleccionaUser() {
+		$("#acaLosDatosDelUsuario").html('<i class="text-center fas fa-spinner fa-spin fa-5x text-success"></i>')
+		document.getElementById('selUserDB').selected = "true";
+		var select = document.getElementById("selUserDB");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+
+		$.ajax({
+		url: './../controlador/traeUsuario.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: value },
+		})
+		.done(function(respuesta){
+			//alert(respuesta);
+			$("#acaLosDatosDelUsuario").html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+
+	function verClave() {
+		document.getElementById('crudClaveN').type = 'text';
+	}
+
+	function ocultaClave() {
+		document.getElementById('crudClaveN').type = 'password';
+	}
+
+	function verClaveOld() {
+		document.getElementById('crudClaveO').type = 'text';
+	}
+
+	function ocultaClaveOld() {
+		document.getElementById('crudClaveO').type = 'password';
+	}
+
+	function sub_CrudUser() {
+		document.getElementById('selUserDB').selected = "true";
+		var select = document.getElementById("selUserDB");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+
+		var nombre = $('#crudNombre').val();
+		var usuario = $('#crudUser').val();
+		var newClave = $('#crudClaveN').val();
+		var oldCuenta = $('#crudTypoCuentaOld').val();
+		var newCuenta = $('#crudTypoCuentaNew').val();
+		var actides = $('#crudActivaDesactivaCta').val();
+		var info = $('#crudInfo').val();
+
+
+		//alert(usr+clv+nm+inf+tipo);
+		var conf = confirm("Esta seguro de los datos ingresados");
+		if(conf){
+			if(newClave != "" && newCuenta != "0" && actides != "3"){
+				$.ajax({
+				url: './../controlador/crudUser.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor1: value,
+					valor2: nombre,
+					valor3: usuario,
+					valor4: newClave,
+					valor5: newCuenta,
+					valor6: info,
+					valor7: actides},
+			})
+			.done(function(respuesta){
+				console.log(respuesta);
+				$('#modalCambiaClave').modal('hide')
+				swal("Operacion realizada con EXITO!")
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+			} else {
+				alert("Completa todos los campos")
+			}
+		} else {
+			alert("Verifica los datos");
+		}
+	}
+
+
+//modal nueva familia
+
+function showModNewFamili() {
+	$("#familiNweFam").html("");
+		if(true){
+			$('#modalNewFalili').modal('show')
+			lGNewFam()
+		}
+	}
+
+	function sub_newFamili() {
+		var grupo = $('#newFamGrupo').val();
+		var fam = $('#newFamFam').val();
+
+		if(grupo != "1" && fam != "" ){
+			optn = confirm("Estas seguro de los datos ingresados")
+			if(optn){
+				$.ajax({
+				url: './../controlador/addNewFamilia.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor1: grupo,
+					valor2: fam },
+				})
+				.done(function(respuesta){
+					console.log(respuesta);
+					//$("#acaLosDatosDelUsuario").html(respuesta)
+					$('#modalNewFalili').modal('hide')
+					swal("datos enviados")
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+			} else {
+				swal("datos NO enviados verificalos.")
+			}
+		} else {
+			swal("Completa todos los datos.")
+		}
+}
+
+	function lGNewFam(){
+    var grupo = [
+        "CADENAS Y CORREAS",
+        "ELEMENTOS DE FIJACION",
+        "EQUIPOS INDUSTRIALES",
+        "FILTROS Y LUBRICANTES",
+        "HERRAMIENTAS E INSTRUMENTOS",
+        "MATERIALES DE CONSTRUCCION Y FERRETERIA",
+        "MATERIALES DE GASFITERIA",
+        "MATERIALES Y ARTICULOS DE REFRIGERACION",
+        "MATERIALES Y ARTICULOS ELECTRICOS",
+        "MOTORES Y MOTORREDUCTORES",
+        "REPUESTOS MAQUINAS",
+        "RODAMIENTOS Y SELLOS"
+    ];
+    var txt = "<select class='form-control form-control-sm my-2' name='newFamGrupo' id='newFamGrupo' onclick='selNewGrupDes()'><option value='1' onclick='selNewGrupDes()'>Selecciona Grupo de items</option>";
+    grupo.forEach(function(element) {
+        txt += "<option value='"+element+"' onclick='selNewGrupDes()'>"+element+"</option>";
+    });
+		txt += "</select>";
+		
+		$("#grupoNweFam").html(txt);
+		
+	}
+
+	function selNewGrupDes() {
+		var grupo = $('#newFamGrupo').val();
+		if(grupo != "1"){
+			var nFam = "<label>Nombre para la Nueva Familia</label><input type='text' id='newFamFam' class='form-control form-control-sm' >";
+		$("#familiNweFam").html(nFam);
+		} else {
+			$("#familiNweFam").html("");
+		}
+	}
+
+</script>

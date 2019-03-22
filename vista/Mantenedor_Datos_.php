@@ -42,16 +42,6 @@ if(!isset($_SESSION['usuario'])){
 					</div>
 				</div>
 
-				<div class="btn-group">
-					<button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user-edit"></i> Usuario
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> Agregar Usuario</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i> Modificar Usuario</a>
-					</div>
-				</div>
 
 				<a href="busquedaAvanzada.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
 				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="far fa-edit"></i> Editar Items Antiguo</a>

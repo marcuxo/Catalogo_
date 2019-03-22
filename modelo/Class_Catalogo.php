@@ -2472,7 +2472,7 @@ class Catalogo
         }
 	}
 	
-    public function ingresoDatos($img,$grupo,$familia,$tipo,$material,$dato_2,$dato_3,$dato_4,$dato_5,$dato_6,$dato_7)
+  public function ingresoDatos($img,$grupo,$familia,$tipo,$material,$dato_2,$dato_3,$dato_4,$dato_5,$dato_6,$dato_7)
 	{
 		try{
 			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0",?,"N/A","N/A",?,?,?,?,?,?,?,?,?,?)');
@@ -3115,6 +3115,50 @@ class Catalogo
 			$e->getMessage();
 		}
 	}
+
+ public function addNewFamili($grupo,$familia)
+ {
+	try{
+		$query = $this->dbh->prepare('INSERT INTO familia_2 VALUES(?, null, ?)');
+		$query->bindParam(1, $familia);
+		$query->bindParam(2, $grupo);
+		
+		if($query->execute()){
+			echo "ok";
+		} else {
+			echo "no_ok";
+		}
+		$this->dbh = null;
+	} catch (PDOException $e){
+		$e->getMessage();
+	}
+ }
+
+ public function traeLosMateriales()
+ {
+		try {
+				 $query = $this->dbh->prepare('SELECT nombre_material FROM material');
+				 $query->execute();
+
+				 $data = $query->fetchAll();
+				 if(!empty($data)){
+						 $salida="<select class='form-control form-control-sm' name='materialAddNewTipo' id='materialAddNewTipo'>
+							 <option value='1'>Seleccione el material</option>";
+						 foreach ($data as $fila):
+								 $salida.=  "
+										<option value='".$fila['nombre_material']."'>".$fila['nombre_material']."</option>";
+						 endforeach;
+						 $salida.= "</select>";
+				 }else{
+						 $salida .= "No se encontro lo que buscas";
+				 }
+
+				 echo $salida;
+				 $this->dbh = null;
+		 }catch (PDOException $e) {
+				 $e->getMessage();
+		 }
+ }
 
 
 }//fin class

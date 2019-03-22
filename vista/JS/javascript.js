@@ -132,7 +132,7 @@ function validaFormulario(user, pass) {
 		 if(respuesta == "Administrador"){
 		 	location.href ="./Mantenedor_Datos_.php";
 		 } else if(respuesta == "Privilegiado"){
-			location.href ="./Mantenedor_Datos_.php";
+			location.href ="./Mantenedor_Datos_ss.php";
 		 } else if (respuesta == "bloqueo"){
 			$("#rspta_login").html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
 			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
