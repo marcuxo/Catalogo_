@@ -210,7 +210,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             //esta consulta carga los datos del item material para luego ser cargados en un select
             $query2 = $this->dbh->prepare('SELECT * FROM material');
@@ -580,7 +580,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             //esta consulta carga los datos del item material para luego ser cargados en un select
             $query2 = $this->dbh->prepare('SELECT * FROM material');
@@ -948,7 +948,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             //esta consulta carga los datos del item material para luego ser cargados en un select
             $query2 = $this->dbh->prepare('SELECT * FROM material');
@@ -1155,7 +1155,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             $query->execute();
             $data = $query->fetchAll();
@@ -1264,7 +1264,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             $query->execute();
             $data = $query->fetchAll();
@@ -1373,7 +1373,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             $query->execute();
             $data = $query->fetchAll();
@@ -1469,7 +1469,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             $query->execute();
             $data = $query->fetchAll();
@@ -1582,7 +1582,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             //esta consulta carga los datos del item material para luego ser cargados en un select
             $query2 = $this->dbh->prepare('SELECT * FROM material');
@@ -1950,7 +1950,7 @@ class Catalogo
     public function pruebas_copia($dato)
     {
         try {
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
             $query->bindParam(1, $dato);
             $query2 = $this->dbh->prepare('SELECT * FROM material');
  
@@ -2105,7 +2105,7 @@ class Catalogo
 	public function traer_familia($dato)
 	{
         try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
+            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
 			$query->bindParam(1, $dato);
             $query->execute();
 
@@ -2131,7 +2131,7 @@ class Catalogo
 	public function traer_familia2($dato)
     {
         try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
+            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
 			$query->bindParam(1, $dato);
             $query->execute();
 
@@ -2155,35 +2155,35 @@ class Catalogo
 	}
 	
 	public function traer_familia_foto($dato)
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
+		$query->bindParam(1, $dato);
+					$query->execute();
+
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaFoto' onclick='selFamiliaFoto()'><option value='1' onclick='selFamiliaFoto()'>Selecciona Familia</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre']."' onclick='selFamiliaFoto()'>".$fila['nombre']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
+
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
+
+  public function traer_familia3($dato)
     {
         try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
-			$query->bindParam(1, $dato);
-            $query->execute();
-
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaFoto' onclick='selFamiliaFoto()'><option value='1' onclick='selFamiliaFoto()'>Selecciona Familia</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre']."' onclick='selFamiliaFoto()'>".$fila['nombre']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
-
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
-
-    public function traer_familia3($dato)
-    {
-        try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
+            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
 			$query->bindParam(1, $dato);
             $query->execute();
 
@@ -2204,235 +2204,238 @@ class Catalogo
         }catch (PDOException $e) {
             $e->getMessage();
         }
-    }
+  }
 
 	public function traer_familia4($dato)
-    {
-        try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
-			$query->bindParam(1, $dato);
-            $query->execute();
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
+		$query->bindParam(1, $dato);
+					$query->execute();
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familiaNew' id='familiaNew' onclick='selFamilia3()'><option value='1' onclick='selFamilia3()'>Selecciona Familia</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre']."' onclick='selFamilia3()'>".$fila['nombre']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='form-group'><select class='form-control form-control-sm' name='familiaNew' id='familiaNew' onclick='selFamilia3()'><option value='1' onclick='selFamilia3()'>Selecciona Familia</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre']."' onclick='selFamilia3()'>".$fila['nombre']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
+
 
 	public function traer_familiaXtipo($dato)
-    {
-        try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ?');
-			$query->bindParam(1, $dato);
-            $query->execute();
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
+		$query->bindParam(1, $dato);
+					$query->execute();
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaXfoto' onclick='selFamiliaXfoto();loadImagenXtipo()'><option value='1' onclick='selFamiliaXfoto();loadImagenXtipo()'>Selecciona Familia</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre']."' onclick='selFamiliaXfoto();loadImagenXtipo()'>".$fila['nombre']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='form-group'><select class='form-control form-control-sm' name='familia' id='familiaXfoto' onclick='selFamiliaXfoto();loadImagenXtipo()'><option value='1' onclick='selFamiliaXfoto();loadImagenXtipo()'>Selecciona Familia</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre']."' onclick='selFamiliaXfoto();loadImagenXtipo()'>".$fila['nombre']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
 
-    public function traer_material()//sin uso
-    {
-    	 try {
-            $query = $this->dbh->prepare('SELECT nombre_material FROM material');
-            $query->execute();
+	public function traer_material()//sin uso
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT nombre_material FROM material');
+					$query->execute();
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='input-group input-group-sm'><select class='form-control form-control-sm' name='tipo'>
-            			<option value='seccionar' onclick='sel_material()'>ComboBox Provisorio!!</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre_material']."'>".$fila['nombre_material']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida .= "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='input-group input-group-sm'><select class='form-control form-control-sm' name='tipo'>
+								<option value='seccionar' onclick='sel_material()'>ComboBox Provisorio!!</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre_material']."'>".$fila['nombre_material']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida .= "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
 
-    public function buscaTipo($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
-    {
-    	try {
-            $query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
+	public function buscaTipo($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
+	{
+		try {
+					$query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
 
-            $query->execute();
+					$query->execute();
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='input-group input-group-sm col-14'><select class='form-control form-control-sm' name='tipo' id='tipoSelMod' required>
-                <option value='seleccionar'>Seleccione el Tipo</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='input-group input-group-sm col-14'><select class='form-control form-control-sm' name='tipo' id='tipoSelMod' required>
+							<option value='seleccionar'>Seleccione el Tipo</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
 
-    public function buscaTipoXtipo($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
-    {
-    	try {
-            $query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
+	public function buscaTipoXtipo($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
+	{
+		try {
+					$query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
 
-            $query->execute();
+					$query->execute();
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='input-group input-group-sm col-14'><select onclick='loadImagenXtipo()' class='form-control form-control-sm' name='tipo' id='tipoXtipo' required>
-                <option onclick='loadImagenXtipo()' value='seleccionar'>Seleccione el Tipo</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre_tipo']."' onclick='loadImagenXtipo()'>".$fila['nombre_tipo']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='input-group input-group-sm col-14'><select onclick='loadImagenXtipo()' class='form-control form-control-sm' name='tipo' id='tipoXtipo' required>
+							<option onclick='loadImagenXtipo()' value='seleccionar'>Seleccione el Tipo</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre_tipo']."' onclick='loadImagenXtipo()'>".$fila['nombre_tipo']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
+
 
 	public function buscaTipoFoto($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
-    {
-    	try {
-            $query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
+	{
+		try {
+					$query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
 
-            $query->execute();
+					$query->execute();
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='input-group input-group-sm col-14'><select class='form-control form-control-sm' name='tipo' id='tipoSelMod' required>
-                <option value='seleccionar'>Seleccione el Tipo</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
-                endforeach;
-				$salida.= "</select></div>";
-				
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='input-group input-group-sm col-14'><select class='form-control form-control-sm' name='tipo' id='tipoSelMod' required>
+							<option value='seleccionar'>Seleccione el Tipo</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
+							endforeach;
+			$salida.= "</select></div>";
+			
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
+
 
 	public function buscaTipo2($dato) //+++++++++++++++++++++++++++++++++++++++++++++++++++++en uso++++++++++++++++++++++++++++++++++++
-    {
-    	try {
-            $query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
+	{
+		try {
+					$query = $this->dbh->prepare('SELECT nombre_tipo FROM '.$dato.'');
 
-            $query->execute();
+					$query->execute();
 
 
-            $data = $query->fetchAll();
-            if(!empty($data)){
-                $salida="<div class='input-group input-group-sm col-14'><select class='form-control form-control-sm' name='tipo' id='tiposel' required>
-                <option value='seleccionar'>Seleccione el Tipo</option>";
-                foreach ($data as $fila):
-                		$salida.=  "
-                		   <option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
-                endforeach;
-                $salida.= "</select></div>";
-            }else{
-                $salida = "No se encontro lo que buscas";
-            }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='input-group input-group-sm col-14'><select class='form-control form-control-sm' name='tipo' id='tiposel' required>
+							<option value='seleccionar'>Seleccione el Tipo</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre_tipo']."'>".$fila['nombre_tipo']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
 
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-	}
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+}
 	
-    public function Correo($msg)
-    {
-    	$to = 'crusok@live.cl';
-        $subject = 'Verificacion de Datos';
-        //$message = 'Hola mundo desde el mail';
-        $headers[]= 'MiME-Version: 1.0';
-        $headers[]= 'Content-type: text/html; charset=iso-8859-1';
+	public function Correo($msg)
+	{
+		$to = 'crusok@live.cl';
+			$subject = 'Verificacion de Datos';
+			//$message = 'Hola mundo desde el mail';
+			$headers[]= 'MiME-Version: 1.0';
+			$headers[]= 'Content-type: text/html; charset=iso-8859-1';
 
-        mail($to, $subject, $msg, implode("\r\n", $headers));
-        echo "Correo enviado, revisa la bandeja de entrada o spam del correo ".$to;
+			mail($to, $subject, $msg, implode("\r\n", $headers));
+			echo "Correo enviado, revisa la bandeja de entrada o spam del correo ".$to;
 
-    }
+	}
 
-    public function Login($user, $pass)
-    {
-        try {
-            $query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
-            $query->bindParam(1, $user);
-            $query->bindParam(2, $pass);
-            $query->execute();
+	public function Login($user, $pass)
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT * FROM login_mantenedor WHERE usuario = binary ? AND clave = ?');
+					$query->bindParam(1, $user);
+					$query->bindParam(2, $pass);
+					$query->execute();
 
-            $data = $query->fetchAll();
+					$data = $query->fetchAll();
 
-						$_SESSION["usuario"] = $data[0]["nombre_login"];
-						if($data[0]["estado_login"] == "1"){
-							if(!empty($data)){
-								echo $data[0]["tipo_user_login"];
-							}else{
-									echo "no_ok";
-							}
-						} else {
-							echo "bloqueo";
+					$_SESSION["usuario"] = $data[0]["nombre_login"];
+					if($data[0]["estado_login"] == "1"){
+						if(!empty($data)){
+							echo $data[0]["tipo_user_login"];
+						}else{
+								echo "no_ok";
 						}
-		
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
-    }
+					} else {
+						echo "bloqueo";
+					}
+	
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
 
 	// metodo que recibe un parametro para buscar las coincidencias en la base de datos
 	public function BuscarB($dato)
@@ -2983,9 +2986,7 @@ class Catalogo
 
 	public function crearTabla(){
 		try{
-			$query = $this->dbh->prepare('CREATE TABLE marco_urrutia(id varchar(50),nombre varchar(50))');
-			//$query->bindParam(1, $id);
-
+			$query = $this->dbh->prepare('CREATE TABLE marco_urrutia(id varchar(50),nombre varchar(INSERT ))');
 			$query->execute();
 			$this->dbh = null;
 		} catch (PDOException $e){
@@ -2993,14 +2994,15 @@ class Catalogo
 		}
 	}
 
-	public function addUserDB($user, $pass, $nombre, $info, $tipo){
+	public function addUserDB($user, $pass, $nombre, $info, $tipo,$fecha){
 		try {
-            $query = $this->dbh->prepare('INSERT INTO login_mantenedor VALUES(null, ?, ?, ?, "1", ?, ?)');
+            $query = $this->dbh->prepare('INSERT INTO login_mantenedor VALUES(null, ?, ?, ?, "1", ?, ?, ?)');
             $query->bindParam(1, $user);
             $query->bindParam(2, $pass);
             $query->bindParam(3, $nombre);
             $query->bindParam(4, $info);
             $query->bindParam(5, $tipo);
+            $query->bindParam(6, $fecha);
             $query->execute();
 
             $this->dbh = null;
@@ -3116,49 +3118,145 @@ class Catalogo
 		}
 	}
 
- public function addNewFamili($grupo,$familia)
- {
-	try{
-		$query = $this->dbh->prepare('INSERT INTO familia_2 VALUES(?, null, ?)');
-		$query->bindParam(1, $familia);
-		$query->bindParam(2, $grupo);
-		
-		if($query->execute()){
-			echo "ok";
-		} else {
-			echo "no_ok";
+	public function addNewFamili($grupo,$familia)
+	{
+		try{
+			$query = $this->dbh->prepare('INSERT INTO familia_2 VALUES(?, null, ?)');
+			$query->bindParam(1, $familia);
+			$query->bindParam(2, $grupo);
+			$query->execute();
+
+			$query2 = $this->dbh->prepare('INSERT INTO items_db_2 VALUES(?,null,null,null,null,null,null,null,"0")');
+			$query2->bindParam(1, $familia);
+			$query2->execute();
+
+			if($query->execute()){
+				echo "ok";
+			} else {
+				echo "no_ok";
+			}
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
 		}
-		$this->dbh = null;
-	} catch (PDOException $e){
-		$e->getMessage();
 	}
- }
 
- public function traeLosMateriales()
- {
-		try {
-				 $query = $this->dbh->prepare('SELECT nombre_material FROM material');
-				 $query->execute();
+	public function traeLosMateriales()
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT nombre_material FROM material');
+					$query->execute();
 
-				 $data = $query->fetchAll();
-				 if(!empty($data)){
-						 $salida="<select class='form-control form-control-sm' name='materialAddNewTipo' id='materialAddNewTipo'>
-							 <option value='1'>Seleccione el material</option>";
-						 foreach ($data as $fila):
-								 $salida.=  "
-										<option value='".$fila['nombre_material']."'>".$fila['nombre_material']."</option>";
-						 endforeach;
-						 $salida.= "</select>";
-				 }else{
-						 $salida .= "No se encontro lo que buscas";
-				 }
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<select class='form-control form-control-sm' name='materialAddNewTipo' id='materialAddNewTipo'>
+								<option value='1'>Seleccione el material</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+											<option value='".$fila['nombre_material']."'>".$fila['nombre_material']."</option>";
+							endforeach;
+							$salida.= "</select>";
+					}else{
+							$salida .= "No se encontro lo que buscas";
+					}
 
-				 echo $salida;
-				 $this->dbh = null;
-		 }catch (PDOException $e) {
-				 $e->getMessage();
-		 }
- }
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+	}
 
+	public function addNewItem($fam,$fk,$txtTipo,$tipo,$material,$dT1,$dT2,$dT3,$dT4,$fecha)
+	{
+		echo "datos desde class: ".$fam."-".$txtTipo."-".$fk."-".$tipo."-".$material."-".$dT1."-".$dT2."-".$dT3."-".$dT4."-".$fecha;
+		try{
+			//$query2 = $this->dbh->prepare('UPDATE items_db_2 SET dato_2 = '.$txtTipo.', fk_tipo = '.$fk.', dato_3 = '.$material.', dato_4 = '.$dT1.', dato_5 = '.$dT2.', dato_6 = '.$dT3.', dato_7 = '.$dT4.' WHERE dato_1 = '.$fam.'');
+			$query2 = $this->dbh->prepare('UPDATE items_db_2 SET dato_2 = ?, fk_tipo = ?, dato_3 = ?, dato_4 = ?, dato_5 = ?, dato_6 = ?, dato_7 = ?, estado_item = "0", fecha_ingreso = ? WHERE dato_1 = ?');
+			$query2->bindParam(1, $txtTipo);
+			$query2->bindParam(2, $fk);
+			$query2->bindParam(3, $material);
+			$query2->bindParam(4, $dT1);
+			$query2->bindParam(5, $dT2);
+			$query2->bindParam(6, $dT3);
+			$query2->bindParam(7, $dT4);
+			$query2->bindParam(8, $fecha);
+			$query2->bindParam(9, $fam);
+			$query2->execute();
+
+			$query3 = $this->dbh->prepare('CREATE TABLE '.$fk.'(nombre_tipo varchar(50))');
+			$query3->execute();
+			sleep(2);
+			$tabla = strtolower($fk);
+			$query4 = $this->dbh->prepare('INSERT INTO '.$tabla.'(nombre_tipo) VALUES(?)');
+			$query4->bindParam(1, $tipo);
+			$query4->execute();
+
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+	public function pruebaDeTiposEnTabla()
+	{
+		$tipo = "tipó_sensor";
+		try{
+			$query2 = $this->dbh->prepare('SELECT * FROM all_tipos WHERE nombre_tipo = ?');
+			$query2->bindParam(1, $tipo);
+			$query2->execute();
+
+			$data = $query2->fetchAll();
+					if(!empty($data)){
+							$salida="<select class='form-control form-control-sm' name='' id=''>
+								<option value='1'>Seleccione el material</option>";
+							foreach ($data as $fila):
+								if($fila['tipo_1'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_1']."'>".$fila['tipo_1']."</option>";
+								}
+								if($fila['tipo_2'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_2']."'>".$fila['tipo_2']."</option>";
+								}
+								if($fila['tipo_3'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_3']."'>".$fila['tipo_3']."</option>";
+								}
+								if($fila['tipo_4'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_4']."'>".$fila['tipo_4']."</option>";
+								}
+								if($fila['tipo_5'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_5']."'>".$fila['tipo_5']."</option>";
+								}
+								if($fila['tipo_6'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_6']."'>".$fila['tipo_6']."</option>";
+								}
+								if($fila['tipo_7'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_7']."'>".$fila['tipo_7']."</option>";
+								}
+								if($fila['tipo_8'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_8']."'>".$fila['tipo_8']."</option>";
+								}
+								if($fila['tipo_9'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_9']."'>".$fila['tipo_9']."</option>";
+								}
+								if($fila['tipo_10'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_10']."'>".$fila['tipo_10']."</option>";
+								}
+								if($fila['tipo_11'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_11']."'>".$fila['tipo_11']."</option>";
+								}
+								if($fila['tipo_12'] != "N/A"){
+									$salida.=  "<option value='".$fila['tipo_12']."'>".$fila['tipo_12']."</option>";
+								}
+							endforeach;
+							$salida.= "</select>";
+					}else{
+							$salida .= "No se encontro lo que buscas";
+					}
+					echo $salida;
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
 
 }//fin class

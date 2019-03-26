@@ -438,7 +438,7 @@ function e() {
 		$('#fecha').html(fecha)
 		$('#fechita').val(fecha)
 
-		setTimeout("laFechita()",1000);s
+		setTimeout("laFechita()",1000);
 	}
 	laFechita()
 

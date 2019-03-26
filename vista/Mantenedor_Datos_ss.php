@@ -34,13 +34,15 @@ if(!isset($_SESSION['usuario'])){
 					<div class="dropdown-menu">
 						<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> Nuevo tipo</a>
 						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> Nueva Familia</a>
+						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i> Agregar Foto tipo</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> Activar Item</a>
+						<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> Activar Glosa</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i> Desactivar Item</a>
+						<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i> Desactivar Glosa</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> Nueva Familia</a>
+						<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-check-circle"></i> Activar item</a>
 					</div>
 				</div>
 				
@@ -218,12 +220,12 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 
-	<!-- -----------------------------------------  MODAL items inactivos----------------------------------------------  -->
+	<!-- -----------------------------------------  MODAL glosa inactivos----------------------------------------------  -->
 	<div class="modal info" id="modalInactivos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Items Inactivos</h5>
+						<h5 class="modal-title" id="exampleModalLongTitle">Glosa Inactivos</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -249,12 +251,12 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 
-	<!-- -----------------------------------------  MODAL items activos----------------------------------------------  -->
+	<!-- -----------------------------------------  MODAL glosa activos----------------------------------------------  -->
 	<div class="modal info" id="modalActivos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Items Activos</h5>
+						<h5 class="modal-title" id="exampleModalLongTitle">Glosa Activos</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -335,7 +337,7 @@ if(!isset($_SESSION['usuario'])){
 			</div>
 		</div>
 	</div>
-
+<input type="text" id="fechita" name="fechaAqui" class="form-control form-control-sm invisible">
 <!-- imports de javascript para funcionalidad -->
  	<script type="text/javascript" src="./JS/jquery.js"></script>
  	<script type="text/javascript" src="./JS/tether.1.4.js"></script>
@@ -349,6 +351,8 @@ if(!isset($_SESSION['usuario'])){
 
 <script>
 	var mat_creado = 0;
+	var tTipo_crew = 0;
+	var sh_mat = 0;
 //conjunt de funciones que cierran session despues de n minutos
 	function e() {
     document.body.appendChild( document.createTextNode("Fin Session") );
@@ -405,7 +409,7 @@ if(!isset($_SESSION['usuario'])){
     });
     txt += "</select>";
     $("#fotoGrupo").html(txt);
-	};
+	}
 	
 	function selGrupoFoto() {
 		//alert("diste click");
@@ -431,7 +435,7 @@ if(!isset($_SESSION['usuario'])){
 				console.log('error');
 			});
 		}//fin if
-	};
+	}
 
 	function selFamiliaFoto(){
 		
@@ -639,7 +643,16 @@ if(!isset($_SESSION['usuario'])){
 		var dT2 = $("#newTipoDT2").val();
 		var dT3 = $("#newTipoDT3").val();
 		var dT4 = $("#newTipoDT4").val();
-		
+		var fecha = laFechita();
+
+		if(tTipo_crew == 0){
+			tipo = "N/A";
+		}
+		if(sh_mat == 0){
+			material = "N/A";
+			material2 = "N/A";
+		}
+
 		if(mat_creado != 1){
 			if(grupo != "1" && familia != "1" && material != "1" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
 				var optn = confirm("Estas seguro de los datos ingresados");
@@ -656,7 +669,8 @@ if(!isset($_SESSION['usuario'])){
 						valor5: dT1,
 						valor6: dT2,
 						valor7: dT3,
-						valor8: dT4 },
+						valor8: dT4,
+						valor9: fecha },
 					}).done(function(respuesta){
 						console.log(respuesta);
 						//$("#dInactivo").html(respuesta)
@@ -687,7 +701,8 @@ if(!isset($_SESSION['usuario'])){
 						valor5: dT1,
 						valor6: dT2,
 						valor7: dT3,
-						valor8: dT4 },
+						valor8: dT4,
+						valor9: fecha },
 					}).done(function(respuesta){
 						console.log(respuesta);
 						//$("#dInactivo").html(respuesta)
@@ -728,7 +743,7 @@ if(!isset($_SESSION['usuario'])){
     });
     txt += "</select>";
     $("#newGrupo").html(txt);
-	};
+	}
 	
 	function selGrupo3() {
 		$("#newFamilia").html("");
@@ -765,10 +780,15 @@ if(!isset($_SESSION['usuario'])){
     var value = select.options[index].value;
 		var text = select.options[index].text;
 
+		// inputsIngreso = "<label><small>Tipo</small></label><input pype='text' class='form-control form-control-sm' placeholder='Ej:' name='newTipoTipo' id='newTipoTipo'>";
+		// inputsIngreso += "<div id='mateEsconder'><small>Material</small></label><p id='materiales__here'> Cargando Materiales... .</p></div>";
+		// inputsIngreso += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
+
 		if(value != "1"){
-			inputsIngreso = "<label><small>Tipo</small></label><input pype='text' class='form-control form-control-sm' placeholder='Ej:' name='newTipoTipo' id='newTipoTipo'>";
-			inputsIngreso += "<div id='mateEsconder'><small>Material</small></label><p id='materiales__here'> Cargando Materiales... .</p></div>";
-			inputsIngreso += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
+			inputsIngreso = "<div id='chaoBtnTipo'><small class='pr-5'>si el item tiene un tipo</small><a class='btn btn-sm btn-info text-white' onclick='showTipoAddNewItem()'> Genere un Tipo para el item </a></div>";
+			inputsIngreso += "<div id='acaVaElTipo'></div>";
+			inputsIngreso += "<div id='chaoBtnMaterial'><small class='pr-5'>Si puede definir el material</small><a class='btn btn-sm btn-info text-white' onclick='showANTmaterial()'> Genere un Tipo para el item </a></div>";
+			inputsIngreso += "<div id='acaVaElMaterial'></div>";
 			inputsIngreso += "<label><small>Dato tecnico 1</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Medida ' name='newTipoDT1' id='newTipoDT1'>";
 			inputsIngreso += "<label><small>Dato tecnico 2</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Voltage' name='newTipoDT2' id='newTipoDT2'>";
 			inputsIngreso += "<label><small>Dato tecnico 3</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Color' name='newTipoDT3' id='newTipoDT3'>";
@@ -784,6 +804,22 @@ if(!isset($_SESSION['usuario'])){
 		$("#mateEsconder").html("");
 		newMat = "<label><small>Material</small></label><input type='text' class='form-control form-control-sm col-12' placeholder='Ej: Madera Carton Metal Vinilo ' name='materialAddNewTipo2' id='materialAddNewTipo2'>";
 		$("#materialNoEsta").html(newMat);
+	}
+
+	function showANTmaterial() {
+		sh_mat += 1;
+		$("#chaoBtnMaterial").html("");
+		traetipoXtipo2()
+		nMat = "<div id='mateEsconder'><small>Material</small></label><p id='materiales__here'> Cargando Materiales... .</p></div>";
+		nMat += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
+		$("#acaVaElMaterial").html(nMat);			
+	}
+
+	function showTipoAddNewItem() {
+		tTipo_crew += 1;
+		$("#chaoBtnTipo").html("");
+		ttttipo = "<label><small>Tipo</small></label><input pype='text' class='form-control form-control-sm' placeholder='Ej:' name='newTipoTipo' id='newTipoTipo'>";		
+		$("#acaVaElTipo").html(ttttipo);
 	}
 
 	function traetipoXtipo2() {
@@ -1002,7 +1038,8 @@ if(!isset($_SESSION['usuario'])){
 		var clv = $('#clave1Add').val();
 		var nm = $('#nombreAdd').val();
 		var inf = $('#infoAdd').val();
-		
+		var fecha = $('#fechita').val();
+
 		che1 =document.getElementById("adminUser");
 		che2 = document.getElementById("superUser");
 		if(che1.checked){
@@ -1021,7 +1058,8 @@ if(!isset($_SESSION['usuario'])){
 					valor2: clv,
 					valor3: nm,
 					valor4: inf,
-					valor5: tipo},
+					valor5: tipo,
+					valor6: fecha},
 			})
 			.done(function(respuesta){
 				// console.log('logrado');
@@ -1167,8 +1205,8 @@ if(!isset($_SESSION['usuario'])){
 
 //modal nueva familia
 
-function showModNewFamili() {
-	$("#familiNweFam").html("");
+	function showModNewFamili() {
+		$("#familiNweFam").html("");
 		if(true){
 			$('#modalNewFalili').modal('show')
 			lGNewFam()
@@ -1204,7 +1242,7 @@ function showModNewFamili() {
 		} else {
 			swal("Completa todos los datos.")
 		}
-}
+	}
 
 	function lGNewFam(){
     var grupo = [
@@ -1241,5 +1279,32 @@ function showModNewFamili() {
 		}
 	}
 
+
+	function laFechita() {
+		var hoy = new Date();
+		var dd = hoy.getDate();
+		var mm = hoy.getMonth()+1;
+		var yyyy = hoy.getFullYear();
+		var hh = hoy.getHours();
+		var mi = hoy.getMinutes();
+		var ss = hoy.getSeconds();
+		dd=addZero(dd);
+		mm=addZero(mm);
+		hh=addZero(hh);
+		ss=addZero(ss);
+
+		function addZero(i) {
+				if (i < 10) {
+						i = '0' + i;
+				}
+				return i;
+		}
+		var fecha = dd+"-"+mm+"-"+yyyy+" "+hh+":"+mi+":"+ss;
+		$('#fecha').html(fecha)
+		$('#fechita').val(fecha)
+		return fecha;
+		setTimeout("laFechita()",1000);
+	}
+	laFechita()
 </script>
 
