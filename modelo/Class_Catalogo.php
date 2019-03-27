@@ -1945,9 +1945,379 @@ class Catalogo
         }catch (PDOException $e) {
             $e->getMessage();
         }
-    }
+	}
+	
+	
+	public function traeDatos_1_7_ngls($dato)// muestra los inputs en el mantenedor de datos central+
+    {
+        try {
+        	//esta consulta carga los items de ingreso de datos vacios
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
+            $query->bindParam(1, $dato);
+            //esta consulta carga los datos del item material para luego ser cargados en un select
+            $query2 = $this->dbh->prepare('SELECT * FROM material');
+ 
 
-    public function pruebas_copia($dato)
+            $query->execute();
+            $query2->execute();
+            $data2 = $query2->fetchAll();
+            $data = $query->fetchAll();
+            	//recorrido para el select material
+            	$salida2="
+            	<div class='input-group input-group-sm mb-2'><select class='form-control form-control-sm' name='material' id='material' required><option value='seccionar' >Seleccione el Material</option>";
+                foreach ($data2 as $filas):
+                		$salida2.=  "
+                		   <option value='".$filas['nombre_material']."' >".$filas['nombre_material']."</option>";
+                endforeach;
+                $salida2.= "</select></div>";
+
+
+            if(!empty($data)){
+            	//recorrido para la carga de los items de llenado de datos vacios
+                $salida="";
+                foreach ($data as $fila):
+
+                	if($fila['dato_3'] == "N/A"){
+                			if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+									traeTipoNGLS();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                            } else {
+                			$salida.=  "
+                				
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+                	} else if($fila['dato_4'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO" && $fila['dato_3'] == "MATERIAL"){
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+									traeTipoNGLS();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>
+                            	";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                            	$salida .= $salida2;
+                            	
+                            }
+                			else if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+									traeTipoNGLS();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+	                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+                            	
+                            } else if($fila['dato_3'] == "MATERIAL"){
+                            	$salida .= "
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            	$salida .= $salida2;
+
+                            } else if($fila['dato_2'] == "TIPO" && $fila['dato_3'] == "MATERIAL"){
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+									traeTipoNGLS();
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida .= $salida2;
+
+                            } else {
+                            	$salida.=  "
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+	                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+							
+                	} else if($fila['dato_5'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO" && $fila['dato_3'] == "MATERIAL"){
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida .= $salida2;
+                            	$salida.=  "
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+                			else if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	//$salida .= $salida2;
+                            	$salida.=  "
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+		                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            
+                           } else if($fila['dato_3'] == "MATERIAL"){
+														 $salida .= $salida2;
+                            	$salida.= "
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            	$salida.=  "
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            
+                            }  else {
+                            	$salida.=  "
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+	                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                        	}
+                            
+
+                	} else if($fila['dato_6'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO" && $fila['dato_3'] == "MATERIAL"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible '>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida .= $salida2;
+                            	$salida.=  "
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+		                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+                            else if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida.=  "
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+		                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+		                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            } else if($fila['dato_3'] == "MATERIAL"){
+                            	
+                            	$salida.=  "
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            ".$salida2."
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+	                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div";
+                            }else {
+	                			$salida.=  "
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+	                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+	                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+	                        }
+
+                	} else if($fila['dato_7'] == "N/A"){
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO" && $fila['dato_3'] == "material"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida .= $salida2;
+                            	$salida.=  "
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+		                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                            	<input name='dato_6' id='dato_6' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+                			else if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	
+                            	$salida.=  "
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+		                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+		                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                            	<input name='dato_6' id='dato_6' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            } else if($fila['dato_3'] == "MATERIAL"){
+                            	$salida .= "
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            	$salida .= $salida2;
+                            	$salida .=  "
+                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+	                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                            <input name='dato_6' id='dato_6' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+
+                            } else {
+                				$salida.=  "
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+	                            <input name='dato_3' id='dato_3' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+	                            <input name='dato_5' id='dato_5' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                            <input name='dato_6' id='dato_6' type='text' class='form-control' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                        	}
+                	} else {
+                			$salida.=  "";
+                			if($fila['dato_2'] == "TIPO" && $fila['dato_3'] == "MATERIAL"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida .= $salida2;
+                            	$salida.=  "
+	                            	<div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+		                            <input name='dato_5' id='dato_5' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                           		<input name='dato_6' id='dato_6' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                           		<div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_7']."</span>
+	                            	<input name='dato_7' id='dato_7' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+                			else if($fila['dato_2'] == "TIPO"){
+
+                            	$salida.= "
+                            	<div id='tipo'>
+                            	<script>
+								traeTipoNGLS()
+                            	</script>
+                            		<input id='acaSaleElTipo' value=".$fila['fk_tipo']." class='invisible'>
+                            	</div>";//configuracion tipo*-**-*-*-*-**-*-*-*-*-*-*-******-****
+
+                            	$salida.=  "
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+		                            <input name='dato_3' id='dato_3' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            	<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+		                            <input name='dato_4' id='dato_4' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+		                            <input name='dato_5' id='dato_5' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+		                            <input name='dato_6' id='dato_6' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+		                            <div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_7']."</span>
+	                            	<input name='dato_7' id='dato_7' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            }
+                            else if($fila['dato_3'] == "MATERIAL"){
+                            	$salida.= "
+                            	<div class='input-group input-group-sm mb-2 '><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+                            	";
+                            	$salida .= $salida2;
+                            	$salida.=  "
+                            	<div class='input-group input-group-sm mb-2 '><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2 '><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+	                            <input name='dato_5' id='dato_5' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2 '><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                            <input name='dato_6' id='dato_6' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2 '><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_7']."</span>
+	                            <input name='dato_7' id='dato_7' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>";
+                            } else {
+	                			$salida.=  "
+	                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_2']."</span>
+	                            <input name='dato_2' id='dato_2' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_3']."</span>
+	                            <input name='dato_3' id='dato_3' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_4']."</span>
+	                            <input name='dato_4' id='dato_4' type='text' class='form-control'name=''  placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_5']."</span>
+	                            <input name='dato_5' id='dato_5' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_6']."</span>
+	                            <input name='dato_6' id='dato_6' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>
+	                            <div class='input-group input-group-sm mb-2' ><span class='input-group-addon' id='sizing-addon2'>".$fila['dato_7']."</span>
+	                            <input name='dato_7' id='dato_7' type='text' class='form-control' name='' placeholder='Ingrese Dato.' aria-describedby='sizing-addon2' required><br></div>"
+	                            ;
+                        }
+                	}
+                    
+				endforeach;
+				$salida .= "
+				<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>Opcional</span>
+				<input name='dato_8' id='dato_8' type='text' class='form-control form-control-sm' placeholder='Ingrese Dato opcional' aria-describedby='sizing-addon2'><br></div>
+				";
+                $salida.= "";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+			
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+  }
+
+  public function pruebas_copia($dato)
     {
         try {
             $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
@@ -2072,11 +2442,11 @@ class Catalogo
         }catch (PDOException $e) {
             $e->getMessage();
         }
-    }
+  }
 
         //carga el primer select multiple donde se cargan los datos de los grupos de repuestos
-    public function TraeGrupo()
-    {
+	public function TraeGrupo()
+	{
         try {
             $query = $this->dbh->prepare('SELECT * FROM grupo');
 
@@ -2100,6 +2470,8 @@ class Catalogo
             $e->getMessage();
         }
 	}
+
+	
 	
 	    //carga el primer select multiple donde se cargan los datos de la familia de repuestos
 	public function traer_familia($dato)
@@ -2128,6 +2500,32 @@ class Catalogo
         }
 	}
 	
+	public function traer_familia_ngls($dato)
+	{
+        try {
+            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
+			$query->bindParam(1, $dato);
+            $query->execute();
+
+            $data = $query->fetchAll();
+            if(!empty($data)){
+                $salida="<div class='form-group'><select class='form-control form-control-sm' name='familiaNGLS_sel' id='familiaNGLS_sel' onclick='selFamiliaNGLS()'><option value='1' onclick='selFamiliaNGLS()'>Seleccione Familia ...</option>";
+                foreach ($data as $fila):
+                		$salida.=  "
+                		   <option value='".$fila['nombre']."' onclick='selFamiliaNGLS()'>".$fila['nombre']."</option>";
+                endforeach;
+                $salida.= "</select></div>";
+            }else{
+                $salida = "No se encontro lo que buscas";
+            }
+
+            echo $salida;
+            $this->dbh = null;
+        }catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
+
 	public function traer_familia2($dato)
     {
         try {
