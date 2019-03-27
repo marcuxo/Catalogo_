@@ -3519,12 +3519,12 @@ class Catalogo
 	public function addNewFamili($grupo,$familia)
 	{
 		try{
-			$query = $this->dbh->prepare('INSERT INTO familia_2 VALUES(?, null, ?)');
+			$query = $this->dbh->prepare('INSERT INTO familia_2 VALUES(?, null, ?,"2")');
 			$query->bindParam(1, $familia);
 			$query->bindParam(2, $grupo);
 			$query->execute();
 
-			$query2 = $this->dbh->prepare('INSERT INTO items_db_2 VALUES(?,null,null,null,null,null,null,null,"0")');
+			$query2 = $this->dbh->prepare('INSERT INTO items_db_2 VALUES(?,null,null,null,null,null,null,null,"2",null,null)');
 			$query2->bindParam(1, $familia);
 			$query2->execute();
 
@@ -3570,7 +3570,7 @@ class Catalogo
 		echo "datos desde class: ".$fam."-".$txtTipo."-".$fk."-".$tipo."-".$material."-".$dT1."-".$dT2."-".$dT3."-".$dT4."-".$fecha;
 		try{
 			//$query2 = $this->dbh->prepare('UPDATE items_db_2 SET dato_2 = '.$txtTipo.', fk_tipo = '.$fk.', dato_3 = '.$material.', dato_4 = '.$dT1.', dato_5 = '.$dT2.', dato_6 = '.$dT3.', dato_7 = '.$dT4.' WHERE dato_1 = '.$fam.'');
-			$query2 = $this->dbh->prepare('UPDATE items_db_2 SET dato_2 = ?, fk_tipo = ?, dato_3 = ?, dato_4 = ?, dato_5 = ?, dato_6 = ?, dato_7 = ?, estado_item = "0", fecha_ingreso = ? WHERE dato_1 = ?');
+			$query2 = $this->dbh->prepare('UPDATE items_db_2 SET dato_2 = ?, fk_tipo = ?, dato_3 = ?, dato_4 = ?, dato_5 = ?, dato_6 = ?, dato_7 = ?, estado_item = "2", fecha_ingreso = ? WHERE dato_1 = ?');
 			$query2->bindParam(1, $txtTipo);
 			$query2->bindParam(2, $fk);
 			$query2->bindParam(3, $material);
@@ -3685,7 +3685,7 @@ class Catalogo
 
 	public function addCodigoNGLS($codigo, $id)
 	{
-		echo $codigo."/class/".$id;
+		//echo $codigo."/class/".$id;
 		try{
 			$query = $this->dbh->prepare('UPDATE datos_formalizados SET codigo_dato_f = '.$codigo.' WHERE ID_DATO_F = ?');
 			$query->bindParam(1, $id);
@@ -3697,6 +3697,32 @@ class Catalogo
 		}
 	}
 
+	public function loadItemsEnEsperaDeActivacion()
+	{
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE estado_item = "2"');
+
+			$query->execute();
+			$data = $query->fetchAll();
+			$cont = count($data);
+			$salida;
+			if(!empty($data)){
+					$salida ="<select multiple name='itemActivo' id='itemActivo' class='col-12 form-control form-control-sm' style='height:220px'>";
+					foreach ($data as $fila):
+			$salida.= "
+				<option value='".$fila['dato_1']."' onclick='selItemEspera()'>".$fila['dato_1']." ".$fila['dato_3']." ".$fila['dato_4']." ".$fila['dato_5']." ".$fila['dato_6']." ".$fila['dato_7']." ".$fila['fecha_ingreso']."</option>
+										";
+					endforeach;
+					$salida.= "</select>";
+			}else{
+					$salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+	}catch (PDOException $e) {
+			$e->getMessage();
+	}
+	}
 
 
 

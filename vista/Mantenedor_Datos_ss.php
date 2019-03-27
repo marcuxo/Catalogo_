@@ -32,19 +32,23 @@ if(!isset($_SESSION['usuario'])){
 							<i class="fas fa-pen"></i> Editar Items
 					</button>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> Nuevo tipo</a>
+							<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> <small>Nuevo tipo</small></a>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> Nueva Familia</a>
+							<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> <small>Nueva Familia</small></a>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> Activar item</a>
+							<a class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> <small>Items En ESPERA</small></a>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i> Agregar Foto tipo</a>
+							<a class="dropdown-item" onclick="showModalActivarItem()"><i class="fas fa-check-circle"></i><small> Activar item</small></a>
+						<!-- <div class="dropdown-divider"></div> -->
+							<a class="dropdown-item" onclick="showModalDesactivarItem()"><i class="fas fa-check-circle"></i><small> Desctivar item</small></a>
+						<!-- <div class="dropdown-divider"></div> -->
+							<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i><small> Agregar Foto tipo</small></a>
 						<div class="dropdown-divider"></div>
-							<a class="dropdown-item" onclick="showNewGlosa()"><i class="fas fa-plus-square"></i> Nueva Glosa</a>
+							<a class="dropdown-item" onclick="showNewGlosa()"><i class="fas fa-plus-square"></i> <small>Nueva Glosa</small></a>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> Activar Glosa</a>
+							<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> <small>Activar Glosa</small></a>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i> Desactivar Glosa</a>
+							<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i><small> Desactivar Glosa</small></a>
 					</div>
 				</div>
 				
@@ -53,9 +57,9 @@ if(!isset($_SESSION['usuario'])){
 						<i class="fas fa-user-edit"></i> Usuario
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> Agregar Usuario</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i> Modificar Usuario</a>
+						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> <small>Agregar Usuario</small></a>
+						<!-- <div class="dropdown-divider"></div> -->
+						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i><small> Modificar Usuario</small></a>
 					</div>
 				</div>
 
@@ -109,45 +113,12 @@ if(!isset($_SESSION['usuario'])){
 	</div>
 </footer>
 
-<!-- -----------------------------------------  MODAL IGRESA CODIGO----------------------------------------------  -->
-<div class="modal info" id="modalIngresaCodigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Ingresa el Codigo para la Glosa</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-
-				<div class="modal-body">
-					<!-- contenido del modal -->
-					<div class="col-12 text-center" id="">
-							<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>Codigo</span>
-								<input name='nuevoCodigoNGLS' id='nuevoCodigoNGLS' type='text' class='form-control' placeholder='Ingrese el codigo' aria-describedby='sizing-addon2' ><br></div>
-								<input type="text" id="iDnuevoCodigoNGLS" class="invisible">
-						<div class="col mb-3" id="textCodigo"></div>
-					</div>
-					<div class="modal-footer">
-							<div class="col-12">
-									<div class="row">
-											<div class="col text-right">
-													<button type="button" class="btn btn-sm btn-danger" onclick="selAddCodigo()">Agregar Codigo</button>
-											</div>
-									</div>
-							</div>
-					</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-	<!-- -----------------------------------------  MODAL ACTIVAR ITEM EN ESPERA----------------------------------------------  -->
-	<div class="modal info" id="modalActivaritemEnEspera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<!-- -----------------------------------------  MODAL IGRESA CODIGO----------------------------------------------  -->
+	<div class="modal info" id="modalIngresaCodigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Actvar Item En espera</h5>
+						<h5 class="modal-title" id="exampleModalLongTitle">Ingresa el Codigo para la Glosa</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -155,12 +126,107 @@ if(!isset($_SESSION['usuario'])){
 
 					<div class="modal-body">
 						<!-- contenido del modal -->
-						<div class="col-12 text-center" id=""></div>
+						<div class="col-12 text-center" id="">
+								<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>Codigo</span>
+									<input name='nuevoCodigoNGLS' id='nuevoCodigoNGLS' type='text' class='form-control' placeholder='Ingrese el codigo' aria-describedby='sizing-addon2' ><br></div>
+									<input type="text" id="iDnuevoCodigoNGLS" class="invisible">
+							<div class="col mb-3" id="textCodigo"></div>
+						</div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col text-right">
+														<button type="button" class="btn btn-sm btn-danger" onclick="selAddCodigo()">Agregar Codigo</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL ACTIVAR ITEM EN ESPERA----------------------------------------------  -->
+	<div class="modal info" id="modalActivaritemEnEspera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Activar Item En espera</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="activarItemES"></div>
 						<div class="modal-footer">
 								<div class="col-12">
 										<div class="row">
 												<div class="col-8">
 														<small class="">Haz click En un item de la lista para ACTIVAR</small>
+												</div>
+												<div class="col-4 text-right">
+														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL ACTIVAR ITEM----------------------------------------------  -->
+	<div class="modal info" id="modalActivaritem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Activar Item</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="activarItemES"></div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col-8">
+														<small class="">Haz click En un item de la lista para ACTIVAR</small>
+												</div>
+												<div class="col-4 text-right">
+														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL DESACTIVAR ITEM ----------------------------------------------  -->
+	<div class="modal info" id="modalDesctivaritem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Desactivar Item</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="activarItemES"></div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col-8">
+														<small class="">Haz click En un item de la lista para DESACTIVAR</small>
 												</div>
 												<div class="col-4 text-right">
 														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
@@ -1812,13 +1878,48 @@ if(!isset($_SESSION['usuario'])){
 
 //modal activar item en espera
 
-function showModalActivarItemEnEspera() {
+	function showModalActivarItemEnEspera() {
+		$('#activarItemES').html("Cargando ..")
+		if(true){
+			$('#modalActivaritemEnEspera').modal('show')
+			loadItemsEnEsperaES()
+		}
+	}
+
+	function loadItemsEnEsperaES() {
+		$.ajax({
+			url: './../controlador/loadItemEspera.php',
+			type: 'POST',
+			dataType: 'html',
+			}).done(function(respuesta){
+				//console.log('lograd0');
+				//$("#loading").html(respuesta)
+				$('#activarItemES').html(respuesta)
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+	}
+
+
+//modal desactiva item 
+function showModalDesactivarItem() {
+	if(true){
+		$('#modalDesctivaritem').modal('show')
+	}
+}
+
+//modal activar item
+function showModalActivarItem() {
 	
 	if(true){
-			$('#modalActivaritemEnEspera').modal('show')
-		}
+		$('#modalActivaritem').modal('show')
+	}
 	
 }
+
+
+
 
 </script>
 
