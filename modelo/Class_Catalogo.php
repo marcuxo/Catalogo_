@@ -3236,7 +3236,7 @@ class Catalogo
                 $salida ="<select multiple name='itemInactivo' id='itemInactivo' class='col-12 form-control' style='height:220px'>";
                 foreach ($data as $fila):
 						$salida.= "
-							<option value='".$fila['id_dato_f']."' onclick='selInactivo()'>".$fila['grupo_dato_f']." ".$fila['familia_dato_f']." ".$fila['dato1_dato_f']." ".$fila['dato2_dato_f']." ".$fila['dato3_dato_f']." ".$fila['dato4_dato_f']." ".$fila['dato5_dato_f']." ".$fila['dato6_dato_f']."</option>
+							<option value='".$fila['id_dato_f']."' onclick='selInactivo()'>".$fila['codigo_dato_f']." ".$fila['grupo_dato_f']." ".$fila['familia_dato_f']." ".$fila['dato1_dato_f']." ".$fila['dato2_dato_f']." ".$fila['dato3_dato_f']." ".$fila['dato4_dato_f']." ".$fila['dato5_dato_f']." ".$fila['dato6_dato_f']."</option>
                         	";
                 endforeach;
                 $salida.= "</select>";
@@ -3656,5 +3656,48 @@ class Catalogo
 			$e->getMessage();
 		}
 	}
+
+	public function AddNewGlosaNGLS($codigo,$grupo,$familia,$fecha,$datoOptn,$dato2,$dato3,$dato4,$dato5,$dato6,$dato7)
+	{
+		echo "Class Glosa: ".$codigo."--".$grupo."--".$familia."--".$fecha."--".$datoOptn."--".$dato2."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7;
+		$nn = "N/A";
+		try{
+			$query2 = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--/--/-- --:--:--")');
+			$query2->bindParam(1, $codigo);
+			$query2->bindParam(2, $grupo);
+			$query2->bindParam(3, $familia);
+			$query2->bindParam(4, $dato2);
+			$query2->bindParam(5, $dato3);
+			$query2->bindParam(6, $dato4);
+			$query2->bindParam(7, $dato5);
+			$query2->bindParam(8, $dato6);
+			$query2->bindParam(9, $dato7);
+			$query2->bindParam(10, $nn);
+			$query2->bindParam(11, $datoOptn);
+			$query2->bindParam(12, $fecha);
+			$query2->execute();
+
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+	public function addCodigoNGLS($codigo, $id)
+	{
+		echo $codigo."/class/".$id;
+		try{
+			$query = $this->dbh->prepare('UPDATE datos_formalizados SET codigo_dato_f = '.$codigo.' WHERE ID_DATO_F = ?');
+			$query->bindParam(1, $id);
+
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+
+
 
 }//fin class

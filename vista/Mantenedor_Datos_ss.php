@@ -108,6 +108,40 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </footer>
+
+<!-- -----------------------------------------  MODAL IGRESA CODIGO----------------------------------------------  -->
+<div class="modal info" id="modalIngresaCodigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Ingresa el Codigo para la Glosa</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<!-- contenido del modal -->
+					<div class="col-12 text-center" id="">
+							<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>Codigo</span>
+								<input name='nuevoCodigoNGLS' id='nuevoCodigoNGLS' type='text' class='form-control' placeholder='Ingrese el codigo' aria-describedby='sizing-addon2' ><br></div>
+								<input type="text" id="iDnuevoCodigoNGLS" class="invisible">
+						<div class="col mb-3" id="textCodigo"></div>
+					</div>
+					<div class="modal-footer">
+							<div class="col-12">
+									<div class="row">
+											<div class="col text-right">
+													<button type="button" class="btn btn-sm btn-danger" onclick="selAddCodigo()">Agregar Codigo</button>
+											</div>
+									</div>
+							</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 	<!-- -----------------------------------------  MODAL ACTIVAR ITEM EN ESPERA----------------------------------------------  -->
 	<div class="modal info" id="modalActivaritemEnEspera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
@@ -561,6 +595,48 @@ if(!isset($_SESSION['usuario'])){
 		}
 	}
 
+	//modal Ingreso Codigo
+	
+	function ShowModalIngresaCodigo(txt, id) {
+		$('#modalIngresaCodigo').modal('show')
+		$('#iDnuevoCodigoNGLS').val(id)
+		$('#nuevoCodigoNGLS').val("");
+
+		txt1 = txt.indexOf("N/A")
+		txt2 = txt.length;
+		var res = txt.substr(0, (txt1-1));
+		$('#textCodigo').html(res)
+	} 
+
+	function selAddCodigo() {
+		var codigo = $('#nuevoCodigoNGLS').val();
+		var idCodigo = $('#iDnuevoCodigoNGLS').val();
+		if(codigo != ""){
+			var optn = confirm("Estas seguro del codigo ingresado")
+			if(optn){
+				$.ajax({
+				url: './../controlador/addCodigoNGLS.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor: codigo,
+				valor2: idCodigo},
+				})
+				.done(function(respuesta){
+					console.log(respuesta);
+					$('#modalIngresaCodigo').modal('hide')
+					//$("#fotoTipo").html(respuesta)
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});//fin fail
+			}
+		} else {
+			swal("Ingresa el codigo!!")
+		}
+		
+	}
+
+
   //modal carga y activa items inactivos
 	function showModalItemInactivo(){
 		if(true){
@@ -593,6 +669,7 @@ if(!isset($_SESSION['usuario'])){
 
 	}
 
+		//aqui funcion cambia codigo empieza
 	function selInactivo(){
 		// $("#fotoTipo").html("");
 		// $("#fotoTipo2").html("");
@@ -601,29 +678,37 @@ if(!isset($_SESSION['usuario'])){
 		var index = select.selectedIndex; 
 		var value = select.options[index].value;
 		var text = select.options[index].text;
-		var conItem = confirm("Esta seguro de ACTIVAR este Item");
-		if(conItem){
-			console.log("El dato a fue ACTIVADO");
-			
-			$.ajax({
-			url: './../controlador/upItem.php',
-			type: 'POST',
-			dataType: 'html',
-			data: { valor: value }
-			}).done(function(respuesta){
-				// console.log('logrado');
-				//$("#dInactivo").html(respuesta)
-				loadItemsInactivos();
-				swal("el dato fue ACTIVADO.");
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-			
-			loadItemsInactivos();
+		var codigo = text.indexOf("Sin Codigo");
+		if(codigo != -1){
+			var conCode = confirm("La glosa no tiene codigo \nDesea Ingresarle un Codigo")
+				if(conCode){
+					$('#modalInactivos').modal('hide')
+					ShowModalIngresaCodigo(text,value)
+				}
 		} else {
-			console.log("El dato a sigue DESCATIVADO");
-
+			var conItem = confirm("Esta seguro de ACTIVAR este Item");
+			if(conItem){
+				console.log("El dato a fue ACTIVADO");
+				
+				$.ajax({
+				url: './../controlador/upItem.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor: value }
+				}).done(function(respuesta){
+					// console.log('logrado');
+					//$("#dInactivo").html(respuesta)
+					loadItemsInactivos();
+					swal("el dato fue ACTIVADO.");
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+				
+				loadItemsInactivos();
+			} else {
+				console.log("El dato a sigue DESCATIVADO");
+			}
 		}
 	}
 
@@ -1502,8 +1587,37 @@ if(!isset($_SESSION['usuario'])){
 				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
 					dato_7 = $('#dato_7').val();				
 				}
-
-				swal(codigo+"//"+grupo+"//"+familia+"//"+tipo+"//"+material+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//1");
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: tipo,
+					valor6: material,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,
+					},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+tipo+"//"+material+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//1");
 			} else if($('#tipoSelMod').val()){
 				var codigo = $('#codigoNGLS_').val();
 				var grupo = $('#grupoNGLS_sel').val();
@@ -1532,8 +1646,36 @@ if(!isset($_SESSION['usuario'])){
 				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
 					dato_7 = $('#dato_7').val();				
 				}
-
-				swal(codigo+"//"+grupo+"//"+familia+"//"+tipo+"//"+dato_3+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//2");
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: tipo,
+					valor6: dato_3,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+tipo+"//"+dato_3+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//2");
 			} else if($('#material').val()){
 				var codigo = $('#codigoNGLS_').val();
 				var grupo = $('#grupoNGLS_sel').val();
@@ -1562,8 +1704,36 @@ if(!isset($_SESSION['usuario'])){
 				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
 					dato_7 = $('#dato_7').val();				
 				}
-				
-				swal(codigo+"//"+grupo+"//"+familia+"//"+material+"//"+dato_2+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//3");
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: material,
+					valor6: dato_2,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+material+"//"+dato_2+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//3");
 			} else {
 				var codigo = $('#codigoNGLS_').val();
 				var grupo = $('#grupoNGLS_sel').val();
@@ -1595,8 +1765,37 @@ if(!isset($_SESSION['usuario'])){
 				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
 					dato_7 = $('#dato_7').val();				
 				}
-
-				swal(codigo+"//"+grupo+"//"+familia+"//"+dato_2+"//"+dato_3+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8);
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: dato_2,
+					valor6: dato_3,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$("#loading").html(respuesta)
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+dato_2+"//"+dato_3+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8);
 			}
 		} else {
 			swal("Seleccione y Complete todos los DATOS!!")
