@@ -1943,16 +1943,16 @@ function sel_itemAGFT() {
 }
 
 function desctivarTipoGFT() {
-	var item2 = $('#datoItemGFT_').val()
-	alert("click " + item2)
+	var item = $('#datoItemGFT_').val();
+	//alert("click " + item2)
 	$.ajax({
-		url: './../controlador/null.php',
+		url: './../controlador/desactivarItemGFT.php',
 		type: 'POST',
 		dataType: 'html',
-		data: { valor: item2 },
+		data: { valor1: item },
 		}).done(function(respuesta){
-			//console.log(respuesta);
-			$('#loadTipoGFT_').html(respuesta)
+			alert(respuesta);
+			//$('#loadTipoGFT_').html(respuesta)
 		})//fin done
 		.fail(function(){
 			console.log('error');
