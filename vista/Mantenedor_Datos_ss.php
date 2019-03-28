@@ -63,8 +63,8 @@ if(!isset($_SESSION['usuario'])){
 					</div>
 				</div>
 
-				<a href="busquedaAvanzada.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
-				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="far fa-edit"></i> Editar Items Antiguo</a>
+				<a href="busquedaAvanzada_ss.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
+				<a href="editarItemExistente_ss.php" class="btn btn-sm btn-info text-white"><i class="far fa-edit"></i> Editar Items Antiguo</a>
 
 				<button onclick="CerrarCession()" class="btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Salir</button>
 			</div>
@@ -179,7 +179,7 @@ if(!isset($_SESSION['usuario'])){
 
 	<!-- -----------------------------------------  MODAL ACTIVAR ITEM----------------------------------------------  -->
 	<div class="modal info" id="modalActivaritem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLongTitle">Activar Item</h5>
@@ -190,7 +190,8 @@ if(!isset($_SESSION['usuario'])){
 
 					<div class="modal-body">
 						<!-- contenido del modal -->
-						<div class="col-12 text-center" id="activarItemES"></div>
+						<div class="col-12 text-center mb-3" id="loadItemsInactivosGFT"></div>
+						<div class="col-12 text-center mb-3" id="loadTipoIGFT_"></div>
 						<div class="modal-footer">
 								<div class="col-12">
 										<div class="row">
@@ -210,7 +211,7 @@ if(!isset($_SESSION['usuario'])){
 
 	<!-- -----------------------------------------  MODAL DESACTIVAR ITEM ----------------------------------------------  -->
 	<div class="modal info" id="modalDesctivaritem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLongTitle">Desactivar Item</h5>
@@ -218,17 +219,19 @@ if(!isset($_SESSION['usuario'])){
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-
+					
 					<div class="modal-body">
 						<!-- contenido del modal -->
-						<div class="col-12 text-center" id="activarItemES"></div>
+						<div class="col-12 text-center mb-3" id="loadItemsActivosGFT"></div>
+						<div class="col-12 text-center mb-3" id="loadTipoGFT_"></div>
+						
 						<div class="modal-footer">
 								<div class="col-12">
 										<div class="row">
-												<div class="col-8">
+												<div class="col-12">
 														<small class="">Haz click En un item de la lista para DESACTIVAR</small>
 												</div>
-												<div class="col-4 text-right">
+												<div class="col-12 text-right">
 														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
 												</div>
 										</div>
@@ -448,12 +451,12 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 
-	<!-- -----------------------------------------  Modal NuevoItem----------------------------------------------  -->
+	<!-- -----------------------------------------  MODAL NUEVO TIPO----------------------------------------------  -->
 	<div class="modal fade" id="modalNuevoItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title lead" id="exampleModalLongTitle">Crear Nuevo Item</h5>
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Crear Nuevo Tipo</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -712,15 +715,6 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 	function loadItemsInactivos() {
-
-		//swal("seleccionaste un item inactivo para activarlo");
-		//$('#dInactivo').html('<i class="text-success fas fa-spinner fa-spin fa-5x"></i>');
-
-		// setTimeout(function(){
-		// 	//document.getElementById("dInactivo").innerHTML="Pasaron 2 segundos antes de que pudieras ver esto.";
-		// 	loadItems();
-		// },2000,"JavaScript");
-
 		$.ajax({
 			url: './../controlador/cargaInactivos.php',
 			type: 'POST',
@@ -732,10 +726,9 @@ if(!isset($_SESSION['usuario'])){
 			.fail(function(){
 			console.log('error');
 		});
-
 	}
 
-		//aqui funcion cambia codigo empieza
+		//aqui funcion cambia codigo pieza
 	function selInactivo(){
 		// $("#fotoTipo").html("");
 		// $("#fotoTipo2").html("");
@@ -777,7 +770,6 @@ if(!isset($_SESSION['usuario'])){
 			}
 		}
 	}
-
 
   //modal carga y desactiva items activo
 	function showModalItemActivo(){
@@ -1002,9 +994,9 @@ if(!isset($_SESSION['usuario'])){
 		// inputsIngreso += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
 
 		if(value != "1"){
-			inputsIngreso = "<div id='chaoBtnTipo'><small class='pr-5'>si el item tiene un tipo</small><a class='btn btn-sm btn-info text-white' onclick='showTipoAddNewItem()'> Genere un Tipo para el item </a></div>";
+			inputsIngreso = "<div id='chaoBtnTipo'><small class='pr-5'>el item tiene un tipo?</small><a class='btn btn-sm btn-info text-white' onclick='showTipoAddNewItem()'> Genere un Tipo para el item </a></div>";
 			inputsIngreso += "<div id='acaVaElTipo'></div>";
-			inputsIngreso += "<div id='chaoBtnMaterial'><small class='pr-5'>Si puede definir el material</small><a class='btn btn-sm btn-info text-white' onclick='showANTmaterial()'> Genere un Tipo para el item </a></div>";
+			inputsIngreso += "<div id='chaoBtnMaterial'><small class='pr-5'>el item tiene un material?</small><a class='btn btn-sm btn-info text-white' onclick='showANTmaterial()'> Genere un Material para el item </a></div>";
 			inputsIngreso += "<div id='acaVaElMaterial'></div>";
 			inputsIngreso += "<label><small>Dato tecnico 1</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Medida ' name='newTipoDT1' id='newTipoDT1'>";
 			inputsIngreso += "<label><small>Dato tecnico 2</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Voltage' name='newTipoDT2' id='newTipoDT2'>";
@@ -1878,44 +1870,141 @@ if(!isset($_SESSION['usuario'])){
 
 //modal activar item en espera
 
-	function showModalActivarItemEnEspera() {
-		$('#activarItemES').html("Cargando ..")
-		if(true){
-			$('#modalActivaritemEnEspera').modal('show')
-			loadItemsEnEsperaES()
-		}
+function showModalActivarItemEnEspera() {
+	$('#activarItemES').html("Cargando ..")
+	if(true){
+		$('#modalActivaritemEnEspera').modal('show')
+		loadItemsEnEsperaES()
 	}
+}
 
-	function loadItemsEnEsperaES() {
-		$.ajax({
-			url: './../controlador/loadItemEspera.php',
-			type: 'POST',
-			dataType: 'html',
-			}).done(function(respuesta){
-				//console.log('lograd0');
-				//$("#loading").html(respuesta)
-				$('#activarItemES').html(respuesta)
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-	}
+function loadItemsEnEsperaES() {
+	$.ajax({
+		url: './../controlador/loadItemEspera.php',
+		type: 'POST',
+		dataType: 'html',
+		}).done(function(respuesta){
+			//console.log('lograd0');
+			//$("#loading").html(respuesta)
+			$('#activarItemES').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+}
+
+function sel_ItemEspera() {
+	alert("item en espera")
+}
 
 
 //modal desactiva item 
 function showModalDesactivarItem() {
+	$('#loadItemsActivosGFT').html("")
+	$('#loadTipoGFT_').html("")
 	if(true){
 		$('#modalDesctivaritem').modal('show')
+		familiDGFT() 
 	}
 }
 
+function familiDGFT() {
+	if(true){
+		$.ajax({
+		url: './../controlador/cargaItemsAGFT.php',
+		type: 'POST',
+		dataType: 'html',
+		}).done(function(respuesta){
+			//console.log('lograd0');
+			$('#loadItemsActivosGFT').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+}
+
+function sel_itemAGFT() {
+	var item = $('#_item_AGFT').val()
+	if(item != "1"){
+		$.ajax({
+		url: './../controlador/traeTipoAGFT.php',
+		type: 'POST',
+		dataType: 'html',
+		data: {valor: item},
+		}).done(function(respuesta){
+			//console.log(respuesta);
+			$('#loadTipoGFT_').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+}
+
+function desctivarTipoGFT() {
+	var item2 = $('#datoItemGFT_').val()
+	alert("click " + item2)
+	$.ajax({
+		url: './../controlador/null.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: item2 },
+		}).done(function(respuesta){
+			//console.log(respuesta);
+			$('#loadTipoGFT_').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+}
+
+
+
+
 //modal activar item
-function showModalActivarItem() {
-	
+function showModalActivarItem() {	
 	if(true){
 		$('#modalActivaritem').modal('show')
+		loadItemsActivosAGFT()
 	}
-	
+}
+
+function loadItemsActivosAGFT() {
+	$.ajax({
+		url: './../controlador/cargaItemsDGFT.php',
+		type: 'POST',
+		dataType: 'html',
+		}).done(function(respuesta){
+			//console.log('lograd0');
+			$('#loadItemsInactivosGFT').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+}
+
+function sel_itemIGFT() {
+	var item = $('#_item_AGFT').val()
+	if(item != "1"){
+		console.log("item inactivo "+item)
+		$.ajax({
+		url: './../controlador/traeTipoDGFT.php',
+		type: 'POST',
+		dataType: 'html',
+		data:{ valor1: item },
+		}).done(function(respuesta){
+			//console.log(respuesta);
+			$('#loadTipoIGFT_').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+}
+
+function activarItemGFT() {
+	console.log("items desactivados	;")
 }
 
 

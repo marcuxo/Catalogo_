@@ -31,17 +31,37 @@ if(!isset($_SESSION['usuario'])){
 					<button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i class="fas fa-pen"></i> Editar Items
 					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> Nuevo tipo</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> <small>Nuevo tipo</small></a>
+						<!-- <div class="dropdown-divider"></div> -->
+							<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> <small>Nueva Familia</small></a>
+						<!-- <div class="dropdown-divider"></div>
+							<a class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> <small>Items En ESPERA</small></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i> Agregar Foto tipo</a>
+							<a class="dropdown-item" onclick="showModalActivarItem()"><i class="fas fa-check-circle"></i><small> Activar item</small></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> Activar Item</a>
+							<a class="dropdown-item" onclick="showModalDesactivarItem()"><i class="fas fa-check-circle"></i><small> Desctivar item</small></a> -->
+						<!-- <div class="dropdown-divider"></div> -->
+							<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i><small> Agregar Foto tipo</small></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i> Desactivar Item</a>
+							<a class="dropdown-item" onclick="showNewGlosa()"><i class="fas fa-plus-square"></i> <small>Nueva Glosa</small></a>
+						<!-- <div class="dropdown-divider"></div>
+							<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> <small>Activar Glosa</small></a>
+						<div class="dropdown-divider"></div>
+							<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i><small> Desactivar Glosa</small></a> -->
 					</div>
 				</div>
-
+				
+				<!-- <div class="btn-group">
+					<button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-edit"></i> Usuario
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> <small>Agregar Usuario</small></a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i><small> Modificar Usuario</small></a>
+					</div>
+				</div> -->
 
 				<a href="busquedaAvanzada.php" class="btn btn-sm btn-info text-white"><i class="fas fa-search"></i> Buscar</a>
 				<a href="editarItemExistente.php" class="btn btn-sm btn-info text-white"><i class="far fa-edit"></i> Editar Items Antiguo</a>
@@ -92,6 +112,166 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </footer>
+
+	<!-- -----------------------------------------  MODAL IGRESA CODIGO----------------------------------------------  -->
+	<div class="modal info" id="modalIngresaCodigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Ingresa el Codigo para la Glosa</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="">
+								<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>Codigo</span>
+									<input name='nuevoCodigoNGLS' id='nuevoCodigoNGLS' type='text' class='form-control' placeholder='Ingrese el codigo' aria-describedby='sizing-addon2' ><br></div>
+									<input type="text" id="iDnuevoCodigoNGLS" class="invisible">
+							<div class="col mb-3" id="textCodigo"></div>
+						</div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col text-right">
+														<button type="button" class="btn btn-sm btn-danger" onclick="selAddCodigo()">Agregar Codigo</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL ACTIVAR ITEM EN ESPERA----------------------------------------------  -->
+	<div class="modal info" id="modalActivaritemEnEspera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Activar Item En espera</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="activarItemES"></div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col-8">
+														<small class="">Haz click En un item de la lista para ACTIVAR</small>
+												</div>
+												<div class="col-4 text-right">
+														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL ACTIVAR ITEM----------------------------------------------  -->
+	<div class="modal info" id="modalActivaritem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Activar Item</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="loadItemsInactivosGFT"></div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col-8">
+														<small class="">Haz click En un item de la lista para ACTIVAR</small>
+												</div>
+												<div class="col-4 text-right">
+														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL DESACTIVAR ITEM ----------------------------------------------  -->
+	<div class="modal info" id="modalDesctivaritem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Desactivar Item</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center" id="loadItemsActivosGFT"></div>
+						<div class="modal-footer">
+								<div class="col-12">
+										<div class="row">
+												<div class="col-8">
+														<small class="">Haz click En un item de la lista para DESACTIVAR</small>
+												</div>
+												<div class="col-4 text-right">
+														<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL NUEVA GLOSA----------------------------------------------  -->
+	<div class="modal info" id="modalIngresarGlosa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Ingresar Glosa</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div class="col-12 text-center">
+							<div class="col" id="codigoNGLS"></div>
+							<div class="col" id="grupoNGLS"></div>
+							<div class="col" id="familiaNGLS"></div>
+							<div class="col" id="tipoNGLS2"></div>
+							<div class="col" id="tipoNGLS"></div>
+						</div>
+						<div class="modal-footer">
+							<div class="col-12">
+								<div class="row">
+									<div class="col text-right">
+										<button type="button" class="btn btn-sm btn-danger" onclick="selNewGlosaNGLS()">Ingresar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- -----------------------------------------  MODAL CAMBIAR CLAVE----------------------------------------------  -->
 	<div class="modal fade" id="modalCambiaClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -199,19 +379,19 @@ if(!isset($_SESSION['usuario'])){
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
+							<input type="button" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
 						</form>
 					</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- -----------------------------------------  MODAL items inactivos----------------------------------------------  -->
+	<!-- -----------------------------------------  MODAL glosa inactivos----------------------------------------------  -->
 	<div class="modal info" id="modalInactivos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Items Inactivos</h5>
+						<h5 class="modal-title" id="exampleModalLongTitle">Glosa Inactivos</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -237,12 +417,12 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 
-	<!-- -----------------------------------------  MODAL items activos----------------------------------------------  -->
+	<!-- -----------------------------------------  MODAL glosa activos----------------------------------------------  -->
 	<div class="modal info" id="modalActivos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Items Activos</h5>
+						<h5 class="modal-title" id="exampleModalLongTitle">Glosa Activos</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -280,25 +460,50 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()">
+						<!-- <form action="" method="get"> -->
 							<small id="modalRespuesta"></small>			
 							<div id="newGrupo"></div>
 							<div id="newFamilia"></div>
-							<div id="newMaterial"></div>
 							<div id="newTipo"></div>
 							<!-- fin conttenido del modal -->
 						</div>
 						<div class="modal-footer">
-							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar">
+							<input type="button" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar" onclick="sel_newTipo_()">
 
-						</form>
+						<!-- </form> -->
 					</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- -----------------------------------------  Modal familia----------------------------------------------  -->
+	<div class="modal fade" id="modalNewFalili" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title lead" id="exampleModalLongTitle">Crear Nueva Familia</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido del modal -->	
+						<!-- <form action="./../controlador/addNewItem.php" method="POST" onsubmit="return sub_envio()"> -->
+							<small id="modalRespuesta"></small>			
+							<div id="grupoNweFam"></div>
+							<div class="pt-2" id="familiNweFam"></div>
+							<div class="pt-2" id="tipoNweFam"></div>
+							<!-- fin conttenido del modal -->
+						</div>
+						<div class="modal-footer">
+							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm" name="btn_add" value="Agregar" onclick="sub_newFamili()">
 
-
+						<!-- </form> -->
+					</div>
+			</div>
+		</div>
+	</div>
+<input type="text" id="fechita" name="fechaAqui" class="form-control form-control-sm invisible">
 <!-- imports de javascript para funcionalidad -->
  	<script type="text/javascript" src="./JS/jquery.js"></script>
  	<script type="text/javascript" src="./JS/tether.1.4.js"></script>
@@ -311,6 +516,9 @@ if(!isset($_SESSION['usuario'])){
 </html>
 
 <script>
+	var mat_creado = 0;
+	var tTipo_crew = 0;
+	var sh_mat = 0;
 //conjunt de funciones que cierran session despues de n minutos
 	function e() {
     document.body.appendChild( document.createTextNode("Fin Session") );
@@ -367,7 +575,7 @@ if(!isset($_SESSION['usuario'])){
     });
     txt += "</select>";
     $("#fotoGrupo").html(txt);
-	};
+	}
 	
 	function selGrupoFoto() {
 		//alert("diste click");
@@ -393,7 +601,7 @@ if(!isset($_SESSION['usuario'])){
 				console.log('error');
 			});
 		}//fin if
-	};
+	}
 
 	function selFamiliaFoto(){
 		
@@ -453,6 +661,48 @@ if(!isset($_SESSION['usuario'])){
 		}
 	}
 
+	//modal Ingreso Codigo
+	
+	function ShowModalIngresaCodigo(txt, id) {
+		$('#modalIngresaCodigo').modal('show')
+		$('#iDnuevoCodigoNGLS').val(id)
+		$('#nuevoCodigoNGLS').val("");
+
+		txt1 = txt.indexOf("N/A")
+		txt2 = txt.length;
+		var res = txt.substr(0, (txt1-1));
+		$('#textCodigo').html(res)
+	} 
+
+	function selAddCodigo() {
+		var codigo = $('#nuevoCodigoNGLS').val();
+		var idCodigo = $('#iDnuevoCodigoNGLS').val();
+		if(codigo != ""){
+			var optn = confirm("Estas seguro del codigo ingresado")
+			if(optn){
+				$.ajax({
+				url: './../controlador/addCodigoNGLS.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor: codigo,
+				valor2: idCodigo},
+				})
+				.done(function(respuesta){
+					console.log(respuesta);
+					$('#modalIngresaCodigo').modal('hide')
+					//$("#fotoTipo").html(respuesta)
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});//fin fail
+			}
+		} else {
+			swal("Ingresa el codigo!!")
+		}
+		
+	}
+
+
   //modal carga y activa items inactivos
 	function showModalItemInactivo(){
 		if(true){
@@ -462,15 +712,6 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 	function loadItemsInactivos() {
-
-		//swal("seleccionaste un item inactivo para activarlo");
-		//$('#dInactivo').html('<i class="text-success fas fa-spinner fa-spin fa-5x"></i>');
-
-		// setTimeout(function(){
-		// 	//document.getElementById("dInactivo").innerHTML="Pasaron 2 segundos antes de que pudieras ver esto.";
-		// 	loadItems();
-		// },2000,"JavaScript");
-
 		$.ajax({
 			url: './../controlador/cargaInactivos.php',
 			type: 'POST',
@@ -482,9 +723,9 @@ if(!isset($_SESSION['usuario'])){
 			.fail(function(){
 			console.log('error');
 		});
-
 	}
 
+		//aqui funcion cambia codigo empieza
 	function selInactivo(){
 		// $("#fotoTipo").html("");
 		// $("#fotoTipo2").html("");
@@ -493,32 +734,39 @@ if(!isset($_SESSION['usuario'])){
 		var index = select.selectedIndex; 
 		var value = select.options[index].value;
 		var text = select.options[index].text;
-		var conItem = confirm("Esta seguro de ACTIVAR este Item");
-		if(conItem){
-			console.log("El dato a fue ACTIVADO");
-			
-			$.ajax({
-			url: './../controlador/upItem.php',
-			type: 'POST',
-			dataType: 'html',
-			data: { valor: value }
-			}).done(function(respuesta){
-				// console.log('logrado');
-				//$("#dInactivo").html(respuesta)
-				loadItemsInactivos();
-				swal("el dato fue ACTIVADO.");
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-			
-			loadItemsInactivos();
+		var codigo = text.indexOf("Sin Codigo");
+		if(codigo != -1){
+			var conCode = confirm("La glosa no tiene codigo \nDesea Ingresarle un Codigo")
+				if(conCode){
+					$('#modalInactivos').modal('hide')
+					ShowModalIngresaCodigo(text,value)
+				}
 		} else {
-			console.log("El dato a sigue DESCATIVADO");
-
+			var conItem = confirm("Esta seguro de ACTIVAR este Item");
+			if(conItem){
+				console.log("El dato a fue ACTIVADO");
+				
+				$.ajax({
+				url: './../controlador/upItem.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor: value }
+				}).done(function(respuesta){
+					// console.log('logrado');
+					//$("#dInactivo").html(respuesta)
+					loadItemsInactivos();
+					swal("el dato fue ACTIVADO.");
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+				
+				loadItemsInactivos();
+			} else {
+				console.log("El dato a sigue DESCATIVADO");
+			}
 		}
 	}
-
 
   //modal carga y desactiva items activo
 	function showModalItemActivo(){
@@ -589,8 +837,96 @@ if(!isset($_SESSION['usuario'])){
 
 	
 
-	//modal nuevo item
+	//modal nuevo item--
 
+	function sel_newTipo_() {
+		var grupo = $("#grupoNew").val();
+		var familia = $("#familiaNew").val();
+		var material = $("#materialAddNewTipo").val();
+		var material2 = $("#materialAddNewTipo2").val();
+		var tipo = $("#newTipoTipo").val();
+		var dT1 = $("#newTipoDT1").val();
+		var dT2 = $("#newTipoDT2").val();
+		var dT3 = $("#newTipoDT3").val();
+		var dT4 = $("#newTipoDT4").val();
+		var fecha = laFechita();
+
+		if(tTipo_crew == 0){
+			tipo = "N/A";
+		}
+		if(sh_mat == 0){
+			material = "N/A";
+			material2 = "N/A";
+		}
+
+		if(mat_creado != 1){
+			if(grupo != "1" && familia != "1" && material != "1" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
+				var optn = confirm("Estas seguro de los datos ingresados");
+				if(optn){
+					$.ajax({
+						url: './../controlador/addNewItem.php',
+						type: 'POST',
+						dataType: 'html',
+						data: { valor0: grupo,
+						valor1: familia,
+						valor2: tipo,
+						valor3: material,
+						valor4: "N/A",
+						valor5: dT1,
+						valor6: dT2,
+						valor7: dT3,
+						valor8: dT4,
+						valor9: fecha },
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$("#dInactivo").html(respuesta)
+						$('#modalNuevoItem').modal('hide')
+					})//fin done
+						.fail(function(){
+						console.log('error');
+					});swal("Ingesando datos");
+				} else {
+					swal("Verifica TODOS los datos")
+				}
+			} else {
+				swal("Completa Todos los Campos")
+			}
+		} else if(mat_creado == 1){
+			if(grupo != "1" && familia != "1" && material2 != "" && tipo != "" && dT1 != "" && dT2 != "" && dT3 != "" && dT4  != ""){
+				var optn = confirm("Estas seguro de los datos ingresados");
+				if(optn){
+					$.ajax({
+						url: './../controlador/addNewItem.php',
+						type: 'POST',
+						dataType: 'html',
+						data: { valor0: grupo,
+						valor1: familia,
+						valor2: tipo,
+						valor3: "N/A",
+						valor4: material2,
+						valor5: dT1,
+						valor6: dT2,
+						valor7: dT3,
+						valor8: dT4,
+						valor9: fecha },
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$("#dInactivo").html(respuesta)
+						$('#modalNuevoItem').modal('hide')
+					})//fin done
+						.fail(function(){
+						console.log('error');
+					});swal("Ingesando datos");
+				} else {
+					swal("Verifica TODOS los datos")
+				}
+			} else {
+				swal("Completa Todos los Campos")
+			}
+		}
+
+		
+	}
 	
 	function loadGrupos3(){
     var grupo = [
@@ -613,7 +949,7 @@ if(!isset($_SESSION['usuario'])){
     });
     txt += "</select>";
     $("#newGrupo").html(txt);
-	};
+	}
 	
 	function selGrupo3() {
 		$("#newFamilia").html("");
@@ -649,34 +985,58 @@ if(!isset($_SESSION['usuario'])){
     var index = select.selectedIndex; 
     var value = select.options[index].value;
 		var text = select.options[index].text;
+
+		// inputsIngreso = "<label><small>Tipo</small></label><input pype='text' class='form-control form-control-sm' placeholder='Ej:' name='newTipoTipo' id='newTipoTipo'>";
+		// inputsIngreso += "<div id='mateEsconder'><small>Material</small></label><p id='materiales__here'> Cargando Materiales... .</p></div>";
+		// inputsIngreso += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
+
 		if(value != "1"){
-			$.ajax({
-				url: './../controlador/TraeInputsXtipo2.php',
-				type: 'POST',
-				dataType: 'html',
-				data: { valor: value},
-			})
-			.done(function(respuesta){
-				//console.log('logrado');
-				$("#newTipo").html(respuesta)
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});//fin fail
-		}//fin if
+			inputsIngreso = "<div id='chaoBtnTipo'><small class='pr-5'>si el item tiene un tipo</small><a class='btn btn-sm btn-info text-white' onclick='showTipoAddNewItem()'> Genere un Tipo para el item </a></div>";
+			inputsIngreso += "<div id='acaVaElTipo'></div>";
+			inputsIngreso += "<div id='chaoBtnMaterial'><small class='pr-5'>Si puede definir el material</small><a class='btn btn-sm btn-info text-white' onclick='showANTmaterial()'> Genere un Tipo para el item </a></div>";
+			inputsIngreso += "<div id='acaVaElMaterial'></div>";
+			inputsIngreso += "<label><small>Dato tecnico 1</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Medida ' name='newTipoDT1' id='newTipoDT1'>";
+			inputsIngreso += "<label><small>Dato tecnico 2</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Voltage' name='newTipoDT2' id='newTipoDT2'>";
+			inputsIngreso += "<label><small>Dato tecnico 3</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Color' name='newTipoDT3' id='newTipoDT3'>";
+			inputsIngreso += "<label><small>Dato tecnico 4</small></label><input type='text' class='form-control form-control-sm' placeholder='Ej: Modelo' name='newTipoDT4' id='newTipoDT4'>";
+			traetipoXtipo2()
+			$("#newTipo").html(inputsIngreso);
+		}
+		
+	}
+
+	function generarNewMaterial() {
+		mat_creado += 1;
+		$("#mateEsconder").html("");
+		newMat = "<label><small>Material</small></label><input type='text' class='form-control form-control-sm col-12' placeholder='Ej: Madera Carton Metal Vinilo ' name='materialAddNewTipo2' id='materialAddNewTipo2'>";
+		$("#materialNoEsta").html(newMat);
+	}
+
+	function showANTmaterial() {
+		sh_mat += 1;
+		$("#chaoBtnMaterial").html("");
+		traetipoXtipo2()
+		nMat = "<div id='mateEsconder'><small>Material</small></label><p id='materiales__here'> Cargando Materiales... .</p></div>";
+		nMat += "<div id='materialNoEsta'><small>Si el material no esta, haz click en el boton</small><a class='btn btn-sm btn-danger text-white' onclick='generarNewMaterial()'>Generar un nuevo Material</a></div>";
+		$("#acaVaElMaterial").html(nMat);			
+	}
+
+	function showTipoAddNewItem() {
+		tTipo_crew += 1;
+		$("#chaoBtnTipo").html("");
+		ttttipo = "<label><small>Tipo</small></label><input pype='text' class='form-control form-control-sm' placeholder='Ej:' name='newTipoTipo' id='newTipoTipo'>";		
+		$("#acaVaElTipo").html(ttttipo);
 	}
 
 	function traetipoXtipo2() {
-			var tipo = $('#acaSaleElTipo').val();
 			$.ajax({
-				url: './../controlador/traeTipoXtipo.php',
+				url: './../controlador/traelosMateriales.php',
 				type: 'POST',
 				dataType: 'html',
-				data: { valor: tipo},
 			})
 			.done(function(respuesta){
 				// console.log('logrado');
-				$("#newMaterial").html(respuesta)
+				$("#materiales__here").html(respuesta)
 				loadImagenXtipo()
 			})//fin done
 			.fail(function(){
@@ -685,7 +1045,6 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 	function modalShow2() {
-	
 		$("#newFamilia").html("");
 		$("#newMaterial").html("");
 		$("#newTipo").html("");
@@ -884,7 +1243,8 @@ if(!isset($_SESSION['usuario'])){
 		var clv = $('#clave1Add').val();
 		var nm = $('#nombreAdd').val();
 		var inf = $('#infoAdd').val();
-		
+		var fecha = $('#fechita').val();
+
 		che1 =document.getElementById("adminUser");
 		che2 = document.getElementById("superUser");
 		if(che1.checked){
@@ -903,7 +1263,8 @@ if(!isset($_SESSION['usuario'])){
 					valor2: clv,
 					valor3: nm,
 					valor4: inf,
-					valor5: tipo},
+					valor5: tipo,
+					valor6: fecha},
 			})
 			.done(function(respuesta){
 				// console.log('logrado');
@@ -1047,7 +1408,529 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 
+//modal nueva familia
+
+	function showModNewFamili() {
+		$("#familiNweFam").html("");
+		if(true){
+			$('#modalNewFalili').modal('show')
+			lGNewFam()
+		}
+	}
+
+	function sub_newFamili() {
+		var grupo = $('#newFamGrupo').val();
+		var fam = $('#newFamFam').val();
+
+		if(grupo != "1" && fam != "" ){
+			optn = confirm("Estas seguro de los datos ingresados")
+			if(optn){
+				$.ajax({
+				url: './../controlador/addNewFamilia.php',
+				type: 'POST',
+				dataType: 'html',
+				data: { valor1: grupo,
+					valor2: fam },
+				})
+				.done(function(respuesta){
+					console.log(respuesta);
+					//$("#acaLosDatosDelUsuario").html(respuesta)
+					$('#modalNewFalili').modal('hide')
+					swal("datos enviados")
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+			} else {
+				swal("datos NO enviados verificalos.")
+			}
+		} else {
+			swal("Completa todos los datos.")
+		}
+	}
+
+	function lGNewFam(){
+    var grupo = [
+        "CADENAS Y CORREAS",
+        "ELEMENTOS DE FIJACION",
+        "EQUIPOS INDUSTRIALES",
+        "FILTROS Y LUBRICANTES",
+        "HERRAMIENTAS E INSTRUMENTOS",
+        "MATERIALES DE CONSTRUCCION Y FERRETERIA",
+        "MATERIALES DE GASFITERIA",
+        "MATERIALES Y ARTICULOS DE REFRIGERACION",
+        "MATERIALES Y ARTICULOS ELECTRICOS",
+        "MOTORES Y MOTORREDUCTORES",
+        "REPUESTOS MAQUINAS",
+        "RODAMIENTOS Y SELLOS"
+    ];
+    var txt = "<select class='form-control form-control-sm my-2' name='newFamGrupo' id='newFamGrupo' onclick='selNewGrupDes()'><option value='1' onclick='selNewGrupDes()'>Selecciona Grupo de items</option>";
+    grupo.forEach(function(element) {
+        txt += "<option value='"+element+"' onclick='selNewGrupDes()'>"+element+"</option>";
+    });
+		txt += "</select>";
+		
+		$("#grupoNweFam").html(txt);
+		
+	}
+
+	function selNewGrupDes() {
+		var grupo = $('#newFamGrupo').val();
+		if(grupo != "1"){
+			var nFam = "<label>Nombre para la Nueva Familia</label><input type='text' id='newFamFam' class='form-control form-control-sm' >";
+		$("#familiNweFam").html(nFam);
+		} else {
+			$("#familiNweFam").html("");
+		}
+	}
+
+//funcion que se encarga de generar la fecha y hora del momento en l cual se guarda un dato en la base de datos
+	function laFechita() {
+		var hoy = new Date();
+		var dd = hoy.getDate();
+		var mm = hoy.getMonth()+1;
+		var yyyy = hoy.getFullYear();
+		var hh = hoy.getHours();
+		var mi = hoy.getMinutes();
+		var ss = hoy.getSeconds();
+		dd=addZero(dd);
+		mm=addZero(mm);
+		hh=addZero(hh);
+		ss=addZero(ss);
+
+		function addZero(i) {
+				if (i < 10) {
+						i = '0' + i;
+				}
+				return i;
+		}
+		var fecha = dd+"-"+mm+"-"+yyyy+" "+hh+":"+mi+":"+ss;
+		$('#fecha').html(fecha)
+		$('#fechita').val(fecha)
+		return fecha;
+		setTimeout("laFechita()",1000);
+	}
+	laFechita()
+
+	//modal nueva glosa
+
+	function showNewGlosa() {
+		$("#familiaNGLS").html("");
+		$("#tipoNGLS").html("");
+		$("#tipoNGLS2").html("");
+		$("#codigoNGLS").html("");
+		if(true){
+			$('#modalIngresarGlosa').modal('show')
+			loadGruposNGS()
+		}
+	}
+
+	function loadGruposNGS(){
+    var grupo = [
+        "CADENAS Y CORREAS",
+        "ELEMENTOS DE FIJACION",
+        "EQUIPOS INDUSTRIALES",
+        "FILTROS Y LUBRICANTES",
+        "HERRAMIENTAS E INSTRUMENTOS",
+        "MATERIALES DE CONSTRUCCION Y FERRETERIA",
+        "MATERIALES DE GASFITERIA",
+        "MATERIALES Y ARTICULOS DE REFRIGERACION",
+        "MATERIALES Y ARTICULOS ELECTRICOS",
+        "MOTORES Y MOTORREDUCTORES",
+        "REPUESTOS MAQUINAS",
+        "RODAMIENTOS Y SELLOS"
+    ];
+    var txt = "<select class='form-control form-control-sm my-2' name='grupoNGLS_sel' id='grupoNGLS_sel' onclick='selGrupoNGLS()'><option value='1' onclick='selGrupoNGLS()'>Selecciona Grupo de items</option>";
+    grupo.forEach(function(element) {
+        txt += "<option value='"+element+"' onclick='selGrupoNGLS()'>"+element+"</option>";
+    });
+    txt += "</select>";
+    $("#grupoNGLS").html(txt);
+	}
+
+	function selGrupoNGLS() {
+		$('#codigoNGLS').html("");
+		$("#tipoNGLS").html("");
+		$("#tipoNGLS2").html("");
+		var grupo =	$('#grupoNGLS_sel').val();
+		if(grupo != "1"){
+			$.ajax({
+			url: './../controlador/traerFamiliasNGLS.php',
+			type: 'POST',
+			dataType: 'html',
+			data: { valor: grupo },
+			}).done(function(respuesta){
+				// console.log('logrado');
+				//$("#loading").html(respuesta)
+				$('#familiaNGLS').html(respuesta)
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+		}
+	}
+
+	function selFamiliaNGLS() {
+		$('#tipoNGLS2').html("");
+		var familia =	$('#familiaNGLS_sel').val();
+	
+		if(familia != "1"){
+			$.ajax({
+			url: './../controlador/traeInputsNGLS.php',
+			type: 'POST',
+			dataType: 'html',
+			data: { valor: familia },
+			}).done(function(respuesta){
+				// console.log('logrado');
+				//$("#loading").html(respuesta)
+				$('#tipoNGLS').html(respuesta)
+				var codigo = "<div class='input-group input-group-sm mb-2'><span class='input-group-addon' id='sizing-addon2'>CODIGO</span><input name='codigoNGLS_' id='codigoNGLS_' type='text' class='form-control' placeholder='Si no lo tiene deje este campo en blanco' aria-describedby='sizing-addon2'><br></div>";
+				$('#codigoNGLS').html(codigo);
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+
+		}
+	}
+	 
+	function traeTipoNGLS() {
+		var tipo = $('#acaSaleElTipo').val();
+		
+		$.ajax({
+			url: './../controlador/traeTipo.php',
+			type: 'POST',
+			dataType: 'html',
+			data: { valor: tipo },
+			}).done(function(respuesta){
+				// console.log('logrado');
+				//$("#loading").html(respuesta)
+				$('#tipoNGLS2').html(respuesta)
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+
+	}
+
+	function selNewGlosaNGLS() {
+		
+		if($('#grupoNGLS_sel').val().trim() != "1" && $('#familiaNGLS_sel').val().trim() != "1"){
+
+			if($('#tipoSelMod').val() && $('#material').val()){
+				var codigo = $('#codigoNGLS_').val();
+				var grupo = $('#grupoNGLS_sel').val();
+				var familia = $('#familiaNGLS_sel').val();
+				var tipo = $('#tipoSelMod').val();
+				var material = $('#material').val();
+				var dato_8 = $('#dato_8').val();
+
+				var dato_4 = "N/A";
+				var dato_5 = "N/A";
+				var dato_6 = "N/A";
+				var dato_7 = "N/A";
+
+				if($('#dato_4').val() && $('#dato_4').val().trim() != ""){
+					dato_4 = $('#dato_4').val();
+				}
+				if($('#dato_5').val() && $('#dato_5').val().trim() != ""){
+					dato_5 = $('#dato_5').val();				
+				}
+				if($('#dato_6').val() && $('#dato_6').val().trim() != ""){
+					dato_6 = $('#dato_6').val();
+				}
+				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
+					dato_7 = $('#dato_7').val();				
+				}
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: tipo,
+					valor6: material,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,
+					},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+tipo+"//"+material+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//1");
+			} else if($('#tipoSelMod').val()){
+				var codigo = $('#codigoNGLS_').val();
+				var grupo = $('#grupoNGLS_sel').val();
+				var familia = $('#familiaNGLS_sel').val();
+				var tipo = $('#tipoSelMod').val();
+				var dato_8 = $('#dato_8').val();
+
+				var dato_3 = "N/A";
+				var dato_4 = "N/A";
+				var dato_5 = "N/A";
+				var dato_6 = "N/A";
+				var dato_7 = "N/A";
+
+				if($('#dato_3').val() && $('#dato_3').val().trim() != ""){
+					dato_3 = $('#dato_3').val();
+				}
+				if($('#dato_4').val() && $('#dato_4').val().trim() != ""){
+					dato_4 = $('#dato_4').val();
+				}
+				if($('#dato_5').val() && $('#dato_5').val().trim() != ""){
+					dato_5 = $('#dato_5').val();				
+				}
+				if($('#dato_6').val() && $('#dato_6').val().trim() != ""){
+					dato_6 = $('#dato_6').val();
+				}
+				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
+					dato_7 = $('#dato_7').val();				
+				}
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: tipo,
+					valor6: dato_3,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+tipo+"//"+dato_3+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//2");
+			} else if($('#material').val()){
+				var codigo = $('#codigoNGLS_').val();
+				var grupo = $('#grupoNGLS_sel').val();
+				var familia = $('#familiaNGLS_sel').val();
+				var material = $('#material').val();
+				var dato_8 = $('#dato_8').val();
+
+				var dato_2 = "N/A";
+				var dato_4 = "N/A";
+				var dato_5 = "N/A";
+				var dato_6 = "N/A";
+				var dato_7 = "N/A";
+
+				if($('#dato_2').val() && $('#dato_2').val().trim() != ""){
+					dato_2 = $('#dato_2').val();
+				}
+				if($('#dato_4').val() && $('#dato_4').val().trim() != ""){
+					dato_4 = $('#dato_4').val();
+				}
+				if($('#dato_5').val() && $('#dato_5').val().trim() != ""){
+					dato_5 = $('#dato_5').val();				
+				}
+				if($('#dato_6').val() && $('#dato_6').val().trim() != ""){
+					dato_6 = $('#dato_6').val();
+				}
+				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
+					dato_7 = $('#dato_7').val();				
+				}
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: material,
+					valor6: dato_2,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+material+"//"+dato_2+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8+"//3");
+			} else {
+				var codigo = $('#codigoNGLS_').val();
+				var grupo = $('#grupoNGLS_sel').val();
+				var familia = $('#familiaNGLS_sel').val();
+				var dato_8 = $('#dato_8').val();
+
+				var dato_2 = "N/A";
+				var dato_3 = "N/A";
+				var dato_4 = "N/A";
+				var dato_5 = "N/A";
+				var dato_6 = "N/A";
+				var dato_7 = "N/A";
+
+				if($('#dato_2').val() && $('#dato_2').val().trim() != ""){
+					dato_2 = $('#dato_2').val();
+				}
+				if($('#dato_3').val() && $('#dato_3').val().trim() != ""){
+					dato_3 = $('#dato_3').val();
+				}
+				if($('#dato_4').val() && $('#dato_4').val().trim() != ""){
+					dato_4 = $('#dato_4').val();
+				}
+				if($('#dato_5').val() && $('#dato_5').val().trim() != ""){
+					dato_5 = $('#dato_5').val();				
+				}
+				if($('#dato_6').val() && $('#dato_6').val().trim() != ""){
+					dato_6 = $('#dato_6').val();
+				}
+				if($('#dato_7').val() && $('#dato_7').val().trim() != ""){
+					dato_7 = $('#dato_7').val();				
+				}
+				var optn = confirm("Estas seguro de los DATOS ingresados");
+				if(optn){
+					$.ajax({
+					url: './../controlador/addNewGlosaNGLS.php',
+					type: 'POST',
+					dataType: 'html',
+					data: { valor0: codigo,
+					valor1: grupo,
+					valor2: familia,
+					valor3: laFechita(),
+					valor4: dato_8,
+					valor5: dato_2,
+					valor6: dato_3,
+					valor7: dato_4,
+					valor8: dato_5,
+					valor9: dato_6,
+					valor10: dato_7,},
+					}).done(function(respuesta){
+						console.log(respuesta);
+						//$("#loading").html(respuesta)
+						//$('#familiaNGLS').html(respuesta)
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
+					$('#modalIngresarGlosa').modal('hide')
+					swal("datos enviados para ser APROBADOS")
+				}else{
+					swal("Revisa los DATOS!!")
+				}
+				//swal(codigo+"//"+grupo+"//"+familia+"//"+dato_2+"//"+dato_3+"//"+dato_4+"//"+dato_5+"//"+dato_6+"//"+dato_7+"//"+dato_8);
+			}
+		} else {
+			swal("Seleccione y Complete todos los DATOS!!")
+		}			
+		// var optn = confirm("Estas seguro de los datos ingresados");
+		// if(optn){
+		// 	swal("enviando datos .. . ."+laFechita())
+		// 	$('#modalIngresarGlosa').modal('hide')
+		// } else {
+		// 	swal("Verifica los datos antes de ENVIARLOS")
+		// }
+	}
+
+
+//modal activar item en espera
+
+	function showModalActivarItemEnEspera() {
+		$('#activarItemES').html("Cargando ..")
+		if(true){
+			$('#modalActivaritemEnEspera').modal('show')
+			loadItemsEnEsperaES()
+		}
+	}
+
+	function loadItemsEnEsperaES() {
+		$.ajax({
+			url: './../controlador/loadItemEspera.php',
+			type: 'POST',
+			dataType: 'html',
+			}).done(function(respuesta){
+				//console.log('lograd0');
+				//$("#loading").html(respuesta)
+				$('#activarItemES').html(respuesta)
+			})//fin done
+			.fail(function(){
+				console.log('error');
+			});
+	}
+
+
+//modal desactiva item 
+function showModalDesactivarItem() {
+	if(true){
+		$('#modalDesctivaritem').modal('show')
+		loadItemsActivosGFT()
+	}
+}
+
+function loadItemsActivosGFT() {
+	$('#loadItemsActivosGFT').html("Cargando articulos ACTIVOS . .. .")
+	// $.ajax({
+	// 	url: './../controlador/.php',
+	// 	type: 'POST',
+	// 	dataType: 'html',
+	// 	}).done(function(respuesta){
+	// 		//console.log('lograd0');
+	// 		$('#activarItemES').html(respuesta)
+	// 	})//fin done
+	// 	.fail(function(){
+	// 		console.log('error');
+	// 	});
+}
+
+
+//modal activar item
+function showModalActivarItem() {	
+	if(true){
+		$('#modalActivaritem').modal('show')
+		loadItemsInactivosGFT()
+	}
+}
+
+function loadItemsInactivosGFT() {
+	$('#loadItemsInactivosGFT').html("Cargando items INACTIVOS . .. . .")
+}
+
+
+
 
 
 
 </script>
+

@@ -19,13 +19,12 @@ class Catalogo
 
     public static function singleton()
     {
-        if (!isset(self::$instancia)) {
-            $miclase = __CLASS__;
-            self::$instancia = new $miclase;
-        }
-        return self::$instancia;
+			if (!isset(self::$instancia)) {
+					$miclase = __CLASS__;
+					self::$instancia = new $miclase;
+			}
+			return self::$instancia;
     }
-
 
     public function traeDatos_1_7copia($dato)
     {
@@ -1952,7 +1951,7 @@ class Catalogo
     {
         try {
         	//esta consulta carga los items de ingreso de datos vacios
-            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
+            $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
             $query->bindParam(1, $dato);
             //esta consulta carga los datos del item material para luego ser cargados en un select
             $query2 = $this->dbh->prepare('SELECT * FROM material');
@@ -2503,7 +2502,7 @@ class Catalogo
 	public function traer_familia_ngls($dato)
 	{
         try {
-            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
+            $query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? ');
 			$query->bindParam(1, $dato);
             $query->execute();
 
@@ -2656,6 +2655,32 @@ class Catalogo
 					$e->getMessage();
 			}
 	}
+
+	public function traer_familiaAGFT($dato)
+	{
+			try {
+					$query = $this->dbh->prepare('SELECT nombre FROM familia_2 WHERE fk_grupo = ? AND estado_familia = "1"');
+		$query->bindParam(1, $dato);
+					$query->execute();
+
+					$data = $query->fetchAll();
+					if(!empty($data)){
+							$salida="<div class='form-group'><select class='form-control form-control-sm' name='familiaAGFT' id='familiaAGFT' onclick='familiAGFT_sel()'><option value='1' onclick='familiAGFT_sel()'>Selecciona Familia</option>";
+							foreach ($data as $fila):
+									$salida.=  "
+										 <option value='".$fila['nombre']."' onclick='familiAGFT_sel()'>".$fila['nombre']."</option>";
+							endforeach;
+							$salida.= "</select></div>";
+					}else{
+							$salida = "No se encontro lo que buscas";
+					}
+
+					echo $salida;
+					$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+}
 
 	public function traer_material()//sin uso
 	{
@@ -3223,31 +3248,31 @@ class Catalogo
 	public function cargaInactivos()
 	{
 		try {
-            $query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = 0');
-            //$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
-            //$query->bindParam(1, $dato);
-			
-            $query->execute();
+			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = 2');
+			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
+			//$query->bindParam(1, $dato);
 
-            $data = $query->fetchAll();
-            $cont = count($data);
-            $salida;
-            if(!empty($data)){
-                $salida ="<select multiple name='itemInactivo' id='itemInactivo' class='col-12 form-control' style='height:220px'>";
-                foreach ($data as $fila):
-						$salida.= "
-							<option value='".$fila['id_dato_f']."' onclick='selInactivo()'>".$fila['codigo_dato_f']." ".$fila['grupo_dato_f']." ".$fila['familia_dato_f']." ".$fila['dato1_dato_f']." ".$fila['dato2_dato_f']." ".$fila['dato3_dato_f']." ".$fila['dato4_dato_f']." ".$fila['dato5_dato_f']." ".$fila['dato6_dato_f']."</option>
-                        	";
-                endforeach;
-                $salida.= "</select>";
-            }else{
-                $salida = "<p class='lead text-white'>No hay datos INACTIVOS en estos momemntos.</p>";
-            }
-            echo $salida;
-            $this->dbh = null;
-        }catch (PDOException $e) {
-            $e->getMessage();
-        }
+			$query->execute();
+
+			$data = $query->fetchAll();
+			$cont = count($data);
+			$salida;
+			if(!empty($data)){
+					$salida ="<select multiple name='itemInactivo' id='itemInactivo' class='col-12 form-control' style='height:220px'>";
+					foreach ($data as $fila):
+			$salida.= "
+				<option value='".$fila['id_dato_f']."' onclick='selInactivo()'>".$fila['codigo_dato_f']." ".$fila['grupo_dato_f']." ".$fila['familia_dato_f']." ".$fila['dato1_dato_f']." ".$fila['dato2_dato_f']." ".$fila['dato3_dato_f']." ".$fila['dato4_dato_f']." ".$fila['dato5_dato_f']." ".$fila['dato6_dato_f']."</option>
+										";
+					endforeach;
+					$salida.= "</select>";
+			}else{
+					$salida = "<p class='lead text-white'>No hay datos INACTIVOS en estos momemntos.</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+			$e->getMessage();
+		}
 	}
 
 	public function cargaActivos()
@@ -3311,7 +3336,7 @@ class Catalogo
 		echo "Datos Ingresados Correctamente : ".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
 
 		try{
-			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"1","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--")');
+			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"1","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--/--/--/ --:--:--")');
 			$query->bindParam(1, $code);
 			$query->bindParam(2, $grupo);
 			$query->bindParam(3, $familia);
@@ -3582,11 +3607,11 @@ class Catalogo
 			$query2->bindParam(9, $fam);
 			$query2->execute();
 
-			$query3 = $this->dbh->prepare('CREATE TABLE '.$fk.'(nombre_tipo varchar(50))');
+			$query3 = $this->dbh->prepare('CREATE TABLE '.$fk.'(nombre_tipo varchar(50), estado_tipo varchar(4))');
 			$query3->execute();
 			sleep(2);
 			$tabla = strtolower($fk);
-			$query4 = $this->dbh->prepare('INSERT INTO '.$tabla.'(nombre_tipo) VALUES(?)');
+			$query4 = $this->dbh->prepare('INSERT INTO '.$tabla.'(nombre_tipo) VALUES(?,"2")');
 			$query4->bindParam(1, $tipo);
 			$query4->execute();
 
@@ -3662,7 +3687,7 @@ class Catalogo
 		echo "Class Glosa: ".$codigo."--".$grupo."--".$familia."--".$fecha."--".$datoOptn."--".$dato2."--".$dato3."--".$dato4."--".$dato5."--".$dato6."--".$dato7;
 		$nn = "N/A";
 		try{
-			$query2 = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"0","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--/--/-- --:--:--")');
+			$query2 = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"2","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--/--/-- --:--:--")');
 			$query2->bindParam(1, $codigo);
 			$query2->bindParam(2, $grupo);
 			$query2->bindParam(3, $familia);
@@ -3710,7 +3735,7 @@ class Catalogo
 					$salida ="<select multiple name='itemActivo' id='itemActivo' class='col-12 form-control form-control-sm' style='height:220px'>";
 					foreach ($data as $fila):
 			$salida.= "
-				<option value='".$fila['dato_1']."' onclick='selItemEspera()'>".$fila['dato_1']." ".$fila['dato_3']." ".$fila['dato_4']." ".$fila['dato_5']." ".$fila['dato_6']." ".$fila['dato_7']." ".$fila['fecha_ingreso']."</option>
+				<option value='".$fila['dato_1']."' onclick='sel_ItemEspera()'>".$fila['dato_1']." ".$fila['dato_3']." ".$fila['dato_4']." ".$fila['dato_5']." ".$fila['dato_6']." ".$fila['dato_7']." ".$fila['fecha_ingreso']."</option>
 										";
 					endforeach;
 					$salida.= "</select>";
@@ -3719,10 +3744,171 @@ class Catalogo
 			}
 			echo $salida;
 			$this->dbh = null;
-	}catch (PDOException $e) {
-			$e->getMessage();
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
 	}
+
+	public function cargaItemsInactivosGFT()
+	{
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE estado_item = "0" ORDER BY dato_1 ');
+
+			$query->execute();
+			$data = $query->fetchAll();
+			$cont = count($data);
+			$salida;
+			if(!empty($data)){
+					$salida ="<select name='_item_AGFT' id='_item_AGFT' class='col-12 form-control form-control-sm' onclick='sel_itemIGFT()'><option value='1' onclick='sel_itemIGFT()'>Seleccione Item</option>";
+					foreach ($data as $fila):
+			$salida.= "
+				<option value='".$fila['dato_1']."' onclick='sel_itemIGFT()'>".$fila['dato_1']."</option>
+										";
+					endforeach;
+					$salida.= "</select>";
+			}else{
+					$salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
 	}
+
+	public function cargaItemsActivosGFT()
+	{
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE estado_item = "1" ORDER BY dato_1 ');
+
+			$query->execute();
+			$data = $query->fetchAll();
+			$cont = count($data);
+			$salida;
+			if(!empty($data)){
+					$salida ="<select name='_item_AGFT' id='_item_AGFT' class='col-12 form-control form-control-sm' onclick='sel_itemAGFT()'><option value='1' onclick='sel_itemAGFT()'>Seleccione Item</option>";
+					foreach ($data as $fila):
+			$salida.= "
+				<option value='".$fila['dato_1']."' onclick='sel_itemAGFT()'>".$fila['dato_1']."</option>
+										";
+					endforeach;
+					$salida.= "</select>";
+			}else{
+					$salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
+
+	public function loadTipoAGFT($data)
+	{
+		//echo($data ." from Class");
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ? AND estado_item = "1"');
+			$query->bindParam(1, $data);
+			$query->execute();
+			$data = $query->fetchAll();
+			$cont = count($data);
+			$salida = " ";
+			if(!empty($data)){
+				if($data[0]["dato_2"] === "TIPO"){
+					$tipo = strtolower($data[0]["fk_tipo"]);
+					//$salida.= $tipo;
+					//$this->consultaTipo_Tablas($tipo);
+
+					$query2 = $this->dbh->prepare('SELECT * FROM '.$tipo.' WHERE estado_tipo = "1" ');
+					//$query2->bindParam(1, $tipo);
+					$query2->execute();
+					$data2 = $query2->fetchAll();
+					//print_r($data2);
+					if(!empty($data2)){
+							$salida ="<select multiple name='datoItemGFT_' id='datoItemGFT_' class='col-12 form-control form-control-sm'>";
+							foreach ($data2 as $fila2):
+								$salida.= "<option value='".$fila2['nombre_tipo']."' onclick='desctivarTipoGFT()'>".$fila2['nombre_tipo']."</option>";
+							endforeach;
+							$salida.= "</select>";
+					} else {
+						$salida .= "<p class=''>El item No contine tipo. Desea DESACTIVAR la familia de este Item.</p>
+						<button onclick='desactivarFamiliaGFT_()' class='btn btn-sm btn-danger'>Desactivar Familia</button>";
+					}
+
+				}else{
+					$salida .= "<p class=''>El item No contine tipo. Desea DESACTIVAR la familia de este Item.</p>
+					<button onclick='desactivarFamiliaGFT_()' class='btn btn-sm btn-danger'>Desactivar Familia</button>";
+				}
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
+	//muestra datos desactivos para activar
+	public function loadTipoDGFT($data)
+	{
+		//echo $data;
+		try {
+				$query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE dato_1 = ?');
+				$query->bindParam(1, $data);
+				$query->execute();
+				$data = $query->fetchAll();
+				$cont = count($data);
+				//print_r($data[0]["fk_tipo"]."//".$data[0]["nombre_tipo"]);
+				if($data[0]["dato_2"] == "TIPO"){
+					echo "ENCONTRE EL TIPO";
+				} else {
+					echo "aca no hay tipo";
+				}
+				// $salida;
+				// if(!empty($data)){
+				// 		$salida ="<select name='_item_IGFT' id='_item_IGFT' class='col-12 form-control form-control-sm' onclick='activarItemGFT()'><option value='1' onclick='activarItemGFT()'>Seleccione Item</option>";
+				// 		foreach ($data as $fila):
+				// $salida.= "
+				// 	<option value='' onclick='activarItemGFT()'>".$fila['fk_tipo']."</option>
+				// 							";
+				// 		endforeach;
+				// 		$salida.= "</select>";
+				// }else{
+				// 		$salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+				// }
+				// echo $salida;
+				$this->dbh = null;
+			}catch (PDOException $e) {
+					$e->getMessage();
+			}
+
+
+
+		// try {
+		// 	$query = $this->dbh->prepare('SELECT i.fk_tipo, t.nombre_tipo FROM items_db_2 AS i, tipo_alienware AS t WHERE i.estado_item = "2" AND t.estado_tipo = "2"');
+		// 	$query->execute();
+		// 	$data = $query->fetchAll();
+		// 	$cont = count($data);
+		// 	//print_r($data[0]["fk_tipo"]."//".$data[0]["nombre_tipo"]);
+		// 	$salida;
+		// 	if(!empty($data)){
+		// 			$salida ="<select name='_item_IGFT' id='_item_IGFT' class='col-12 form-control form-control-sm' onclick='activarItemGFT()'><option value='1' onclick='activarItemGFT()'>Seleccione Item</option>";
+		// 			foreach ($data as $fila):
+		// 	$salida.= "
+		// 		<option value='".$fila['nombre_tipo']."' onclick='activarItemGFT()'>".$fila['nombre_tipo']."</option>
+		// 								";
+		// 			endforeach;
+		// 			$salida.= "</select>";
+		// 	}else{
+		// 			$salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+		// 	}
+		// 	echo $salida;
+		// 	$this->dbh = null;
+		// }catch (PDOException $e) {
+		// 		$e->getMessage();
+		// }
+	}
+	
+
+
 
 
 

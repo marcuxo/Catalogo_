@@ -38,15 +38,15 @@ session_start();
 
 						<div class="input-group">
 							<span class="input-group-addon corm-control" id="sizing-addon2"><i class='fas fa-user-shield'></i></span>
-							<input type="text" class="form-control" name="usuarioL" placeholder="Ingrese su Usuario" aria-describedby="sizing-addon2">
+							<input type="text" class="form-control form-control-sm text-primary" name="usuarioL" placeholder="Ingrese su Usuario" aria-describedby="sizing-addon2" style="background-color:transparent;">
 						</div><br>
 						<div class="input-group">
 							<span class="input-group-addon corm-control" id="sizing-addon2"><i class="fas fa-key"></i></span>
-							<input type="password" class="form-control" placeholder="Ingrese su Clave" aria-describedby="sizing-addon2">
+							<input type="password" class="form-control form-control-sm text-primary" placeholder="Ingrese su Clave" aria-describedby="sizing-addon2" style="background-color:transparent;">
 						</div>
 						<br>
 						<div class="input-group">
-							<input type="submit" class="btn btn-info col rounded" value="Entrar" aria-describedby="sizing-addon2">
+							<input type="submit" class="btn btn-primary btn-sm col rounded" value="Entrar" aria-describedby="sizing-addon2">
 							</form>
 						</div>
 				<!-- este label contiene la respuesta erronea del login, lo representa como un alert en pagina -->
