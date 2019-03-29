@@ -3757,14 +3757,15 @@ class Catalogo
 
 			$query->execute();
 			$data = $query->fetchAll();
-			$salida;
+			$salida ="";
+			$ARtipo = array();
 			if(!empty($data)){
-				$ARtipo = array();
+				
 					foreach ($data as $fila):
 					array_push($ARtipo, $fila['dato_1']);
 					endforeach;
 			}else{
-					echo "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+					echo "<p class='lead text-success'>No hay datos INACTIVOS en estos momemntos.</p>";
 			}
 
 			$query = $this->dbh->prepare('SELECT * FROM items_desactivados WHERE estado_tipo_d = "0" ');
@@ -3773,18 +3774,21 @@ class Catalogo
 			$salida;
 			if(!empty($data2)){
 					foreach ($data2 as $fila):
-					array_push($ARtipo, $fila['familia_tipo_d']);
+						array_push($ARtipo, $fila['familia_tipo_d']);
 					endforeach;
 			}else{
-					echo "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+					echo "<p class='lead text-success'>No hay datos INACTIVOS en estos momemntos.</p>";
 			}
 				//print_r($ARtipo);
-				$salida ="<select name='_item_AGFT' id='_item_AGFT' class='col-12 form-control form-control-sm' onclick='sel_itemIGFT()'><option value='1' onclick='sel_itemIGFT()'>Seleccione Item</option>";
-				foreach($ARtipo as $XY):
-					$salida .= "<option value='".$XY."' onclick='sel_itemIGFT()'>".$XY."</option>";
-				endforeach;
-				$salida.= "</select>";
-
+				if(!empty($ARtipo)){
+					$salida ="<select name='_item_AGFT' id='_item_AGFT' class='col-12 form-control form-control-sm' onclick='sel_itemIGFT()'><option value='1' onclick='sel_itemIGFT()'>Seleccione Item</option>";
+					foreach($ARtipo as $XY):
+						$salida .= "<option value='".$XY."' onclick='sel_itemIGFT()'>".$XY."</option>";
+					endforeach;
+					$salida.= "</select>";
+				}else{
+					echo "<p class='lead text-success'>No hay datos INACTIVOS en estos momemntos.</p>";
+			}
 				echo $salida;
 			$this->dbh = null;
 		}catch (PDOException $e) {
@@ -3878,14 +3882,14 @@ class Catalogo
 					// $query2->bindParam(1, $F_k);
 					$query2->execute();
 					$data2 = $query2->fetchAll();
-					$salida ="<select multiple name='tipo_dessactivado_GFT' id='tipo_dessactivado_GFT' class='col-12 form-control form-control-sm' onclick='activarItemGFT()'>";
+					$salida ="<select multiple name='tipo_dessactivado_GFT' id='tipo_dessactivado_GFT' class='col-12 form-control form-control-sm''>";
 					foreach($data2 as $col):
 						$salida.= "	<option value='".$F_k."' onclick='activarItemGFT()'>".$col['nombre_tipo']."</option>";
 					endforeach;
 					$salida.= "</select>";
 					echo $salida;
 				} else {
-					echo "aca no hay tipo";//GENERAR BOTON PARA ACTIVAR FAMILIA DE ITEM_DB_2
+					echo "<button class='btn btn-sm btn-danger' onclick='activarItemGFT_btn()'>Activar Item</button>";//GENERAR BOTON PARA ACTIVAR FAMILIA DE ITEM_DB_2
 				}
 				$this->dbh = null;
 			}catch (PDOException $e) {
@@ -3931,7 +3935,47 @@ class Catalogo
 		}
 	}
 
+	public function funcActivarItemGFT_btn($data)
+	{
+		//echo($data ."from controlador btn class");
+		try {			
+			$query2 = $this->dbh->prepare('UPDATE items_db_2 SET estado_item = "1" WHERE dato_1 = ?');
+			$query2->bindParam(1, $data);
 
+			$query2->execute();
+			if($query2->execute()){
+				echo "ok";
+			} else {
+				echo "no_ok";
+			}
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
+
+	public function funActivarItemGFT($data, $data2)
+	{
+		echo($data."//".$data2 ." from controlador class");
+		//echo $data." from class ".$dataFK;
+		try {			
+			$query2 = $this->dbh->prepare('UPDATE '.$data2.' SET estado_tipo = "1" WHERE nombre_tipo = ?');
+			$query2->bindParam(1, $data);
+				$query3 = $this->dbh->prepare('DELETE FROM items_desactivados WHERE tipo_d = ?');
+				$query3->bindParam(1, $data);
+				
+				$query3->execute();
+			$query2->execute();
+			if($query2->execute()){
+				echo "ok";
+			} else {
+				echo "no_ok";
+			}
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
 
 
 

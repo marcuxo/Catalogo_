@@ -2002,6 +2002,7 @@ function desactivarFamiliaGFT_() {
 
 //modal activar item
 function showModalActivarItem() {	
+	$('#loadTipoIGFT_').html("")
 	if(true){
 		$('#modalActivaritem').modal('show')
 		loadItemsActivosAGFT()
@@ -2047,7 +2048,50 @@ function activarItemGFT() {
 	var index = select.selectedIndex; 
 	var value = select.options[index].value;
 	var text = select.options[index].text;
-	console.log("items desactivados	"+ text + " // " + value) //tomar estos 2 datos y enviarlos a controlador para activar el item en modelo
+	//console.log("items desactivados	"+ text + " // " + value) //tomar estos 2 datos y enviarlos a controlador para activar el item en modelo
+	var optn_3 = confirm("Estas seguro de ACTIVAR este item 1")
+	if(optn_3){
+		$.ajax({
+		url: './../controlador/funcActivarItemGFT.php',
+		type: 'POST',
+		dataType: 'html',
+		data: {valor1: text,
+		valor2: value}
+		}).done(function(respuesta){
+			console.log(respuesta);
+			swal("Operacionrealizada con Exito!!")
+			$('#modalActivaritem').modal('hide')
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+}
+
+function activarItemGFT_btn() {
+	var data_val = $('#_item_AGFT').val()
+	document.getElementById('_item_AGFT').selected = "true";
+	var select = document.getElementById("_item_AGFT");
+	var index = select.selectedIndex; 
+	var value = select.options[index].value;
+	var text = select.options[index].text;
+	console.log(data_val)
+	var optn_4 = confirm("Estas seguro de ACTIVAR este item")
+	if(optn_4){
+		$.ajax({
+		url: './../controlador/funcActivarItemGFT_btn.php',
+		type: 'POST',
+		dataType: 'html',
+		data: {valor1: text}
+		}).done(function(respuesta){
+			console.log(respuesta);
+			swal("Operacionrealizada con Exito!!")
+			$('#modalActivaritem').modal('hide')
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
 }
 
 
