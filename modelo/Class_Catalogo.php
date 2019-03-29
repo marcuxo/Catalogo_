@@ -3760,12 +3760,9 @@ class Catalogo
 			$salida ="";
 			$ARtipo = array();
 			if(!empty($data)){
-				
 					foreach ($data as $fila):
 					array_push($ARtipo, $fila['dato_1']);
 					endforeach;
-			}else{
-					echo "<p class='lead text-success'>No hay datos INACTIVOS en estos momemntos.</p>";
 			}
 
 			$query = $this->dbh->prepare('SELECT * FROM items_desactivados WHERE estado_tipo_d = "0" ');
@@ -3776,8 +3773,6 @@ class Catalogo
 					foreach ($data2 as $fila):
 						array_push($ARtipo, $fila['familia_tipo_d']);
 					endforeach;
-			}else{
-					echo "<p class='lead text-success'>No hay datos INACTIVOS en estos momemntos.</p>";
 			}
 				//print_r($ARtipo);
 				if(!empty($ARtipo)){
