@@ -224,6 +224,8 @@ if(!isset($_SESSION['usuario'])){
 						<!-- contenido del modal -->
 						<div class="col-12 text-center mb-3" id="loadItemsActivosGFT"></div>
 						<div class="col-12 text-center mb-3" id="loadTipoGFT_"></div>
+
+						<div class="col-12 text-center mb-3" id="loadLoadGFT"></div>
 						
 						<div class="modal-footer">
 								<div class="col-12">
@@ -1926,6 +1928,7 @@ function familiDGFT() {
 
 function sel_itemAGFT() {
 	var item = $('#_item_AGFT').val()
+
 	if(item != "1"){
 		$.ajax({
 		url: './../controlador/traeTipoAGFT.php',
@@ -1943,22 +1946,57 @@ function sel_itemAGFT() {
 }
 
 function desctivarTipoGFT() {
-	var item = $('#datoItemGFT_').val();
-	//alert("click " + item2)
-	$.ajax({
+	var grup_o = $('#_item_AGFT').val()
+	document.getElementById('datoItemGFT_').selected = "true";
+		var select = document.getElementById("datoItemGFT_");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+	//alert("click " + dato_)
+	var optn_1 = confirm("Estas seguro de DESACTIVAR este item")
+	if(optn_1){
+		$.ajax({
 		url: './../controlador/desactivarItemGFT.php',
 		type: 'POST',
 		dataType: 'html',
-		data: { valor1: item },
+		data: { valor1: value,
+		valor2: text,
+		valor3: grup_o }
 		}).done(function(respuesta){
-			alert(respuesta);
-			//$('#loadTipoGFT_').html(respuesta)
+			console.log(respuesta);
+			//$("#loadLoadGFT").html(respuesta)
+			swal("Accion realizada con exito")
+			$('#modalDesctivaritem').modal('hide')
+			//$('#LoadCuentas').html(respuesta)
 		})//fin done
 		.fail(function(){
 			console.log('error');
 		});
+	}
 }
 
+function desactivarFamiliaGFT_() {
+	var famili_a = $('#_item_AGFT').val()
+	var optn_2 = confirm("Estas seguro de DESACTIVAR este item " + famili_a)
+	if(optn_2){
+		$.ajax({
+		url: './../controlador/desactivarItemGFTfamilia.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor1: famili_a }
+		}).done(function(respuesta){
+			console.log(respuesta);
+			//$("#loadLoadGFT").html(respuesta)
+			swal("desactivar familia")
+			$('#modalDesctivaritem').modal('hide')
+			//$('#LoadCuentas').html(respuesta)
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+
+	}
+}
 
 
 
@@ -2004,7 +2042,12 @@ function sel_itemIGFT() {
 }
 
 function activarItemGFT() {
-	console.log("items desactivados	;")
+	document.getElementById('tipo_dessactivado_GFT').selected = "true";
+	var select = document.getElementById("tipo_dessactivado_GFT");
+	var index = select.selectedIndex; 
+	var value = select.options[index].value;
+	var text = select.options[index].text;
+	console.log("items desactivados	"+ text + " // " + value) //tomar estos 2 datos y enviarlos a controlador para activar el item en modelo
 }
 
 

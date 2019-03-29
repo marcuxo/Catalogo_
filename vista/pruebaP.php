@@ -24,6 +24,26 @@ echo $carpeta;
 			</div>
 		</div>
 	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>prueba de array</h1>
+				<?php
+					$array = array();
+					array_push($array, "persona","perro", "gato", "casa");
+					print_r($array);
+					echo "<br>";
+					//echo $array[0];
+					
+					$cont = 0;
+					foreach ($array as $tipo):
+						echo $tipo."<br>";
+						$cont = $cont +1;
+					endforeach;
+				?>
+			</div>
+		</div>
+	</div>
 
 	<!-- imports de javascript para funcionalidad -->
 	<script type="text/javascript" src="./JS/jquery.js"></script>
@@ -57,7 +77,7 @@ echo $carpeta;
 		$('#fecha').html(fecha)
 		$('#fechita').val(fecha)
 
-		setTimeout("laFechita()",1000);s
+		setTimeout("laFechita()",1000);
 	}
 
 laFechita()
