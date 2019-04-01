@@ -1024,5 +1024,243 @@ class Reporte extends PHPExcel
       exit;
     }
 
+    public function reporte_allNoFormActivo()
+    {
+      // Crear nuevo objeto PHPExcel
+      $objPHPExcel = new PHPExcel();
+
+      // Propiedades del documento
+      $objPHPExcel->getProperties()->setCreator("MarcoUrrutia")
+                    ->setLastModifiedBy("MarcoUrrutia");
+
+      // Combino las celdas desde A1 hasta E1
+      $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:F1');//DECLARAR RANGO DE CELDAS
+
+      //-----------plantilla EXCEL---------------------------------------------
+      $objPHPExcel->setActiveSheetIndex(0)
+                  ->setCellValue('A1', 'REPORTE DE ITEMS NO FORMALIZADOS ACTIVOS')//titulo dentro de la hoja de excel
+                  ->setCellValue('A2', 'ID')//titulo de celda
+                  ->setCellValue('B2', 'GRUPO')//titulo de celda
+                  ->setCellValue('C2', 'FAMILIA')//titulo de celda
+                  ->setCellValue('D2', 'TIPO')//titulo de celda
+                  ->setCellValue('E2', 'CODIGO')//titulo de celda
+                  ->setCellValue('F2', 'DESCRIPCION');//titulo de celda
+            
+      // Fuente de la primera fila en negrita
+      $boldArray = array('font' => array('bold' => true,),'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER));
+      $titulo_1 = array('font' => array( 'name' => 'Arial','size' => 20));
+
+      $objPHPExcel->getActiveSheet()->getStyle('A1:B2')->applyFromArray($titulo_1);		//DECLARAR RANGO DE CELDAS
+      $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->applyFromArray($boldArray);		//DECLARAR RANGO DE CELDAS
+
+        
+            
+      //Ancho de las columnas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(30);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(80);//rellena las celdas
+
+      /*Extraer datos de MYSQL*/
+      # conectare la base de datos
+        //esta consulta carga los items de ingreso de datos vacios
+        $query = $this->dbh->prepare('SELECT * FROM all_items WHERE estado_item = "1" ');
+        $query->execute();
+        $data = $query->fetchAll();
+
+      $cel=3;//Numero de fila donde empezara a crear  el reporte
+      if(!empty($data)){
+        foreach ($data as $row):
+          $celda_A=$row['id_item'];
+          $celda_B=$row['grupo'];
+          $celda_C=$row['familia'];
+          $celda_d=$row['subfamilia'];
+          $celda_e=$row['codigo'];
+          $celda_f=$row['descripcion'];
+            
+            $a="A".$cel;
+            $b="B".$cel;
+            $c="C".$cel;
+            $d="D".$cel;
+            $e="E".$cel;
+            $f="F".$cel;
+            // Agregar datos
+            $objPHPExcel->setActiveSheetIndex(0)
+                  ->setCellValue($a, $celda_A)
+                  ->setCellValue($b, $celda_B)
+                  ->setCellValue($c, $celda_C)
+                  ->setCellValue($d, $celda_d)
+                  ->setCellValue($e, $celda_e)
+                  ->setCellValue($f, $celda_f);
+        $cel+=1;
+        endforeach;
+
+        /*Fin extracion de datos MYSQL*/
+        $rango="A2:$f"; //DECLARAR  RANGO DE CELDAS
+        $styleArray = array('font' => array( 'name' => 'Arial','size' => 10),
+        'borders'=>array('allborders'=>array('style'=> PHPExcel_Style_Border::BORDER_THIN,'color'=>array('argb' => '000')))
+        );
+        $objPHPExcel->getActiveSheet()->getStyle($rango)->applyFromArray($styleArray);
+      } else {
+          //exit;
+          //header('location: ../vista/redireccionar.php?data=no_data');
+          $objPHPExcel->setActiveSheetIndex(0)
+          ->setCellValue('A1', 'No hay datos Para Mostrar.')//titulo dentro de la hoja de excel
+          ->setCellValue('A2', ' ')//titulo de celda
+          ->setCellValue('B2', ' ')//titulo de celda
+          ->setCellValue('C2', ' ')//titulo de celda
+          ->setCellValue('D2', ' ')//titulo de celda
+          ->setCellValue('E2', ' ')//titulo de celda
+          ->setCellValue('F2', ' ');//titulo de celda
+      }
+
+      // Cambiar el nombre de hoja de cálculo
+      $objPHPExcel->getActiveSheet()->setTitle('Reporte');//nombre de hoja de excel
+      //------------------------------------FIN PLANTILLA ------------------------------------------
+
+
+      // Establecer índice de hoja activa a la primera hoja , por lo que Excel abre esto como la primera hoja
+      $objPHPExcel->setActiveSheetIndex(0);
+
+
+      // Redirigir la salida al navegador web de un cliente ( Excel5 )
+      header('Content-Type: application/vnd.ms-excel');
+      header('Content-Disposition: attachment;filename="reporte_allItem_noFormalizado_activo_'.date('d'.'_'.'m'.'_'.'Y').'.xls"');//nombre de ARCHIVO EXCEL
+      header('Cache-Control: max-age=0');
+      // Si usted está sirviendo a IE 9 , a continuación, puede ser necesaria la siguiente
+      header('Cache-Control: max-age=1');
+
+      // Si usted está sirviendo a IE a través de SSL , a continuación, puede ser necesaria la siguiente
+      header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+      header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+      header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+      header ('Pragma: public'); // HTTP/1.0
+
+      $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+      $objWriter->save('php://output');
+      exit;
+    }
+
+    public function reporte_allNoFormInctivo()
+    {
+      // Crear nuevo objeto PHPExcel
+      $objPHPExcel = new PHPExcel();
+
+      // Propiedades del documento
+      $objPHPExcel->getProperties()->setCreator("MarcoUrrutia")
+                    ->setLastModifiedBy("MarcoUrrutia");
+
+      // Combino las celdas desde A1 hasta E1
+      $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:F1');//DECLARAR RANGO DE CELDAS
+
+      //-----------plantilla EXCEL---------------------------------------------
+      $objPHPExcel->setActiveSheetIndex(0)
+                  ->setCellValue('A1', 'REPORTE DE ITEMS NO FORMALIZADOS INACTIVOS')//titulo dentro de la hoja de excel
+                  ->setCellValue('A2', 'ID')//titulo de celda
+                  ->setCellValue('B2', 'GRUPO')//titulo de celda
+                  ->setCellValue('C2', 'FAMILIA')//titulo de celda
+                  ->setCellValue('D2', 'TIPO')//titulo de celda
+                  ->setCellValue('E2', 'CODIGO')//titulo de celda
+                  ->setCellValue('F2', 'DESCRIPCION');//titulo de celda
+            
+      // Fuente de la primera fila en negrita
+      $boldArray = array('font' => array('bold' => true,),'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER));
+      $titulo_1 = array('font' => array( 'name' => 'Arial','size' => 20));
+
+      $objPHPExcel->getActiveSheet()->getStyle('A1:B2')->applyFromArray($titulo_1);		//DECLARAR RANGO DE CELDAS
+      $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->applyFromArray($boldArray);		//DECLARAR RANGO DE CELDAS
+
+        
+            
+      //Ancho de las columnas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(30);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);//rellena las celdas
+      $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(80);//rellena las celdas
+
+      /*Extraer datos de MYSQL*/
+      # conectare la base de datos
+        //esta consulta carga los items de ingreso de datos vacios
+        $query = $this->dbh->prepare('SELECT * FROM all_items WHERE estado_item = "0" ');
+        $query->execute();
+        $data = $query->fetchAll();
+
+      $cel=3;//Numero de fila donde empezara a crear  el reporte
+      if(!empty($data)){
+        foreach ($data as $row):
+          $celda_A=$row['id_item'];
+          $celda_B=$row['grupo'];
+          $celda_C=$row['familia'];
+          $celda_d=$row['subfamilia'];
+          $celda_e=$row['codigo'];
+          $celda_f=$row['descripcion'];
+            
+            $a="A".$cel;
+            $b="B".$cel;
+            $c="C".$cel;
+            $d="D".$cel;
+            $e="E".$cel;
+            $f="F".$cel;
+            // Agregar datos
+            $objPHPExcel->setActiveSheetIndex(0)
+                  ->setCellValue($a, $celda_A)
+                  ->setCellValue($b, $celda_B)
+                  ->setCellValue($c, $celda_C)
+                  ->setCellValue($d, $celda_d)
+                  ->setCellValue($e, $celda_e)
+                  ->setCellValue($f, $celda_f);
+        $cel+=1;
+        endforeach;
+
+        /*Fin extracion de datos MYSQL*/
+        $rango="A2:$f"; //DECLARAR  RANGO DE CELDAS
+        $styleArray = array('font' => array( 'name' => 'Arial','size' => 10),
+        'borders'=>array('allborders'=>array('style'=> PHPExcel_Style_Border::BORDER_THIN,'color'=>array('argb' => '000')))
+        );
+        $objPHPExcel->getActiveSheet()->getStyle($rango)->applyFromArray($styleArray);
+      } else {
+          //exit;
+          //header('location: ../vista/redireccionar.php?data=no_data');
+          $objPHPExcel->setActiveSheetIndex(0)
+          ->setCellValue('A1', 'No hay datos Para Mostrar.')//titulo dentro de la hoja de excel
+          ->setCellValue('A2', ' ')//titulo de celda
+          ->setCellValue('B2', ' ')//titulo de celda
+          ->setCellValue('C2', ' ')//titulo de celda
+          ->setCellValue('D2', ' ')//titulo de celda
+          ->setCellValue('E2', ' ')//titulo de celda
+          ->setCellValue('F2', ' ');//titulo de celda
+      }
+
+      // Cambiar el nombre de hoja de cálculo
+      $objPHPExcel->getActiveSheet()->setTitle('Reporte');//nombre de hoja de excel
+      //------------------------------------FIN PLANTILLA ------------------------------------------
+
+
+      // Establecer índice de hoja activa a la primera hoja , por lo que Excel abre esto como la primera hoja
+      $objPHPExcel->setActiveSheetIndex(0);
+
+
+      // Redirigir la salida al navegador web de un cliente ( Excel5 )
+      header('Content-Type: application/vnd.ms-excel');
+      header('Content-Disposition: attachment;filename="reporte_allItem_noFormalizado_inactivo_'.date('d'.'_'.'m'.'_'.'Y').'.xls"');//nombre de ARCHIVO EXCEL
+      header('Cache-Control: max-age=0');
+      // Si usted está sirviendo a IE 9 , a continuación, puede ser necesaria la siguiente
+      header('Cache-Control: max-age=1');
+
+      // Si usted está sirviendo a IE a través de SSL , a continuación, puede ser necesaria la siguiente
+      header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+      header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+      header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+      header ('Pragma: public'); // HTTP/1.0
+
+      $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+      $objWriter->save('php://output');
+      exit;
+    }
+
 
 }//fin clase
