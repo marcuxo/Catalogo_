@@ -343,12 +343,12 @@ if(!isset($_SESSION['usuario'])){
 									<p class="lead">Tipo de Cuenta</p>
 									<div class="form-check form-check-inline">
 											<label class="form-check-label" data-toggle="tooltip" title="Este tipo de usuario solo puede modificar los datos de los items">
-												<input class="form-check-input" type="radio" name="tipoUser" id="adminUser" value="administrador"> Usuario Administrador
+												<input class="form-check-input" type="radio" name="tipoUser" id="adminUser" value="Administrador"> Usuario Administrador
 											</label>
 										</div>
 										<div class="form-check form-check-inline" data-toggle="tooltip" title="Este tipo de usuario puede crear cuentas de usuarios y modificar items">
 											<label class="form-check-label">
-												<input class="form-check-input" type="radio" name="tipoUser" id="superUser" value="privilegiado"> Usuario Privilegiado
+												<input class="form-check-input" type="radio" name="tipoUser" id="superUser" value="Privilegiado"> Usuario Privilegiado
 											</label>
 										</div>
 									<p class="text-danger"><small>** Por defecto la cuenta creada quedara ACTIVADA **</small></p>
@@ -1219,7 +1219,6 @@ if(!isset($_SESSION['usuario'])){
 		}
 	}
 
-
 	function sub_AddUser() {
 		var user = $('#usuarioAdd').val();
 		var cl1 = $('#clave1Add').val();
@@ -1282,7 +1281,6 @@ if(!isset($_SESSION['usuario'])){
 				console.log('error');
 			});
 	}
-
 
 	function passValida() {
 		var clave1 = $('#clave1Add').val();
