@@ -161,29 +161,29 @@ $msg2 = '
 <body>
 <center>
 <div class="container-fluid">
-<div class="row">
-<div class="col bg-inverse rounded-bottom">
-<h1 class="text-white">Datos a Verificar</h1>
-</div>
-</div>
+    <div class="row">
+        <div class="col bg-inverse rounded-bottom">
+            <h1 class="text-white">Datos a Verificar</h1>
+        </div>
+    </div>
 </div>
 
 <div class="container-fluid">
 <div class="row">
 <div class="col">
-<p class="lead">Codigo: '.$codigo.'</p>
-<p class="lead">Dir. Imagen: '.$directorioDB.'</p>
-<p class="lead">Descripcion: '.$descripcion.'</p>
-<p class="lead">Grupo: '.$grupo.'</p>
-<p class="lead">Familia: '.$familia.'</p>
-<p class="lead">Tipo: '.$tipo.'</p>
-<p class="lead">Material: '.$material.'</p>
-<p class="lead">Dato Tecnico 1: '.$dato_2.'</p>
-<p class="lead">Dato Tecnico 2: '.$dato_3.'</P>
-<p class="lead">Dato Tecnico 3: '.$dato_4.'</p>
-<p class="lead">dato Tecnico 4: '.$dato_5.'</p>
-<p class="lead">Dato Tecnico 5: '.$dato_6.'</p>
-<p class="lead">Dato Tecnico 6: '.$dato_7.'</p>
+    <p class="lead">Codigo: '.$codigo.'</p>
+    <p class="lead">Dir. Imagen: '.$directorioDB.'</p>
+    <p class="lead">Descripcion: '.$descripcion.'</p>
+    <p class="lead">Grupo: '.$grupo.'</p>
+    <p class="lead">Familia: '.$familia.'</p>
+    <p class="lead">Tipo: '.$tipo.'</p>
+    <p class="lead">Material: '.$material.'</p>
+    <p class="lead">Dato Tecnico 1: '.$dato_2.'</p>
+    <p class="lead">Dato Tecnico 2: '.$dato_3.'</P>
+    <p class="lead">Dato Tecnico 3: '.$dato_4.'</p>
+    <p class="lead">dato Tecnico 4: '.$dato_5.'</p>
+    <p class="lead">Dato Tecnico 5: '.$dato_6.'</p>
+    <p class="lead">Dato Tecnico 6: '.$dato_7.'</p>
 <br>
 <br>
 

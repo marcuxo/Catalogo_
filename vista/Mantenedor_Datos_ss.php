@@ -32,23 +32,23 @@ if(!isset($_SESSION['usuario'])){
 							<i class="fas fa-pen"></i> Editar Items
 					</button>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> <small>Nuevo tipo</small></a>
+							<button class="dropdown-item" onclick="modalShow2()"><i class="fas fa-plus-square"></i> <small>Nuevo tipo</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> <small>Nueva Familia</small></a>
+							<button class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> <small>Nueva Familia</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> <small>Items En ESPERA</small></a>
+							<button class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> <small>Items En ESPERA</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalActivarItem()"><i class="fas fa-check-circle"></i><small> Activar item</small></a>
+							<button class="dropdown-item" onclick="showModalActivarItem()"><i class="fas fa-check-circle"></i><small> Activar item</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalDesactivarItem()"><i class="fas fa-check-circle"></i><small> Desctivar item</small></a>
+							<button class="dropdown-item" onclick="showModalDesactivarItem()"><i class="fas fa-check-circle"></i><small> Desctivar item</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i><small> Agregar Foto tipo</small></a>
+							<button class="dropdown-item" onclick="showMfoto()"><i class="fas fa-folder-plus"></i><small> Agregar Foto tipo</small></button>
 						<div class="dropdown-divider"></div>
-							<a class="dropdown-item" onclick="showNewGlosa()"><i class="fas fa-plus-square"></i> <small>Nueva Glosa</small></a>
+							<button class="dropdown-item" onclick="showNewGlosa()"><i class="fas fa-plus-square"></i> <small>Nueva Glosa</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> <small>Activar Glosa</small></a>
+							<button class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> <small>Activar Glosa</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<a class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i><small> Desactivar Glosa</small></a>
+							<button class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i><small> Desactivar Glosa</small></button>
 					</div>
 				</div>
 				
@@ -57,9 +57,34 @@ if(!isset($_SESSION['usuario'])){
 						<i class="fas fa-user-edit"></i> Usuario
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> <small>Agregar Usuario</small></a>
+						<button class="dropdown-item" onclick="showModalAddUser()"><i class="fas fa-plus-square"></i> <small>Agregar Usuario</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-						<a class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i><small> Modificar Usuario</small></a>
+						<button class="dropdown-item" onclick="showModalChangePass()"><i class="fas fa-user-shield"></i><small> Modificar Usuario</small></button>
+					</div>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-file-alt"></i> Reportes
+					</button>
+						<div class="dropdown-menu">
+							<button class="dropdown-item btn" onclick="generaReporte_(Rexcel = 'famActivo')"><i class="fas fa-file-download"></i><small> EXCEL Familias Activos</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'famInactivo')"><i class="fas fa-file-download"></i><small> EXCEL Familias Inactivos</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'famXactivar')"><i class="fas fa-file-download"></i><small> EXCEL Familias X Activar</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'cuentasUsuario')"><i class="fas fa-file-download"></i><small> EXCEL Cuentas de Usuarios</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formActivos')"><i class="fas fa-file-download"></i><small> EXCEL Formalizados Activos</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formInactivos')"><i class="fas fa-file-download"></i><small> EXCEL formalizados Inactivos</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formXactivar')"><i class="fas fa-file-download"></i><small> EXCEL Formalizados x Activar</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'nFactivos')"><i class="fas fa-file-download"></i><small> EXCEL Items no formalizados Activos</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'nFinactivos')"><i class="fas fa-file-download"></i><small> EXCEL Items no formalizados Inactivos</small></button>
 					</div>
 				</div>
 
@@ -2093,6 +2118,37 @@ function activarItemGFT_btn() {
 }
 
 
+//metodo que activa la generacion de registro en excel
+
+function generaReporte_(tipoReporte) {
+if(tipoReporte === "famActivo"){
+	location.href = "../controlador/generaReporteFamiliaActiva.php";
+}
+if(tipoReporte === "famInactivo"){
+	location.href = "../controlador/generaReporteFamiliaInactiva.php";
+}
+if(tipoReporte === "famXactivar"){
+	location.href = "../controlador/generaReporteFamiliaXaprobar.php";
+}
+if(tipoReporte === "cuentasUsuario"){
+	location.href = "../controlador/generaReporteCuenta.php";
+}
+if(tipoReporte === "formActivos"){
+	location.href = "../controlador/generaReporteFormalizadoActivo.php";
+}
+if(tipoReporte === "formInactivos"){
+	location.href = "../controlador/generaReporteFormalizadosInactivos.php";
+}
+if(tipoReporte === "formXactivar"){
+	location.href = "../controlador/generaReporteFormalizadosAprobar.php";
+}
+if(tipoReporte === "nFactivos"){
+	location.href = "../controlador/generaReporteFullNoFormActivo.php";
+}
+if(tipoReporte === "nFinactivos"){
+	location.href = "../controlador/generaReporteFullNoFormInactivo.php";
+}
+}
 
 
 </script>

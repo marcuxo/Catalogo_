@@ -7,3 +7,4 @@ $familia = $_POST['valor2'];
 $familia = strtoupper($familia);
  //echo $grupo.$familia.$tipo;
 $catalogo->addNewFamili($grupo,$familia);
+

@@ -78,7 +78,7 @@ if(!isset($_SESSION['usuario'])){
 				</div>
 				<div class="modal-body">
 					<!-- contenido del modal -->	
-						<form action="../controlador/addItemFormal.php" method="post" onsubmit="return sub_envio()">
+						<!-- <form action="../controlador/addItemFormal.php" method="post" onsubmit="return sub_envio()"> -->
 							<small id="modalRespuesta"></small>		
 							<div id="esconder" class=""><a class="btn btn-sm btn-info col-12" onclick="loadGrupos();esconde()">EDITAR LOS DATOS</a></div>						
 							<div id="grupos"></div>
@@ -92,8 +92,8 @@ if(!isset($_SESSION['usuario'])){
 						<div class="modal-footer">
 							<!-- contenedor de fecha y hora actual para generar un dato de ingreso con fecha actual de guardado en base de datos -->
 							<input type="text" name="horaActual" id="fechita"  class="form-control form-control-sm col-2 text-center invisible">
-							<input type="submit" id="mostrarBTN" class="btn btn-primary btn-sm invisible" name="btn_add" value="Agregar">
-						</form>
+							<input id="mostrarBTN" class="btn btn-primary btn-sm invisible" name="btn_add" value="Agregar" onclick="selFormADD()">
+						<!-- </form> -->
 					</div>
 			</div>
 		</div>
@@ -227,10 +227,72 @@ function e() {
 		});
 	}
 
-	function sub_envio() {
+	function selFormADD() {
+		//$('input:text[name=nombre]').val()
+		var grupo = $('#grupo').val()
+		var familia = $('#familia').val()
+		var tipo = $('#tiposel').val()
+		var material = $('#materialMod').val()
+		var dato3 = $('input:text[name=dato_3]').val()
+		var dato4 = $('input:text[name=dato_4]').val()
+		var dato5 = $('input:text[name=dato_5]').val()
+		var dato6 = $('input:text[name=dato_6]').val()
+		var dato7 = $('input:text[name=dato_7]').val()
+		var dato8 = $('input:text[name=dato_8]').val()
+		var dato9 = $('input:text[name=0]').val()
+
+		if(!tipo){
+			tipo = "N/A";
+		}
+		if(!material){
+			material = "N/A";
+		}
+		if(!dato3){
+			dato3 = "N/A";
+		}
+		if(!dato4){
+			dato4 = "N/A";
+		}
+		if(!dato5){
+			dato5 = "N/A";
+		}
+		if(!dato6){
+			dato6 = "N/A";
+		}
+		if(!dato7){
+			dato7 = "N/A";
+		}	
+
+
 			var dato = confirm("Estas seguro de los datos");
 			if(dato){
-					return true;
+					//console.log(grupo+"//"+familia+"//"+tipo+"//"+material+"//"+dato3+"//"+dato4+"//"+dato5+"//"+dato6+"//"+dato7+"//"+dato8+"//"+dato9+"//"+laFechita());
+					$.ajax({
+						url: '../controlador/addItemFormal.php',
+						type: 'POST',
+						dataType: 'html',
+						data: { valor1: grupo,
+						valor2: familia,
+						valor3: tipo,
+						valor4: material,
+						valor5: dato9,
+						valor6: laFechita(),
+						valor7:dato8,
+						valor8:dato3,
+						valor9: dato4,
+						valor10: dato5,
+						valor11: dato6,
+						valor12: dato7},
+					})
+					.done(function(respuesta){
+						console.log(respuesta);
+						//$("#materiales").html(respuesta)
+						$('#modalBusqueda').modal('hide')
+						swal("Operacion Realizada con exito", "", "success")
+					})//fin done
+					.fail(function(){
+						console.log('error');
+					});
 			} else {
 					return false;
 			}
@@ -406,15 +468,13 @@ function e() {
 		element2.classList.add("invisible");
 	}
 
-	function reiniciaMod() {
-		
-	}
-	
 
+	
+//cierra la seccion despues d en munutos
 	function CerrarCession() {
 	location.href ="./../controlador/CerrarSession.php";
 	}
-
+//genera fecha y hora para ser guardada como dato
 	function laFechita() {
 		var hoy = new Date();
 		var dd = hoy.getDate();
@@ -439,6 +499,7 @@ function e() {
 		$('#fechita').val(fecha)
 
 		setTimeout("laFechita()",1000);
+		return fecha;
 	}
 	laFechita()
 

@@ -3333,7 +3333,7 @@ class Catalogo
 
 	public function addDato_DM($code, $grupo, $familia, $tipo, $material, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8, $fechora)
 	{
-		echo "Datos Ingresados Correctamente : ".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
+		//echo "Datos Ingresados Correctamente : ".$code.$grupo.$familia.$tipo.$material.$dato3.$dato4.$dato5.$dato6.$dato7.$dato8;
 
 		try{
 			$query = $this->dbh->prepare('INSERT INTO datos_formalizados VALUES(null,"1","N/A",?,"N/A",?,?,?,?,?,?,?,?,?,?,?,"--/--/--/ --:--:--")');
@@ -3350,14 +3350,17 @@ class Catalogo
 			$query->bindParam(11, $dato8);
 			$query->bindParam(12, $fechora);
 
-			$query->execute();
-
+			
+			
 			$query2 = $this->dbh->prepare('UPDATE all_items SET estado_item = 0 WHERE CODIGO = ?');
 			$query2->bindParam(1, $code);
 			$query2->execute();
-			echo "Datos ingresados correctamente<br>";
-			echo "Sera redireccionado en 3 segundos<br>";
-			echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=../vista/Mantenedor_Datos_.php'>";
+
+			if($query->execute()){
+				echo "ok";
+			} else {
+				echo "no_ok";
+			}
 			$this->dbh = null;
 		} catch (PDOException $e){
 			$e->getMessage();
