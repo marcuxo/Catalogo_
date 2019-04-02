@@ -50,7 +50,7 @@ if(!isset($_SESSION['usuario'])){
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i><small> Desactivar Glosa</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="showModalCrud()"><i class="fas fa-edit"></i><small> Crud Glosa</small></button>
+							<!-- <button class="dropdown-item" onclick="showModalCrud()"><i class="fas fa-edit"></i><small> Crud Glosa</small></button> -->
 					</div>
 				</div>
 				

@@ -1,7 +1,7 @@
 <?php
 require_once 'PHPExcel.php';
 session_start();
-class Catalogo
+class Catalogo extends PHPExcel
 {
     private static $instancia;
     public $dbh;
