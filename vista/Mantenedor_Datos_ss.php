@@ -49,6 +49,8 @@ if(!isset($_SESSION['usuario'])){
 							<button class="dropdown-item" onclick="showModalItemInactivo()"><i class="fas fa-check-circle"></i> <small>Activar Glosa</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="showModalItemActivo()"><i class="fas fa-times-circle"></i><small> Desactivar Glosa</small></button>
+						<!-- <div class="dropdown-divider"></div> -->
+							<button class="dropdown-item" onclick="showModalCrud()"><i class="fas fa-edit"></i><small> Crud Glosa</small></button>
 					</div>
 				</div>
 				
@@ -76,11 +78,11 @@ if(!isset($_SESSION['usuario'])){
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'cuentasUsuario')"><i class="fas fa-file-download"></i><small> EXCEL Cuentas de Usuarios</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formActivos')"><i class="fas fa-file-download"></i><small> EXCEL Formalizados Activos</small></button>
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formActivos')"><i class="fas fa-file-download"></i><small> EXCEL Glosa Activos</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formInactivos')"><i class="fas fa-file-download"></i><small> EXCEL formalizados Inactivos</small></button>
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formInactivos')"><i class="fas fa-file-download"></i><small> EXCEL Glosa Inactivos</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formXactivar')"><i class="fas fa-file-download"></i><small> EXCEL Formalizados x Activar</small></button>
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formXactivar')"><i class="fas fa-file-download"></i><small> EXCEL Glosa x Activar</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'nFactivos')"><i class="fas fa-file-download"></i><small> EXCEL Items no formalizados Activos</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
@@ -533,6 +535,59 @@ if(!isset($_SESSION['usuario'])){
 			</div>
 		</div>
 	</div>
+
+
+	<!-- -----------------------------------------  MODAL CRUD GLOSA ----------------------------------------------  -->
+	<div class="modal info" id="modalCrudGlosa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<!-- <div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">crud Glosa</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div> -->
+					
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div id="showDrudGlosa"></div>
+						
+						<div class="modal-footer">
+							<div class="col-12">
+								<div class="row">
+									<div class="col-12 text-center">
+										<button type="button" class="btn btn-sm btn-danger mx-3" onclick="crudGlosa_eliminar()">Eliminar</button>
+										<button type="button" class="btn btn-sm btn-success mx-3" onclick="crudGlosa_actualizar()">Actualizar Datos</button>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------  MODAL CRUD direction GLOSA ----------------------------------------------  -->
+	<div class="modal info" id="modalCrudDirection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle"><label for="" id="//crudValue"></label></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				
+				<div class="modal-body text-center pb-5">
+					<!-- contenido del modal -->
+				<div id="crudBtn_"></div>
+					
+				</div>
+		</div>
+	</div>
+</div>
+
+
 <input type="text" id="fechita" name="fechaAqui" class="form-control form-control-sm invisible">
 <!-- imports de javascript para funcionalidad -->
  	<script type="text/javascript" src="./JS/jquery.js"></script>
@@ -756,7 +811,7 @@ if(!isset($_SESSION['usuario'])){
 	}
 
 		//aqui funcion cambia codigo pieza
-	function selInactivo(){
+	function selInactivo_respaldo(){
 		// $("#fotoTipo").html("");
 		// $("#fotoTipo2").html("");
 		document.getElementById('itemInactivo').selected = "true";//TRAE EL VALOR DESDE FOTO GRUPO
@@ -774,16 +829,12 @@ if(!isset($_SESSION['usuario'])){
 		} else {
 			var conItem = confirm("Esta seguro de ACTIVAR este Item");
 			if(conItem){
-				console.log("El dato a fue ACTIVADO");
-				
 				$.ajax({
 				url: './../controlador/upItem.php',
 				type: 'POST',
 				dataType: 'html',
 				data: { valor: value }
 				}).done(function(respuesta){
-					// console.log('logrado');
-					//$("#dInactivo").html(respuesta)
 					loadItemsInactivos();
 					swal("el dato fue ACTIVADO.");
 				})//fin done
@@ -797,6 +848,48 @@ if(!isset($_SESSION['usuario'])){
 			}
 		}
 	}
+
+	function selInactivo(){
+		// $("#fotoTipo").html("");
+		// $("#fotoTipo2").html("");
+		document.getElementById('itemInactivo').selected = "true";//TRAE EL VALOR DESDE FOTO GRUPO
+		var select = document.getElementById("itemInactivo");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+		var codigo = text.indexOf("Sin Codigo");
+		if(codigo != -1){
+			//showModalCrud(value, code = "sin_code", text)
+			var conCode = confirm("La glosa no tiene codigo \nDesea Ingresarle un Codigo")
+				if(conCode){
+					$('#modalInactivos').modal('hide')
+					ShowModalIngresaCodigo(text,value)
+				}
+		} else {
+			showModalCrud(value , code = "code", text)
+
+			// var conItem = confirm("Esta seguro de ACTIVAR este Item");
+			// if(conItem){
+			// 	$.ajax({
+			// 	url: './../controlador/upItem.php',
+			// 	type: 'POST',
+			// 	dataType: 'html',
+			// 	data: { valor: value }
+			// 	}).done(function(respuesta){
+			// 		loadItemsInactivos();
+			// 		swal("el dato fue ACTIVADO.");
+			// 	})//fin done
+			// 	.fail(function(){
+			// 		console.log('error');
+			// 	});
+				
+			// 	loadItemsInactivos();
+			// } else {
+			// 	console.log("El dato a sigue DESCATIVADO");
+			// }
+		}
+	}
+
 
   //modal carga y desactiva items activo
 	function showModalItemActivo(){
@@ -1919,7 +2012,29 @@ function loadItemsEnEsperaES() {
 }
 
 function sel_ItemEspera() {
-	alert("item en espera")
+	//var item=$('#itemActivo').val()
+	document.getElementById('itemActivo').selected = "true";
+		var select = document.getElementById("itemActivo");
+		var index = select.selectedIndex; 
+		var value = select.options[index].value;
+		var text = select.options[index].text;
+	var optn_7 = confirm("Esta seguro de activar este ITEM")
+	if(optn_7){
+		$.ajax({
+		url: './../controlador/activarItemEnEspera.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: value,
+		valor0: laFechita()}
+		}).done(function(respuesta){
+			$('#modalActivaritemEnEspera').modal('hide')
+			console.log(respuesta)
+			swal("el dato fue ACTIVADO.", "", "success");
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
 }
 
 
@@ -2121,35 +2236,179 @@ function activarItemGFT_btn() {
 //metodo que activa la generacion de registro en excel
 
 function generaReporte_(tipoReporte) {
-if(tipoReporte === "famActivo"){
-	location.href = "../controlador/generaReporteFamiliaActiva.php";
-}
-if(tipoReporte === "famInactivo"){
-	location.href = "../controlador/generaReporteFamiliaInactiva.php";
-}
-if(tipoReporte === "famXactivar"){
-	location.href = "../controlador/generaReporteFamiliaXaprobar.php";
-}
-if(tipoReporte === "cuentasUsuario"){
-	location.href = "../controlador/generaReporteCuenta.php";
-}
-if(tipoReporte === "formActivos"){
-	location.href = "../controlador/generaReporteFormalizadoActivo.php";
-}
-if(tipoReporte === "formInactivos"){
-	location.href = "../controlador/generaReporteFormalizadosInactivos.php";
-}
-if(tipoReporte === "formXactivar"){
-	location.href = "../controlador/generaReporteFormalizadosAprobar.php";
-}
-if(tipoReporte === "nFactivos"){
-	location.href = "../controlador/generaReporteFullNoFormActivo.php";
-}
-if(tipoReporte === "nFinactivos"){
-	location.href = "../controlador/generaReporteFullNoFormInactivo.php";
-}
+	if(tipoReporte === "famActivo"){
+		location.href = "../controlador/generaReporteFamiliaActiva.php";
+	}
+	if(tipoReporte === "famInactivo"){
+		location.href = "../controlador/generaReporteFamiliaInactiva.php";
+	}
+	if(tipoReporte === "famXactivar"){
+		location.href = "../controlador/generaReporteFamiliaXaprobar.php";
+	}
+	if(tipoReporte === "cuentasUsuario"){
+		location.href = "../controlador/generaReporteCuenta.php";
+	}
+	if(tipoReporte === "formActivos"){
+		location.href = "../controlador/generaReporteFormalizadoActivo.php";
+	}
+	if(tipoReporte === "formInactivos"){
+		location.href = "../controlador/generaReporteFormalizadosInactivos.php";
+	}
+	if(tipoReporte === "formXactivar"){
+		location.href = "../controlador/generaReporteFormalizadosAprobar.php";
+	}
+	if(tipoReporte === "nFactivos"){
+		location.href = "../controlador/generaReporteFullNoFormActivo.php";
+	}
+	if(tipoReporte === "nFinactivos"){
+		location.href = "../controlador/generaReporteFullNoFormInactivo.php";
+	}
 }
 
+//Modal Crud GLosa
+function showModalCrud(value, code, text) {
+	//$('#modalCrudGlosa').modal('show')
+	
+	
+	if(code == "code"){
+		$('#modalCrudDirection').modal('show')
+		$('#crudValue').html(value + code)
+		var item = '<button class="btn btn-sm btn-info mx-2" onclick="crud_ActivarGlosa('+value+')">Activar Glosa</button><button class="btn btn-sm btn-info mx-2" onclick="crud_ModificarGlosa('+value+')">Modificar Glosa</button>';
+	} 
+	// if(code == "sin_code"){
+	// 	$('#modalCrudDirection').modal('show')
+	// 	$('#crudValue').html(value + code)
+	// 	var item = '<button class="btn btn-sm btn-info mx-2" onclick="ShowModalIngresaCodigo('+text+','+value+')">Agregar Codigo</button>';
+	// }
+	$('#crudBtn_').html(item)
+	
+}
+
+function crud_ActivarGlosa(value) {
+	//alert(value)
+	
+	var conItem = confirm("Esta seguro de ACTIVAR este Item");
+	if(conItem){
+		$.ajax({
+		url: './../controlador/upItem.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: value }
+		}).done(function(respuesta){
+			loadItemsInactivos();
+			$('#modalCrudDirection').modal('hide')
+			swal("el dato fue ACTIVADO.", "", "success");
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+		
+		loadItemsInactivos();
+	} else {
+		console.log("El dato a sigue DESCATIVADO");
+	}
+}
+//trae los datos para modificarlos
+function crud_ModificarGlosa(value) {
+	// alert(value)
+	$('#idHereCrud').val(value)
+	$('#modalCrudGlosa').modal('show')
+	$('#modalCrudDirection').modal('hide')
+	$('#modalInactivos').modal('hide')
+
+	$.ajax({
+		url: './../controlador/crudGlosaMOD.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: value }
+		}).done(function(respuesta){
+			//loadItemsInactivos();
+			$('#modalCrudDirection').modal('hide')
+			$('#showDrudGlosa').html(respuesta)
+			//swal("el dato fue ACTIVADO.", "", "success");
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+}
+
+function crudGlosa_eliminar() {
+	var crudID = $('#crudGlosa_id').val()
+	var optn_6 = confirm("Esta seguro de ELIMINAR la glosa.")
+	if(optn_6){
+		$.ajax({
+		url: './../controlador/crudGlosaEliminar.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor: crudID }
+		}).done(function(respuesta){
+			//loadItemsInactivos();
+			$('#modalCrudGlosa').modal('hide')
+			//$('#null').html(respuesta)
+			swal("el dato fue ELIMINADO.", "", "success");
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+}
+
+function crudGlosa_actualizar() {
+	var id = $('#crudGlosa_id').val()
+	var dato2 = $('#crudGlosa_dato2').val()
+	var dato3 = $('#crudGlosa_dato3').val()
+	var dato4 = $('#crudGlosa_dato4').val()
+	var dato5 = $('#crudGlosa_dato5').val()
+	var dato6 = $('#crudGlosa_dato6').val()
+	var dato7 = $('#crudGlosa_dato7').val()
+	var dato8 = $('#crudGlosa_dato8').val()
+
+	if(!dato2){
+		dato2 = "N/A";
+	}
+	if(!dato3){
+		dato3 = "N/A";
+	}
+	if(!dato4){
+		dato4 = "N/A";
+	}
+	if(!dato5){
+		dato5 = "N/A";
+	}
+	if(!dato6){
+		dato6 = "N/A";
+	}
+	if(!dato7){
+		dato7 = "N/A";
+	}
+	if(!dato8){
+		dato8 = "N/A";
+	}
+
+	var optn_7 = confirm("Esta seguro de los datos a ACTUALIZAR.")
+	if(optn_7){
+		$.ajax({
+		url: './../controlador/crudGlosaUpdate.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { valor1: id,
+		valor2: dato2,
+		valor3: dato3,
+		valor4: dato4,
+		valor5: dato5,
+		valor6: dato6,
+		valor7: dato7,
+		valor8: dato8 }
+		}).done(function(respuesta){
+			$('#modalCrudGlosa').modal('hide')
+			console.log(respuesta)
+			swal("el dato fue ACTUALIZADO.", "", "success");
+		})//fin done
+		.fail(function(){
+			console.log('error');
+		});
+	}
+}
 
 </script>
 

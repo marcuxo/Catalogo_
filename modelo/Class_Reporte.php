@@ -89,12 +89,12 @@ class Reporte extends PHPExcel
       /*Extraer datos de MYSQL*/
       # conectare la base de datos
         //esta consulta carga los items de ingreso de datos vacios
-        $query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = "1" ');
+        $query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = 1 ');
         $query->execute();
         $data = $query->fetchAll();
 
       $cel=3;//Numero de fila donde empezara a crear  el reporte
-      if(empty($data)){
+      if(!empty($data)){
         foreach ($data as $row):
           $celda_A=$row['codigo_dato_f'];
           $celda_B=$row['grupo_dato_f'];
@@ -693,7 +693,7 @@ class Reporte extends PHPExcel
       /*Extraer datos de MYSQL*/
       # conectare la base de datos
         //esta consulta carga los items de ingreso de datos vacios
-        $query = $this->dbh->prepare('SELECT * FROM ITEMS_DB_2 WHERE estado_item = "1" ');
+        $query = $this->dbh->prepare('SELECT * FROM items_db_2 WHERE estado_item = "1" ');
         $query->execute();
         $data = $query->fetchAll();
 

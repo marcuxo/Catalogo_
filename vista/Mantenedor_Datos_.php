@@ -76,11 +76,11 @@ if(!isset($_SESSION['usuario'])){
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'cuentasUsuario')"><i class="fas fa-file-download"></i><small> EXCEL Cuentas de Usuarios</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formActivos')"><i class="fas fa-file-download"></i><small> EXCEL Formalizados Activos</small></button>
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formActivos')"><i class="fas fa-file-download"></i><small> EXCEL Glosa Activos</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formInactivos')"><i class="fas fa-file-download"></i><small> EXCEL formalizados Inactivos</small></button>
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formInactivos')"><i class="fas fa-file-download"></i><small> EXCEL Glosa Inactivos</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formXactivar')"><i class="fas fa-file-download"></i><small> EXCEL Formalizados x Activar</small></button>
+							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'formXactivar')"><i class="fas fa-file-download"></i><small> EXCEL Glosa x Activar</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="generaReporte_(Rexcel = 'nFactivos')"><i class="fas fa-file-download"></i><small> EXCEL Items no formalizados Activos</small></button>
 						<!-- <div class="dropdown-divider"></div> -->

@@ -2822,7 +2822,7 @@ class Catalogo
 	
 	public function Correo($msg)
 	{
-		$to = 'crusok@live.cl';
+		$to = 'pruebas.correo.dev@gmail.com';
 			$subject = 'Verificacion de Datos';
 			//$message = 'Hola mundo desde el mail';
 			$headers[]= 'MiME-Version: 1.0';
@@ -3248,7 +3248,7 @@ class Catalogo
 	public function cargaInactivos()
 	{
 		try {
-			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = 2');
+			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE estado_dato_f = "2" OR estado_dato_f = "0"');
 			//$query = $this->dbh->prepare('SELECT * FROM all_items WHERE descripcion LIKE ?');
 			//$query->bindParam(1, $dato);
 
@@ -3715,8 +3715,10 @@ class Catalogo
 	{
 		//echo $codigo."/class/".$id;
 		try{
-			$query = $this->dbh->prepare('UPDATE datos_formalizados SET codigo_dato_f = '.$codigo.' WHERE ID_DATO_F = ?');
-			$query->bindParam(1, $id);
+			// $query = $this->dbh->prepare('UPDATE datos_formalizados SET codigo_dato_f = '.$codigo.' WHERE ID_DATO_F = ?');
+			$query = $this->dbh->prepare('UPDATE datos_formalizados SET codigo_dato_f = ? WHERE id_dato_f = ?');
+			$query->bindParam(1, $codigo);
+			$query->bindParam(2, $id);
 
 			$query->execute();
 			$this->dbh = null;
@@ -3975,6 +3977,122 @@ class Catalogo
 		}
 	}
 
+	public function crudGlosaMOD($id)
+	{
+		try {
+			$query = $this->dbh->prepare('SELECT * FROM datos_formalizados WHERE id_dato_f = ?');
+			$query->bindParam(1, $id);
+			$query->execute();
+			$data = $query->fetchAll();
+			$cont = count($data);
+			$salida="";
+			if(!empty($data)){
+					foreach ($data as $fila):
+			$salida.= "
+						<input type='text' id='crudGlosa_id' class='form-control form-control-sm invisible' value='".$fila['id_dato_f']."'>
+						<label>Codigo</label>
+						<input type='text' id='crudGlosa_codigo' class='form-control form-control-sm' value='".$fila['codigo_dato_f']."' readonly>
+						<label>Dependencia Del Item</label>
+						<input type='text' id='crudGlosa_grufam' class='form-control form-control-sm' value='".$fila['grupo_dato_f']." - ".$fila['familia_dato_f']."' readonly>
+						<label>Tipo</label>
+						<input type='text' id='crudGlosa_dato1' class='form-control form-control-sm' value='".$fila['dato1_dato_f']."' readonly>
+						
+			";
+						if($fila['dato2_dato_f'] != "N/A"){
+							$salida.="
+							<label>Dato</label>
+							<input type='text' id='crudGlosa_dato2' class='form-control form-control-sm' value='".$fila['dato2_dato_f']."'>";
+						}
+						if($fila['dato3_dato_f'] != "N/A"){
+							$salida.="
+							<label>Dato</label>
+							<input type='text' id='crudGlosa_dato3' class='form-control form-control-sm' value='".$fila['dato3_dato_f']."'>";
+						}
+						if($fila['dato4_dato_f'] != "N/A"){
+							$salida.="
+							<label>Dato</label>
+							<input type='text' id='crudGlosa_dato4' class='form-control form-control-sm' value='".$fila['dato4_dato_f']."'>";
+						}
+						if($fila['dato5_dato_f'] != "N/A"){
+							$salida.="
+							<label>Dato</label>
+							<input type='text' id='crudGlosa_dato5' class='form-control form-control-sm' value='".$fila['dato5_dato_f']."'>";
+						}
+						if($fila['dato6_dato_f'] != "N/A"){
+							$salida.="
+							<label>Dato</label>
+							<input type='text' id='crudGlosa_dato6' class='form-control form-control-sm' value='".$fila['dato6_dato_f']."'>";
+						}
+						if($fila['dato7_dato_f'] != "N/A"){
+							$salida.="
+							<label>Dato</label>
+							<input type='text' id='crudGlosa_dato7' class='form-control form-control-sm' value='".$fila['dato7_dato_f']."'>";
+						}
+						
+						$salida.="
+						<label>Dato Opcional</label>
+							<input type='text' id='crudGlosa_dato8' class='form-control form-control-sm' value='".$fila['dato8_dato_f']."'>
+						<label>Fecha Ingreso Dato</label>
+							<input type='text' id='crudGlosa_fechaI' class='form-control form-control-sm' value='".$fila['fecha_ingreso']."' readonly>";
+					endforeach;
+					$salida.= "</select>";
+			}else{
+					$salida = "<p class='lead text-success'>No hay datos ACTIVOS en estos momemntos.</p>";
+			}
+			echo $salida;
+			$this->dbh = null;
+		}catch (PDOException $e) {
+				$e->getMessage();
+		}
+	}
 
+	public function crudGlosaEliminar($id)
+	{
+		try{
+			$query = $this->dbh->prepare('DELETE FROM datos_formalizados WHERE id_dato_f = ?');
+			$query->bindParam(1, $id);
+
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
+	public function crudGlosaUpdate($id, $dato2, $dato3, $dato4, $dato5, $dato6, $dato7, $dato8)
+	{
+		//echo $id. $dato2. $dato3. $dato4. $dato5. $dato6. $dato7. $dato8;
+			// echo "class: ".$id.$nombre.$usuario.$nClave.$tCuenta.$info;
+			try{
+				$query = $this->dbh->prepare('UPDATE datos_formalizados SET dato2_dato_f = ?, dato3_dato_f = ?, dato4_dato_f = ?, dato5_dato_f = ?, dato6_dato_f = ?, dato7_dato_f = ?, dato8_dato_f = ? WHERE id_dato_f = ?');
+				$query->bindParam(1, $dato2);
+				$query->bindParam(2, $dato3);
+				$query->bindParam(3, $dato4);
+				$query->bindParam(4, $dato5);
+				$query->bindParam(5, $dato6);
+				$query->bindParam(6, $dato7);
+				$query->bindParam(7, $dato8);
+				$query->bindParam(8, $id);
+	
+				$query->execute();
+				$this->dbh = null;
+			} catch (PDOException $e){
+				$e->getMessage();
+			}
+	}
+
+	public function activarItemEnEspera($data, $fecha)
+	{
+		try{
+			$query = $this->dbh->prepare('UPDATE items_db_2 SET estado_item = "1", fecha_aprobacion = ? WHERE dato_1 = ?');
+			$query->bindParam(1, $fecha);
+			$query->bindParam(2, $data);
+
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
 
 }//fin class
