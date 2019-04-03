@@ -1,7 +1,5 @@
 <?php
-$txt = "hola :P ja ja ja";
-$carpeta= str_replace(' ','_',$txt);
-echo $carpeta;
+
 ?>
 <html>
 <head>
@@ -17,7 +15,7 @@ echo $carpeta;
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-				<p class="lead text-warning bg-primary" id="fecha"></p>
+				<p class="display-4 text-white bg-primary rounded-bottom py-3" id="fecha"></p>
 				<form action="" method="get">
 					<input type="text" name="horaActual" id="fechita"  class="form-control form-control-sm col-2 text-center invisible">
 					<button type="submit">Enviar</button>
@@ -89,17 +87,13 @@ laFechita()
 
 function correo()
 {
-	// // El mensaje
-	// $mensaje = "Línea 1\r\nLínea 2\r\nLínea 3";
-
-	// // Si cualquier línea es más larga de 70 caracteres, se debería usar wordwrap()
-	// $mensaje = wordwrap($mensaje, 70, "\r\n");
-
-	// // Enviarlo
-	// mail('marcourrutiam@gmail.com', 'Mi título', $mensaje);
 	mail('marcourrutiam@gmail.com', "Comprobación Email", "Si lees el mensaje, terminaste correctamente la configuración");
 	echo "CORREO";
 }
-correo()
 
+$txt = "hola :P ja ja ja";
+$carpeta= str_replace(' ','_',$txt);
+echo $carpeta;
+
+correo()
 ?>

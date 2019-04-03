@@ -193,6 +193,9 @@ if(!isset($_SESSION['usuario'])){
 	function selFamilia2(){
 		//$("#materiales").html("");
 		$("#loading").html("");
+		$("#tipo").html("");
+		 $("#tipoPagUno").html("");
+		 $("#loading").html("");
 		document.getElementById('familiaSelPag').selected = "true";
         var select = document.getElementById("familiaSelPag");
         var index = select.selectedIndex; 
@@ -237,29 +240,33 @@ if(!isset($_SESSION['usuario'])){
 		var grupo = $('#grupo2').val();
 		var familia = $('#familiaSelPag').val();
 		var tipo = $('#tipoSelMod').val();
-	
-		if(grupo != "1" && familia != "1"){
-			$.ajax({
-				url: './../controlador/busqueda2.php',
-				type: 'post',
-				dataType: 'html',
-				data: { valor1: grupo,
-				valor2: familia,
-				valor3: tipo},
-			})
-			.done(function(respuesta){
-				// console.log('logrado');
-				$("#resultado").html(respuesta)
-				$("#resultadoBusImg").html("")
-				loadImagenXtipo()
-			})//fin done
-			.fail(function(){
-				console.log('error');
-			});
-			return false;
-		} else {
-			return false;
+		if(!tipo){
+			tipo = "N/A";
 		}
+
+			if(grupo != "1" && familia != "1"){
+				$.ajax({
+					url: './../controlador/busqueda2.php',
+					type: 'post',
+					dataType: 'html',
+					data: { valor1: grupo,
+					valor2: familia,
+					valor3: tipo},
+				})
+				.done(function(respuesta){
+					// console.log('logrado');
+					$("#resultado").html(respuesta)
+					$("#resultadoBusImg").html("")
+					loadImagenXtipo()
+				})//fin done
+				.fail(function(){
+					console.log('error');
+				});
+				return false;
+			} else {
+				return false;
+			}
+		
  	}
 
 	function showwwwImagen() {
@@ -284,7 +291,7 @@ if(!isset($_SESSION['usuario'])){
 	function loadImagenXtipo() {
 		var familia = $('#familiaSelPag').val();
 		var tipo = $('#tipoSelMod').val();
-
+		
 		$.ajax({
 		url: './../controlador/cargaImagen2.php',
 		type: 'POST',
