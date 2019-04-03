@@ -237,7 +237,7 @@ if(!isset($_SESSION['usuario'])){
 		var familia = $('#familiaSelPag').val();
 		var tipo = $('#tipoSelMod').val();
 		//var dato = confirm("Estas seguro de los datos");
-		if(true){
+		if(grupo != "1" && familia != "1"){
 			$.ajax({
 				url: './../controlador/busqueda2.php',
 				type: 'post',

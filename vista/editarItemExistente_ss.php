@@ -326,9 +326,10 @@ function e() {
 
 	function selGrupo2() {
 		//alert("diste click");
-		// $("#familias2").html("");
-		// $("#tipo22").html("");
-		// $("#materiales2").html("");
+		//$("#grupos2").html("");
+		$("#familias2").html("");
+		$("#tipo").html("");
+		$("#tipoPagUno").html("");
 		document.getElementById('grupo2').selected = "true";
         var select = document.getElementById("grupo2");
         var index = select.selectedIndex; 
@@ -396,7 +397,7 @@ function e() {
 		var familia = $('#familiaSelPag').val();
 		var tipo = $('#tipoSelMod').val();
 		//var dato = confirm("Estas seguro de los datos");
-		if(true){
+		if(grupo != "1"){
 			$.ajax({
 				url: './../controlador/busqueda1.php',
 				type: 'post',
