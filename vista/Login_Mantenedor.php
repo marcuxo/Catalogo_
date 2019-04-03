@@ -6,6 +6,7 @@ session_start();
  <html>
  <head>
 	 <title>Login Catalogo</title>
+	 <link rel="icon" type="image/png" href="img_/icon.png" />
 	 <!-- import de hojas de estilos estilos.css solo contiene el color del fondo de la app -->
 	<link rel="stylesheet" type="text/css" href="./CSS/bootstrap-4.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/estilos.css">

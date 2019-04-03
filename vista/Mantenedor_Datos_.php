@@ -9,6 +9,7 @@ if(!isset($_SESSION['usuario'])){
 <html>
 <head >
 	<title>Catalogo Ariztia</title>
+	<link rel="icon" type="image/png" href="img_/icon.png" />
 	<!-- import de estilos css, el de estilos.css solo contiene el color del fondo -->
 	<link rel="stylesheet" href="CSS/estilos.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/bootstrap-4.css">
@@ -102,7 +103,7 @@ if(!isset($_SESSION['usuario'])){
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-4"><img src="img_/logo.png" height="150px"></div>
-		<div class="col-4 text-center"><h1 class="display-4 text-white">busqueda por imagen</h1></div>
+		<div class="col-4 text-center mt-5"><h1 class="lead text-white">busqueda por imagen</h1></div>
 		<div class="col-4 text-right"><img src="img_/logo_mante.png" height="150px"></div>
 	</div>
 </div>

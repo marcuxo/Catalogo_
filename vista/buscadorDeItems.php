@@ -5,6 +5,7 @@
 <html>
 <head >
 	<title>Catalogo Ariztia</title>
+	<link rel="icon" type="image/png" href="img_/icon.png" />
 	<!-- import de hojas de estilos css estilos.css solo contiene el color del fondo -->
 	<link rel="stylesheet" href="CSS/estilos.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/bootstrap-4.css">
