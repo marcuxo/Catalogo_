@@ -4096,6 +4096,20 @@ class Catalogo
 		}
 	}
 
+	
+	public function eliminarItemEnEspera($data, $fecha)
+	{
+		try{
+			$query = $this->dbh->prepare('UPDATE items_db_2 SET estado_item = "5" WHERE dato_1 = ?');
+			$query->bindParam(1, $data);
+
+			$query->execute();
+			$this->dbh = null;
+		} catch (PDOException $e){
+			$e->getMessage();
+		}
+	}
+
 
 
 

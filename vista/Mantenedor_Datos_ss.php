@@ -37,7 +37,7 @@ if(!isset($_SESSION['usuario'])){
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="showModNewFamili()"><i class="fas fa-plus-square"></i> <small>Nueva Familia</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
-							<button class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> <small>Items En ESPERA</small></button>
+							<button class="dropdown-item" onclick="showModalActivarItemEnEspera()"><i class="fas fa-check-circle"></i> <small>Items En espera</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
 							<button class="dropdown-item" onclick="showModalActivarItem()"><i class="fas fa-check-circle"></i><small> Activar item</small></button>
 						<!-- <div class="dropdown-divider"></div> -->
@@ -587,6 +587,36 @@ if(!isset($_SESSION['usuario'])){
 		</div>
 	</div>
 </div>
+
+	<!-- -----------------------------------------  MODAL desisison espera ----------------------------------------------  -->
+	<div class="modal info" id="modalDesiEspera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<!-- <div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">crud Glosa</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div> -->
+					
+					<div class="modal-body">
+						<!-- contenido del modal -->
+						<div id="showDrudGlosa"></div>
+						
+						<div class="modal-footer">
+							<div class="col-12">
+								<div class="row">
+									<div class="col-12 text-center">
+										<button type="button" class="btn btn-sm btn-danger mx-3" onclick="eLiminarItemEspera_()">Eliminar item</button>
+										<button type="button" class="btn btn-sm btn-success mx-3" onclick="aCtivarItemEspera_()">Activar item</button>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 <input type="text" id="fechita" name="fechaAqui" class="form-control form-control-sm invisible">
@@ -2011,26 +2041,56 @@ function loadItemsEnEsperaES() {
 			console.log('error');
 		});
 }
-
+//here item espera
 function sel_ItemEspera() {
+	$('#modalDesiEspera').modal('show')
+// }
+// function aCtivarItemEspera_() {
+// 		//var item=$('#itemActivo').val()
+// 		document.getElementById('itemActivo').selected = "true";
+// 		var select = document.getElementById("itemActivo");
+// 		var index = select.selectedIndex; 
+// 		var value = select.options[index].value;
+// 		var text = select.options[index].text;
+// 	var optn_7 = confirm("Esta seguro de ACTIVAR este ITEM")
+// 	if(optn_7){
+// 		$.ajax({
+// 		url: './../controlador/activarItemEnEspera.php',
+// 		type: 'POST',
+// 		dataType: 'html',
+// 		data: { valor: value,
+// 		valor0: laFechita()}
+// 		}).done(function(respuesta){
+// 			$('#modalActivaritemEnEspera').modal('hide')
+// 			$('#modalDesiEspera').modal('hide')
+// 			console.log(respuesta)
+// 			swal("el dato fue ACTIVADO.", "", "success");
+// 		})//fin done
+// 		.fail(function(){
+// 			console.log('error');
+// 		});
+// 	}
+}
+function eLiminarItemEspera_() {
 	//var item=$('#itemActivo').val()
 	document.getElementById('itemActivo').selected = "true";
 		var select = document.getElementById("itemActivo");
 		var index = select.selectedIndex; 
 		var value = select.options[index].value;
 		var text = select.options[index].text;
-	var optn_7 = confirm("Esta seguro de activar este ITEM")
+	var optn_7 = confirm("Esta seguro de ELIMINAR este ITEM")
 	if(optn_7){
 		$.ajax({
-		url: './../controlador/activarItemEnEspera.php',
+		url: './../controlador/eliminarItemEnEspera.php',
 		type: 'POST',
 		dataType: 'html',
 		data: { valor: value,
 		valor0: laFechita()}
 		}).done(function(respuesta){
 			$('#modalActivaritemEnEspera').modal('hide')
+			$('#modalDesiEspera').modal('hide')
 			console.log(respuesta)
-			swal("el dato fue ACTIVADO.", "", "success");
+			swal("el dato fue ELIMINADO.", "", "success");
 		})//fin done
 		.fail(function(){
 			console.log('error');
